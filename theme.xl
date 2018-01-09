@@ -1,0 +1,560 @@
+import Slides
+import Animate
+import Charts
+import VLCAudioVideo
+import ObjectLoader
+import RegExp
+import Filters
+
+
+theme "RedHat"
+PresentationTitle -> "Slicing GPUs (Virtually)"
+
+
+
+// ============================================================================
+//
+//    Customizations for the slides
+//
+// ============================================================================
+//    This should be kept sorted with the more specific patterns at the top
+
+theme_align "RedHat", "main", "title"           -> align_left
+theme_align "RedHat", "main", "subtitle"        -> align_left
+theme_color "RedHat", "main", Theme             -> color "white"
+theme_color "RedHat", "section", Theme          -> color "white"
+
+theme_font  "RedHat", Master, "title"           -> font "Overpass", weight 300
+theme_size  "RedHat", Master, "title"           -> 60
+theme_font  "RedHat", Master, "subtitle"        -> font "Overpass"
+theme_size  "RedHat", Master, "subtitle"        -> 35
+theme_color "RedHat", Master, "subtitle"        -> color "#A21400"
+theme_font  "RedHat", Master, "code"            -> font "Menlo", 40
+theme_color "RedHat", Master, "code"            -> color "#003388"
+theme_font  "RedHat", Master, "boxtitle"        -> font "Overpass", bold, 40
+theme_align "RedHat", Master, "boxtitle"        -> align 80%
+
+theme_align "RedHat", Master,"story",N          -> margins 40*N, 0
+theme_color "RedHat", Master,"story",N          -> color "black", 0.99-0.2*N
+theme_size  "RedHat", Master,"story",N          -> 36 - N * 2
+
+theme_color "RedHat", Master,"picture"          -> color "white"
+theme_font  "RedHat", Master,"story"            -> font "Overpass", "Arial"
+theme_size  "RedHat", Master,"story"            -> 40
+
+theme_font  "RedHat", Master, Theme             -> font "Overpass", "Arial"
+theme_color "RedHat", Master,Style              -> color "black"
+
+
+
+// ============================================================================
+//
+//    Charts
+//
+// ============================================================================
+
+// Chart colors
+theme_color "RedHat", Master:text, "line", N:integer -> line_color_hsv (336.0 * N) / chart_datasets_count, 0.3, 1.0, 1.0
+theme_color "RedHat", "pie", Style:text, N:integer -> color_hsv (336.0 * N) / (chart_count chart_first), 0.3, 1.0, 1.0
+theme_color "RedHat", "area", Style:text, N:integer -> theme_color "RedHat", "bar", Style, N
+theme_color "RedHat", "line", Style:text, N:integer -> theme_color "RedHat", "bar", Style, N
+theme_color "RedHat", "bar", Style:text, N:integer -> color_hsv (336.0 * N) / chart_datasets_count, 0.3, 1.0, 1.0
+
+// No boxes for charts components (except title)
+theme_box "RedHat",Master:text,"chart_legend", X:real,Y:real,W:real,H:real -> false
+theme_box "RedHat",Master:text,"area", X:real,Y:real,W:real,H:real -> false
+theme_box "RedHat",Master:text,"bar", X:real,Y:real,W:real,H:real -> false
+theme_box "RedHat",Master:text,"line", X:real,Y:real,W:real,H:real -> false
+theme_box "RedHat",Master:text,"pie", X:real,Y:real,W:real,H:real -> false
+
+// No boxes for pictures either
+theme_box "RedHat",Master:text,"picture", X:real,Y:real,W:real,H:real -> false
+theme_box "RedHat",Master:text,"leftpic", X:real,Y:real,W:real,H:real -> false
+theme_box "RedHat",Master:text,"rightpic", X:real,Y:real,W:real,H:real -> false
+
+
+// ============================================================================
+//
+//    Theme definition
+//
+// ============================================================================
+
+theme_slide_width  "RedHat" -> 1920
+theme_slide_height "RedHat" -> 1080
+
+redhat_red1     -> "#8F1000"
+redhat_red2     -> "#B21600"
+redhat_red3     -> "#CC1B00"
+
+redhat_blue1    -> "#10008F"
+redhat_green1   -> "#008F10"
+
+
+theme_background "RedHat", "main" ->
+// ----------------------------------------------------------------------------
+//   Draw the triangles in the background
+// ----------------------------------------------------------------------------
+    clear_color "#A21400"
+    background -100,
+        rotate_z 45
+        translate_y 1000
+        color redhat_red1
+        rectangle 1800, 500
+    background -50,
+        rotate_z 45
+        translate_y 1000
+        color redhat_red2
+        rectangle 1800, 300
+    background -20,
+        rotate_z 45
+        translate_y 1000
+        color redhat_red3
+        rectangle 1800, 230
+        translate_y -2000
+        rectangle 1800, 230
+    background -50,
+        translate 570, -570, 0
+        frame_texture 80, 80,
+            line_color "white"
+            color "transparent"
+            line_width 2
+            for I in 0..8 loop
+                rectangle 10 * I, 10 * I
+        texture_transform
+            translate -seconds_time * 0.2 mod 1, 0.0, 0
+            scale 20 + 10 * sin (0.1 * seconds_time)
+        texture_wrap true, true
+        color redhat_red2
+        redhat_triangle 800, 860
+        redhat_triangle A, B ->
+            path
+                move_to -B, -B
+                line_to  B,  B
+                line_to  B,  A
+                line_to -A, -B
+                line_to -B, -B
+
+    contents -10,
+        color "white"
+        image -580, 250, 100%, 100%, "RedHat-WhiteText.png"
+
+
+theme_background "RedHat", "section" ->
+// ----------------------------------------------------------------------------
+//   Same as section
+// ----------------------------------------------------------------------------
+    theme_background "RedHat", "main"
+
+
+theme_background "RedHat", Master ->
+// ----------------------------------------------------------------------------
+//   Draw the triangles in the background
+// ----------------------------------------------------------------------------
+    clear_color "white"
+    time
+    locally
+        translate_z -200
+        frame_texture 80, 80,
+            line_color "white"
+            color "transparent"
+            line_width 2
+            for I in 0..8 loop
+                rectangle 10 * I, 10 * I
+        texture_transform
+            translate -time * 0.2 mod 1, 0.0, 0
+            scale 20 + 10 * sin (0.1 * time)
+        texture_wrap true, true
+        color "lightgray", 60% // 30
+        locally
+            translate window_width / 2 - 80, -window_height / 2 + 80, 0
+            redhat_triangle 800, 860
+        locally
+            translate -window_width / 2 + 80, window_height / 2 - 80, 0
+            redhat_triangle -800, -860
+        redhat_triangle A, B ->
+            path
+                move_to -B, -B
+                line_to  B,  B
+                line_to  B,  A
+                line_to -A, -B
+                line_to -B, -B
+
+    locally
+        translate 0, bottom_offset + 20, -100
+        color "lightgray"
+        rectangle bottom_width, 2
+    locally
+        translate bottom_width/2 - 60, bottom_offset, -50
+        color "white"
+        image 0, 0, 100%, 100%, "RedHat-BlackText.png"
+    locally
+        translate 0, bottom_offset, -50
+        vertical_align 0.5
+        font_size 30 * min(0.5, min(window_width / slide_width, window_height / slide_height))
+        text_box 0, 0, bottom_width - 30, 50,
+            align 0%
+            text "Page " & page_number & "/" & page_count
+        text_box 0, 0, bottom_width - 2.5 * text_width("Page 99/99"), 50,
+            align 0%
+            text PresentationTitle
+        text_box 0, 0, bottom_width - 250, 50,
+            align 100%
+            text month & "/" & day & "/" & year & " - " & hours & ":" & zero minutes & ":" & zero seconds
+zero N -> if N < 10 then "0" & N else N
+bottom_offset -> (-window_height / 2 + 20)
+bottom_width -> window_width - 100
+
+
+
+theme_boxstyle "RedHat",Master:text,Style:text->
+// ----------------------------------------------------------------------------
+//   Style for text boxes
+// ----------------------------------------------------------------------------
+    color "black"
+
+
+theme_box "RedHat",Master:text,Style:text, X:real,Y:real,W:real,H:real ->
+// ----------------------------------------------------------------------------
+//   Draw the background box for text and flows
+// ----------------------------------------------------------------------------
+    false
+
+
+
+// ============================================================================
+//
+//    Layout for the various kind of pages
+//
+// ============================================================================
+
+theme_layout "RedHat", "main" ->
+// ----------------------------------------------------------------------------
+//    Centered flows
+// ----------------------------------------------------------------------------
+    flow 0,   50, 1200, 200, "title"
+    flow 0, -100, 1200, 300, "subtitle"
+
+
+theme_layout "RedHat", "section" ->
+// ----------------------------------------------------------------------------
+//    Centered flows
+// ----------------------------------------------------------------------------
+    flow 0, 50, 1800, 250, "title"
+    flow 0, -100, 1800, 150, "subtitle"
+
+
+theme_layout "RedHat", "blank" ->
+// ----------------------------------------------------------------------------
+//    Centered flows
+// ----------------------------------------------------------------------------
+    flow 0, 0, 1800, 750, "story"
+
+
+theme_layout "RedHat", Master:text ->
+// ----------------------------------------------------------------------------
+//    Centered flows
+// ----------------------------------------------------------------------------
+    flows   0,  400, 1800, 220, "title", "subtitle"
+    flow    0,  -80, 1800, 700, "story"
+    flow -475,  -80,  850, 700, "left"
+    flow  475,  -80,  850, 700, "right"
+
+
+presentation_author Body ->
+// ----------------------------------------------------------------------------
+//    Format the presentation author on the main title page
+// ----------------------------------------------------------------------------
+        box 0, -400, 1200, 200,
+            font_size 45
+            render Body
+
+
+
+// ============================================================================
+//
+//    Utilities
+//
+// ============================================================================
+
+current_step -> 1
+
+stepping ->
+// ----------------------------------------------------------------------------
+//   A body where each bullet is at a given step
+// ----------------------------------------------------------------------------
+    compute_smooth_step
+    current_step := 1
+    on "pageentry",
+        skip_directly_to 0
+        highest_step := 0
+
+
+at_current_step ->
+// ----------------------------------------------------------------------------
+//   Show something at the current step
+// ----------------------------------------------------------------------------
+    at_step current_step
+    current_step := current_step + 1
+
+
+only_at N:integer..M:integer, Body ->
+// ----------------------------------------------------------------------------
+//   Show something at step N only
+// ----------------------------------------------------------------------------
+    if smooth_step in N-1..M+1 then
+        locally
+            show 1.3*fade_between(smooth_step, N, M)
+            Body
+
+
+only_at N:integer, Body ->
+// ----------------------------------------------------------------------------
+//   Show something at step N only
+// ----------------------------------------------------------------------------
+    if smooth_step in N-1..N+1 then
+        locally
+            show 1.3*fade_between(smooth_step, N, N)
+            Body
+
+
+
+*    Body -> at_current_step; bullet 1, Body
+**   Body -> at_current_step; bullet 2, Body
+***  Body -> at_current_step; bullet 3, Body
+**** Body -> at_current_step; bullet 4, Body
+
+
+top_left     Body -> box -475,  150, 900, 350, { render Body }
+top_right    Body -> box  475,  150, 900, 350, { render Body }
+bottom_left  Body -> box -475, -250, 900, 350, { render Body }
+bottom_right Body -> box  475, -250, 900, 350, { render Body }
+// ----------------------------------------------------------------------------
+//   Draw a box in the four quadrants
+// ----------------------------------------------------------------------------
+
+
+! Body ->
+// ----------------------------------------------------------------------------
+//   Highlight a given bullet point
+// ----------------------------------------------------------------------------
+    * { color_hsv 32.3 * seconds, 0.4, 1; render Body }
+
+
+red     Body -> text_span { color "#AA0022";    render Body }
+green   Body -> text_span { color "#006633";  render Body }
+blue    Body -> text_span { color "#003399";   render Body }
+yellow  Body -> text_span { color "#EEAA11"; render Body }
+gray    Body -> text_span { color "#777";   render Body }
+code    Body -> text_span { font "Menlo"; blue Body }
+concept Body -> text_span { font "Amaze", 64; green Body }
+// ----------------------------------------------------------------------------
+//   Draw something in red, green or blue
+// ----------------------------------------------------------------------------
+
+
+code_box X:real, Y:real, W:real, H:real, Title, Body ->
+// ----------------------------------------------------------------------------
+//    A text box showing a code example
+// ----------------------------------------------------------------------------
+    background -50,
+        line_color "lightblue", 0.5
+        linear_gradient 128, 0, 128, 256, 256, 256,
+            gradient_color 0%, "lightgray", 80%
+            gradient_color 100%, "white", 0%
+        color "white"
+        rectangle X, Y, W+50, H+50
+    locally
+        frame_texture W, H,
+            text_box 0, 0, W, H,
+                style "boxtitle"
+                anchor
+                    linear_gradient 32, 64, 32, 0, 64, 64,
+                        gradient_color   0%, "lightgray", 70%
+                        gradient_color  10%, "darkgray",  90%
+                        gradient_color 100%, "white", 0%
+                    color "lightblue"
+                    rectangle 0, -25, 5 * W, 65
+                paragraph Title
+                style "code"
+                render Body
+        color "white"
+        rectangle X, Y, W, H
+code_box Title, Body -> code_box 600, 120, 500, 650, Title, Body
+
+
+code_box_at_step N, Title, Body ->
+// ----------------------------------------------------------------------------
+//   Draw a code box only at given step
+// ----------------------------------------------------------------------------
+    picture
+        only_at N,
+            code_box Title, Body
+
+
+tbox X:real, Y:real, W:real, H:real, Body ->
+// ----------------------------------------------------------------------------
+//    A text box showing a code example
+// ----------------------------------------------------------------------------
+    background -50,
+        line_color "lightblue", 0.5
+        linear_gradient 128, 0, 128, 256, 256, 256,
+            gradient_color 0%, "lightgray", 80%
+            gradient_color 100%, "white", 0%
+        color "white"
+        rectangle X, Y, W+50, H+50
+    locally
+        frame_texture W, H,
+            text_box 0, 0, W, H, Body
+        color "white"
+        rectangle X, Y, W, H
+
+
+image_box X:real, Y:real, W:real, H:real, Body ->
+// ----------------------------------------------------------------------------
+//    An image box with a cached frame texture
+// ----------------------------------------------------------------------------
+    background -50,
+        line_color "lightblue", 0.5
+        linear_gradient 128, 0, 128, 256, 256, 256,
+            gradient_color 0%, "lightgray", 80%
+            gradient_color 100%, "white", 0%
+        color "white"
+        rectangle X, Y, W+50, H+50
+    locally
+        frame_texture W, H,
+            render Body
+        color "white"
+        rectangle X, Y, W, H
+
+
+stamp Color, Body ->
+// ----------------------------------------------------------------------------
+//    Display a stamp with the given color
+// ----------------------------------------------------------------------------
+    locally
+        rotate_z 30
+        text_box -80, 250, 400, 80,
+            font "Impact", 90
+            color Color, sin(5 * page_time)^4
+            render Body
+
+
+image_only_at N, Body ->
+// ----------------------------------------------------------------------------
+//   Draw an image at the given step
+// ----------------------------------------------------------------------------
+    only_at N,
+        locally
+            color "white"
+            Body
+
+
+math_eq Eq:text ->
+// ----------------------------------------------------------------------------
+//   Small utility to draw an equation
+// ----------------------------------------------------------------------------
+    image "http://latex.codecogs.com/png.latex?\dpi{600}\color{White}" & Eq
+
+
+rotate_image N, Picture:text ->
+// ----------------------------------------------------------------------------
+//   Display a picture on a carousel
+// ----------------------------------------------------------------------------
+    rotate_step N,
+        texture Picture
+        if texture_width > 0 and texture_height > 0 then
+            scale min(1.0, 800.0 / texture_width, 800.0 / texture_height)
+            rectangle texture_width, texture_height
+
+
+rotate_movie N, Movie:text ->
+// ----------------------------------------------------------------------------
+//   Display a picture on a carousel
+// ----------------------------------------------------------------------------
+    rotate_step N,
+        movie_texture Movie
+        if texture_width > 0 and texture_height > 0 then
+            scale min(1.0, 800.0 / texture_width, 800.0 / texture_height)
+            rectangle texture_width, texture_height
+
+        on "pageexit",
+            movie_drop Movie
+
+
+rotate_step N, Body ->
+// ----------------------------------------------------------------------------
+//   Display something on a carousel
+// ----------------------------------------------------------------------------
+    locally
+        rotate_step_adjust  X:real -> rotate_step_adjust2 30 * X * pi / 180
+        rotate_step_adjust2 X:real ->
+            translate 600 * sin X, 550 - 600 * cos X, 4000 * cos X - 4000
+
+        rotate_step_adjust smooth_step - N
+        at_step N
+        show fade_between(smooth_step, N, N) + 0.3
+        Body
+
+
+youtube_movie File:text, YT:text ->
+// ----------------------------------------------------------------------------
+//   Load a youtube movie locally if cached, otherwise remotely
+// ----------------------------------------------------------------------------
+    if file_exists ("movies/" & File) then
+        "movies/" & File
+    else
+        "https://www.youtube.com/watch?v=" & YT
+
+
+
+// ============================================================================
+//
+//    Taodyne colors
+//
+// ============================================================================
+
+// Taodyne logo colors
+tao "red"                               -> "#AA0022"
+tao "orange"                            -> "#DD3311"
+tao "yellow"                            -> "#EEAA11"
+tao "green"                             -> "#006633"
+tao "ocean"                             -> "#229988"
+tao "sky"                               -> "#3399FF"
+tao "navy"                              -> "#003388"
+tao "purple"                            -> "#CC0099"
+tao "grey"                              -> "#555"
+
+
+// ============================================================================
+//
+//   Timer
+//
+// ============================================================================
+
+TOTAL_DURATION -> 3000 // 50 minutes
+START_TIME     -> 0.0
+
+key "Right" -> skip 1
+key "Space" -> skip 1
+key "Left"  -> skip -1
+seconds_time -> hours * 3600 + minutes * 60 + seconds
+key "Backspace" ->
+    START_TIME := seconds_time
+    goto_page 1
+once
+    START_TIME := seconds_time
+
+locally
+    color "red"
+    translate 0, bottom_offset + 20, -90
+    rectangle bottom_width * (seconds_time - START_TIME) / TOTAL_DURATION, 4
+    if page_count > 0 then
+        color "green"
+        rectangle bottom_width * page_number / page_count, 2
+
+LANG -> "fr"
+English fr French -> if LANG="fr" then French else English
+english Body -> if LANG="en" then Body
+french  Body -> if LANG="fr" then Body
+key "f" -> LANG := "fr"; refresh 0
+key "e" -> LANG := "en"; refresh 0
