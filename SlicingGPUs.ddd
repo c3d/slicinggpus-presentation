@@ -44,7 +44,7 @@ base_slide "About the presentation authors",
 base_slide "Use cases for GPU virtualization",
 // ----------------------------------------------------------------------------
     title page_label
-    subtitle "There are many reasons you may want to use a GPU"
+    subtitle "There are many reasons you may want to use a GPU in a virtual machine"
     stepping
     story
         paragraph "Using GPUs for graphics"
