@@ -1,5 +1,5 @@
-BUILD Presentation
-==================
+Slicing a GPU (Virtually) Presentation
+======================================
 
 This is a Tao3D presentation for `Slicing a GPU`, a presentation
 for DevConf.cz 2018.
