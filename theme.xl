@@ -33,6 +33,10 @@ theme_font  "RedHat", Master, "code"            -> font "Menlo", 40
 theme_color "RedHat", Master, "code"            -> color "#003388"
 theme_font  "RedHat", Master, "boxtitle"        -> font "Overpass", bold, 40
 theme_align "RedHat", Master, "boxtitle"        -> align 80%
+theme_font  "RedHat", Master, "diagram"         -> font "Overpass"
+theme_size  "RedHat", Master, "diagram"         -> 35
+theme_color "RedHat", Master, "diagram"         -> color "white"
+theme_align "RedHat", Master, "diagram"         -> align 50%; vertical_align 10%
 
 theme_align "RedHat", Master,"story",N          -> margins 40*N, 0
 theme_color "RedHat", Master,"story",N          -> color "black", 0.99-0.2*N
@@ -504,6 +508,34 @@ youtube_movie File:text, YT:text ->
         "movies/" & File
     else
         "https://www.youtube.com/watch?v=" & YT
+
+
+diagram_box Color:text, X:real, Y:real, W:real, H:real, Body ->
+// ----------------------------------------------------------------------------
+//   A text box for diagrams
+// ----------------------------------------------------------------------------
+    locally
+        color Color
+        line_color "darkgrey"
+        line_width 2
+        rectangle X, Y, W, H
+    text_box X, Y, W, H,
+        style "diagram"
+        render Body
+
+
+autoscale CX:real, CY:real, S1:real, S2:real, R:real ->
+// ----------------------------------------------------------------------------
+//   Auto-scale factor based on the mouse position
+// ----------------------------------------------------------------------------
+    S1 + (S2-S1) * exp(-((mouse_x-CX)^2 + (mouse_y-CY)^2) / R^2)
+
+
+autoscale_image CX:real, CY:real, S1:real, S2:real, R:real, Image:text ->
+// ----------------------------------------------------------------------------
+//   Draw an image with an auto-scale
+// ----------------------------------------------------------------------------
+    image CX, CY, autoscale(CX,CY,S1,S2,R), autoscale(CX,CY,S1,S2,R), Image
 
 
 
