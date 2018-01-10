@@ -87,7 +87,7 @@ base_slide "Use cases for GPU virtualization",
         at_current_step
         paragraph " "
         paragraph "Using GPUs for computations"
-        * "ML & Artificial intelligence"
+        * "Machine Learning & Artificial intelligence"
         * "Human genome"
         * "High-quality 3D rendering"
 
@@ -134,15 +134,19 @@ base_slide "GPU and virtualization?!",
     subtitle "We have a solution. Many solutions..."
     stepping
     story
-        * "fully emulated graphics device"
-        * "paravirtualized graphics device"
+        * "Fully emulated graphics device"
+        * "Paravirtualized graphics device"
         * "GPU assignment"
         * "vfio-mdev"
+        paragraph " "
+        paragraph "Illustrated below"
 
     // TODO: try to visualize each example
     right_picture
         image_only_at 3,
             image -100, 0, 100%, 100%, "tesla.jpg"
+
+import "SlicingGPUs-API.ddd"
 
 // ----------------------------------------------------------------------------
 base_slide "Full emulation of graphics device",
