@@ -102,7 +102,7 @@ star_chart ->
 section_slide "Thank you",
 // ----------------------------------------------------------------------------
     title page_label
-    subtitle "A good time for questions"
+    subtitle "Now is a good time for questions"
     stepping
 
     picture
