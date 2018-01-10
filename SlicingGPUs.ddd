@@ -1,123 +1,256 @@
-// ----------------------------------------------------------------------------
-main_title_slide "Main title",
-// ----------------------------------------------------------------------------
-    title "Slicing GPUs (virtually!)"
-    subtitle
-        paragraph "How can you run GPU-accelerated workloads in guests?"
-    presentation_author
-        paragraph "Martin Polednik (mpolednik@redhat.com)"
-        paragraph "Christophe de Dinechin (dinechin@redhat.com)"
-
-    picture
-        translate 600, 450, 20
-        rotate_z -8
-        scale 45%
-        texture "GPU.jpg"
-        color "white"
-        rounded_rectangle 0, 0, texture_width, texture_height, 80
-
-
-// ----------------------------------------------------------------------------
-base_slide "About the presentation authors",
-// ----------------------------------------------------------------------------
-    title page_label
-    subtitle "Who are these two guys talking to you?"
-
-    left_column
-        paragraph { bold "Martin Polednik" }
-        paragraph "Software Engineer at Red Hat"
-        paragraph "Working on oVirt"
-        paragraph "[Insert more bio here ;-) ]"
-        paragraph { blue "https://mpolednik.github.io" }
-
-    right_column
-        paragraph { bold "Christophe de Dinechin" }
-        paragraph "Senior Principal Software Engineer at Red Hat"
-        paragraph "Working on SPICE (remote computing)"
-        paragraph "Started many open-source projects"
-        paragraph "Created HP Integrity Virtual Machines"
-        paragraph "Also worked on DxO ONE, HP C++ compiler, etc"
-        paragraph { blue "http://c3d.github.io" }
-
+// basic idea:
+// 1 introduce audience to the advantages of GPU (acceleration)
+// 1.1 and why it makes sense in a VM
+// 2 start with the virtualization problem space
+// 2.1 isolation -> no hardware capabilities
+// 2.2 emulation -> bad perf
+// 2.3 paravirt -> difficult? (@c3d)
+// 3 show solutions at various levels of isolation/performance
+//   idea: top to bottom
+// 4 emulation
+// TODO
+// 5 paravirt 
+// TODO
+// 6 device assignment
+// 6.1 VT-d, AMD-Vi, IOMMU setup requirements
+// 6.2 QEMU, libvirt API; highlight that direct addressing isn't perfect for cloud
+// 6.3 oVirt as mgmt level solution, how addressing is handled
+// 6.3.1 problems with the approach, how could they be eventually solved
+// 6.3.2 advantages (easy to use)
+// 6.4 (or 7.3, depends on how to position it) SPICE
+// 6.4.1 ???
+// 7 vgpu (vfio-mdev to be vendor-agnostic) <<< moved *below* assignment since it nicely solves problems with assignment
+// 7.1 hardware support, kernel vfio-mdev support
+// 7.2 vfio-mdev sysfs iface
+// 7.3 QEMU, libvirt API
+// 7.4 oVirt: how vgpu solved issues with device assignment
+// 7.5 SPICE (again, could be 7.4 - depends on how we want to structure the stack)
+// 8 thx, bye, q&a
 
 // ----------------------------------------------------------------------------
-base_slide "Use cases for GPU virtualization",
+main_title_slide "Main title", 
 // ----------------------------------------------------------------------------
-    title page_label
-    subtitle "There are many reasons you may want to use a GPU"
+    title "Slicing GPUs (virtually!)" 
+    subtitle 
+        paragraph "How can you run GPU-accelerated workloads in guests?" 
+    presentation_author 
+        paragraph "Martin Polednik (mpolednik@redhat.com)" 
+        paragraph "Christophe de Dinechin (dinechin@redhat.com)" 
+
+    picture 
+        translate 600, 450, 20 
+        rotate_z -8 
+        scale 45% 
+        texture "GPU.jpg" 
+        color "white" 
+        rounded_rectangle 0, 0, texture_width, texture_height, 80 
+
+
+// ----------------------------------------------------------------------------
+base_slide "About the presentation authors", 
+// ----------------------------------------------------------------------------
+    title page_label 
+    subtitle "Who are these two guys talking to you?" 
+
+    left_column 
+        paragraph {bold "Martin Polednik" } 
+        paragraph "Software Engineer at Red Hat" 
+        paragraph "oVirt/RHV developer" 
+        paragraph "focused on hypervisor features" 
+        paragraph "NUMA, (v)GPU, SR-IOV, device assignment" 
+        paragraph {blue "https://mpolednik.github.io" } 
+
+    right_column 
+        paragraph {bold "Christophe de Dinechin" } 
+        paragraph "Senior Principal Software Engineer at Red Hat" 
+        paragraph "Working on SPICE (remote computing)" 
+        paragraph "Started many open-source projects" 
+        paragraph "Created HP Integrity Virtual Machines" 
+        paragraph "Also worked on DxO ONE, HP C++ compiler, etc" 
+        paragraph {blue "http://c3d.github.io" } 
+
+
+// ----------------------------------------------------------------------------
+base_slide "Use cases for GPU virtualization", 
+// ----------------------------------------------------------------------------
+    title page_label 
+    subtitle "There are many reasons you may want to use a GPU" 
+    stepping 
+    story 
+        paragraph "Using GPUs for graphics" 
+        * "Playing video games" 
+        * "Design and modelling software" 
+        * "Playing video games" 
+        * "Data visualization" 
+        * "Playing video games" 
+
+        at_current_step 
+        paragraph " " 
+        paragraph "Using GPUs for computations" 
+        * "ML & Artificial intelligence" 
+        * "Human genome" 
+        * "High-quality 3D rendering" 
+
+    right_picture 
+        translate_x -100 
+        rotate_image 1, "TuxRacer.jpg" 
+        rotate_image 2, "BlenderUI.jpg" 
+        rotate_image 3, "Civilization.jpg" 
+        rotate_step 4, {star_chart} 
+        rotate_image 5, "Ark Survival Evolved.jpg" 
+        // From https://www.youtube.com/watch?v=c0Uh5OjEinM
+        // rotate_movie 7, "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5485##stop-time=5545##input-repeat=-1" 
+        rotate_image 8, "nvbio_string_search.jpg" 
+        // From https://www.youtube.com/watch?v=HfGt8ZwdOF4
+        // rotate_movie 9, "movies/New Nvidia GTX 690 - Performance Using IRAY Renderer & 3D Studio Max 2013-HfGt8ZwdOF4.mkv##start-time=140##stop-time=260##input-repeat=-1" 
+
+star_chart -> 
+    SIZE -> 500 
+    frame_texture SIZE, SIZE, 
+        background_color "black" 
+        font "Arial", 30 
+        color "yellow" 
+        align 50% 
+        text_box 0, 0, SIZE, SIZE, 
+            vertical_align 0% 
+            text "Hipparcos Star Chart" 
+        text_box 0, 0, SIZE, SIZE, 
+            vertical_align 100% 
+            text "~15000 visible stars" 
+        rotatex 10 
+        rotatey 2 * time + 0.3 * screen_mouse_x 
+        cached integer (screen_mouse_y * 0.1) , 
+            load_csv "stars.csv", "star" 
+            star Mag:real, Color:real, X:real, Y:real, Z:real -> 
+                color_hsv 360 * Color mod 360, screen_mouse_y * 0.0002 * Mag, 1 
+                point X, Y, Z, 1 
+            star X -> false 
+    rounded_rectangle 0, 0, SIZE, SIZE, 80 
+
+// ----------------------------------------------------------------------------
+base_slide "GPU and virtualization?!", 
+// ----------------------------------------------------------------------------
+    title page_label 
+    subtitle "We have a solution. Many solutions..." 
+    stepping 
+    story 
+        * "fully emulated graphics device"
+        * "paravirtualized graphics device"
+        * "GPU assignment"
+        * "vfio-mdev"
+
+    // TODO: try to visualize each example
+    right_picture 
+        image_only_at 3,
+            image -100, 0, 100%, 100%, "tesla.jpg"
+
+// ----------------------------------------------------------------------------
+base_slide "Full emulation of graphics device", 
+// ----------------------------------------------------------------------------
+    title page_label 
+
+
+// ----------------------------------------------------------------------------
+base_slide "Paravirtualized graphics device", 
+// ----------------------------------------------------------------------------
+    title page_label 
+
+
+// ----------------------------------------------------------------------------
+base_slide "Device assignment", 
+// ----------------------------------------------------------------------------
+    title page_label 
     stepping
     story
-        paragraph "Using GPUs for graphics"
-        * "Playing video games"
-        * "Design and modelling software"
-        * "Playing video games"
-        * "Data visualization"
-        * "Playing video games"
+        * "Assign the whole GPU to the VM"
+        * "Not that easy, we need hardware support:"
+        ** "hardware that works"
+        ** "Intel VT-d and AMD-Vi"
+        ** "IOMMU"
+        ** "hardware quirks?"
 
-        at_current_step
-        paragraph " "
-        paragraph "Using GPUs for computations"
-        * "Artificial intelligence"
-        * "Human genome"
-        * "High-quality 3D rendering"
-
-    right_picture
-        translate_x -100
-        rotate_image 1, "TuxRacer.jpg"
-        rotate_image 2, "BlenderUI.jpg"
-        rotate_image 3, "Civilization.jpg"
-        rotate_step  4, { star_chart }
-        rotate_image 5, "Ark Survival Evolved.jpg"
-        // From https://www.youtube.com/watch?v=c0Uh5OjEinM
-        rotate_movie 7, "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5485##stop-time=5545##input-repeat=-1"
-        rotate_image 8, "nvbio_string_search.jpg"
-        // From https://www.youtube.com/watch?v=HfGt8ZwdOF4
-        rotate_movie 9, "movies/New Nvidia GTX 690 - Performance Using IRAY Renderer & 3D Studio Max 2013-HfGt8ZwdOF4.mkv##start-time=140##stop-time=260##input-repeat=-1"
-
-star_chart ->
-    SIZE -> 500
-    frame_texture SIZE, SIZE,
-        background_color "black"
-        font "Arial", 30
-        color "yellow"
-        align 50%
-        text_box 0, 0, SIZE, SIZE,
-            vertical_align 0%
-            text "Hipparcos Star Chart"
-        text_box 0, 0, SIZE, SIZE,
-            vertical_align 100%
-            text "~15000 visible stars"
-        rotatex 10
-        rotatey 2 * time + 0.3 * screen_mouse_x
-        cached integer(screen_mouse_y * 0.1),
-            load_csv "stars.csv", "star"
-            star Mag:real, Color:real, X:real, Y:real, Z:real ->
-                color_hsv 360 * Color mod 360, screen_mouse_y * 2.0e-4 * Mag, 1
-                point X, Y, Z, 1
-            star X -> false
-    rounded_rectangle 0, 0, SIZE, SIZE, 80
+    right_picture 
+        recorder_listing_Y -> 200 * fade_at (smooth_step, 3) 
+        image_only_at 1,
+            image 0, 100, 130%, 130%, "meme-assign.jpg"
+        image_only_at 4,
+            image 0, 100, 50%, 50%, "bios.png"
+        image_only_at 5 .. 6,
+            code_box -300, -100, 1200, 400, "IOMMU on kernel cmdline", 
+                font_size 40 
+                paragraph "$ cat /proc/cmdline" 
+                paragraph "BOOT_IMAGE=/vmlinuz-3.10.0-693.11.6.el7.x86_64 root=/dev/mapper/rhel-root ro rd.lvm.lv=rhel/root rd.lvm.lv=rhel/swap rhgb quiet LANG=en_US.UTF-8 intel_iommu=on pci=realloc" 
+        image_only_at 5,
+            line_color redhat_green1 
+            color redhat_green1, 20% 
+            line_width 2 
+            rectangle -730, -200, 350, 50 + 5 * cos (5 * time) 
+        image_only_at 6,
+            line_color redhat_green1 
+            color redhat_green1, 20% 
+            line_width 2 
+            rectangle -410, -200, 290, 50 + 5 * cos (5 * time) 
 
 
 // ----------------------------------------------------------------------------
-section_slide "Thank you",
+base_slide "Device assignment API", 
 // ----------------------------------------------------------------------------
-    title page_label
-    subtitle "A good time for questions"
+    title page_label 
     stepping
+    story
+        paragraph "QEMU"
+        * "which device?"
+        * "what about system?"
+        ** "unbind the device from the original driver"
+        ** "bind it to vfio-pci"
+        
+        paragraph "libvirt"
+        * "test"
+        * "test"
+        * "test"
+        * "test"
 
     picture
-        translate 600, 450, 20
-        rotate_z -8
-        scale 45%
-        texture "GPU.jpg"
-        color "white"
-        rounded_rectangle 0, 0, texture_width, texture_height, 80
+        only_at 0 .. 1,
+            code_box 0, 350, 1050, 200, "lspci -nnk | grep Tesla", 
+                font_size 20 
+                text load_text "lspci" 
+        only_at 1,
+            code_box 0, -50, 950, 500, "QEMU command line", 
+                font_size 26 
+                text load_text "qemucmdline" 
+            line_color redhat_green1 
+            color redhat_green1, 20% 
+            line_width 2 
+            rectangle -155, -160, 660, 27 + 5 * cos (5 * time) 
 
-    contents 0,
-        text_box 500, -400, 600, 200,
-            style "story"
-            font_size 30
-            anchor
-                image -80, -40, 10%, 10%, "Tao3D.png"
-            paragraph "This Tao3D presentation is available at"
-            paragraph "https://github.com/c3d/slicinggpus-presentation"
+
+// ----------------------------------------------------------------------------
+base_slide "vfio-mdev", 
+// ----------------------------------------------------------------------------
+    title page_label 
+
+
+// ----------------------------------------------------------------------------
+section_slide "Thank you", 
+// ----------------------------------------------------------------------------
+    title page_label 
+    subtitle "A good time for questions" 
+    stepping 
+
+    picture 
+        translate 600, 450, 20 
+        rotate_z -8 
+        scale 45% 
+        texture "GPU.jpg" 
+        color "white" 
+        rounded_rectangle 0, 0, texture_width, texture_height, 80 
+
+    contents 0, 
+        text_box 500, -400, 600, 200, 
+            style "story" 
+            font_size 30 
+            anchor 
+                image -80, -40, 10% , 10% , "Tao3D.png" 
+            paragraph "This Tao3D presentation is available at" 
+            paragraph "https://github.com/c3d/slicinggpus-presentation" 
