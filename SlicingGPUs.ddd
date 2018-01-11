@@ -172,6 +172,7 @@ base_slide "Device assignment",
         ** "Intel VT-d and AMD-Vi"
         ** "IOMMU"
         ** "hardware quirks?"
+        * "and some PCI express awareness"
 
     right_picture
         recorder_listing_Y -> 200 * fade_at (smooth_step, 3)
@@ -195,24 +196,20 @@ base_slide "Device assignment",
             line_width 2
             rectangle -410, -200, 290, 50 + 5 * cos (5 * time)
 
+import "pcie.ddd"
 
 // ----------------------------------------------------------------------------
-base_slide "Device assignment API",
+base_slide "Device assignment API - QEMU",
 // ----------------------------------------------------------------------------
     title page_label
     stepping
     story
         paragraph "QEMU"
         * "which device?"
-        * "what about system?"
+        * "what about the system?"
         ** "unbind the device from the original driver"
         ** "bind it to vfio-pci"
-
-        paragraph "libvirt"
-        * "test"
-        * "test"
-        * "test"
-        * "test"
+        * "... for every device in the IOMMU group"
 
     picture
         only_at 0 .. 1,
@@ -227,12 +224,72 @@ base_slide "Device assignment API",
             color redhat_green1, 20%
             line_width 2
             rectangle -155, -160, 660, 27 + 5 * cos (5 * time)
+        only_at 3..4,
+            code_box 400, 0, 950, 500, "vfio-pci driver_override",
+                font_size 28
+                text load_text "vfiopci"
 
+
+// ----------------------------------------------------------------------------
+base_slide "Device assignment API - libvirt",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+        paragraph "libvirt"
+        * "hostdev device"
+        * "managed/unmanaged mode"
+        * "not every device from IOMMU group needs to be assigned"
+
+    picture
+        only_at 1 .. 2,
+            code_box 250, 0, 1150, 600, "hostdev XML snippet",
+                font_size 26
+                text load_text "vfioxml"
+        only_at 2,
+            line_color redhat_red1
+            color redhat_red1, 20%
+            line_width 2
+            rectangle 30, 70, 200, 27 + 5 * cos (5 * time)
+
+
+// ----------------------------------------------------------------------------
+base_slide "Device assignment and management software",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+        * "QEMU & libvirt API is device-centered"
+        ** "assignment uses device address"
+        * "bad idea in the management layer..."
+        ** "host pinning"
+        ** "no cloud!"
+        * "inherently 1:1 GPU to VM mapping"
+
+    right_picture
+        image_only_at 3 .. 4,
+            image 0, 50, 90%, 90%, "ovirt-pinning.png"
+        image_only_at 5,
+            image 25, 50, 90%, 90%, "cloud.png"
+            picture
+                line_color "#FF0000"
+                line_width 15
+
+                // draw the arrows as BFS
+                line_arrow -500, 500, none, 500, -150, none
+                line_arrow -500, -150, none, 500, 500, none
 
 // ----------------------------------------------------------------------------
 base_slide "vfio-mdev",
 // ----------------------------------------------------------------------------
     title page_label
+    stepping
+    story
+        paragraph "could we solve VFIO issues?"
+        * "IOMMU group stability"
+        * "bad idea in the management layer..."
+        ** "host pinning"
+        ** "no cloud!"
 
 
 // ----------------------------------------------------------------------------

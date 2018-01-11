@@ -1,0 +1,99 @@
+base_slide "PCI express topology",
+    title page_label
+    pcie_topology
+
+
+base_slide "IOMMU case 1",
+    title page_label
+    pcie_topology
+    iommu_group_1
+
+
+base_slide "IOMMU case 2",
+    title page_label
+    pcie_topology
+    iommu_group_2
+    iommu_group_3
+
+
+base_slide "IOMMU case 3",
+    title page_label
+    pcie_topology
+    iommu_group_4
+
+
+base_slide "IOMMU meets topology",
+    title page_label
+    pcie_topology
+    iommu_group_1
+    iommu_group_2
+    iommu_group_3
+    iommu_group_4
+
+
+pcie_topology ->
+    picture
+        diagram_box "#298", 0, 300, 100, 100, "CPU"
+        diagram_box "#298", -500, 100, 200, 100, "device_0"
+        diagram_box "#298", -100, 100, 200, 100, "bridge_0"
+        diagram_box "#298", -250, -100, 200, 100, "device_1"
+        diagram_box "#298", 50, -100, 200, 100, "device_2"
+        diagram_box "#298", 500, 100, 200, 100, "bridge_1"
+        diagram_box "#298", 350, -100, 200, 100, "device_3"
+        diagram_box "#298", 650, -100, 200, 100, "device_4"
+
+        line_color "#000000"
+        line_width 5
+
+        // draw the arrows as BFS
+        line_arrow -50, 250, none, -500, 150, arrowhead
+        line_arrow 0, 250, none, -100, 150, arrowhead
+        line_arrow 50, 250, none, 500, 150, arrowhead
+
+        line_arrow -200, 50, none, -250, -50, arrowhead
+        line_arrow 0, 50, none, 50, -50, arrowhead
+
+        line_arrow 400, 50, none, 350, -50, arrowhead
+        line_arrow 600, 50, none, 650, -50, arrowhead
+
+iommu_group X:real, Y:real, R:real, Body -> 
+    picture
+        line_color redhat_green1
+        color "#000", 20%
+        line_width 2
+        circle X, Y, R
+
+        text_box X, Y - R - 20, 184, 40, 
+            font "Menlo", 24 
+            align 0% 
+            vertical_align 50% 
+            color "black" 
+            render Body
+
+iommu_group_1 -> 
+    picture
+        line_color redhat_green1
+        color "#000", 20%
+        line_width 2
+        iommu_group -500, 225, 150, "IOMMU group 1"
+
+iommu_group_2 -> 
+    picture
+        line_color redhat_green1
+        color "#000", 20%
+        line_width 2
+        iommu_group -250, 25, 150, "IOMMU group 2"
+
+iommu_group_3 -> 
+    picture
+        line_color redhat_green1
+        color "#000", 20%
+        line_width 2
+        iommu_group 50, 25, 150, "IOMMU group 3"
+
+iommu_group_4 -> 
+    picture
+        line_color redhat_green1
+        color "#000", 20%
+        line_width 2
+        iommu_group 500, 125, 300, "IOMMU group 4"
