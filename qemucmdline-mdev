@@ -1,0 +1,9 @@
+/usr/libexec/qemu-kvm
+-name guest=gpu
+-machine pc-i440fx-rhel7.3.0,accel=kvm
+-cpu SandyBridge,hv_time,hv_relaxed,hv_vapic,hv_spinlocks=0x1fff
+-m size=4194304k,slots=16,maxmem=16777216k
+-realtime mlock=off
+-smp 4,maxcpus=16,sockets=16,cores=1,threads=1
+-device vfio-pci,id=hostdev0,sysfsdev=/sys/bus/mdev/devices/25bb25e...
+-device qxl-vga,id=video0

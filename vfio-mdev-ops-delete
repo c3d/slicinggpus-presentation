@@ -1,0 +1,3 @@
+# pwd
+/sys/class/mdev_bus/0000:07:00.0/mdev_supported_types/nvidia-12
+# echo 1 > devices/25bb25e9-70d9-46bd-86cd-4d5c1a1a8945/remove
