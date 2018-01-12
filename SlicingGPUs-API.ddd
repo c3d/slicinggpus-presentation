@@ -5,23 +5,14 @@ base_slide "Graphics APIs",
 
 base_slide "Graphics APIs on bare hardware",
     title "Graphics API on bare hardware"
-    subtitle "Piping data through the layers"
+    subtitle "Data is piped through the layers"
     graphics_api 1
 
 base_slide "Graphics APIs with standard virtualization",
     title "Graphics API with ""standard"" virtualization"
     subtitle "Virtualize CPU and basic chipset features, but only emulates simple VGA"
     graphics_api 2
-    picture
-        translate 400, -20, 50
-        rotate_z 20
-        scale 4 + sin(1.5*time)^4
-        show fade_at(page_time, 5)
-        color "red", 50%
-        line_color "red"
-        font "Impact", 30
-        text "Slow!"
-
+    graphics_api_mark "red", "Slow"
 
 base_slide "Graphics API with multiple VMs",
     title "Graphics API with ""standard"" virtualization"
@@ -33,6 +24,11 @@ base_slide "GPU device assignment",
     subtitle "Assign the GPU to a single guest"
     graphics_api 4
 
+base_slide "VGPU - GPU virtualization",
+    title "VGPU: GPU virtualization"
+    subtitle "Split a virtualization capable GPU between multiple guests"
+    graphics_api 5
+
 
 graphics_api_step -> 0.0
 graphics_api N ->
@@ -41,32 +37,32 @@ graphics_api N ->
         graphics_api_picture graphics_api_step
 
 graphics_api_picture S:real ->
-    image -200, -120, 80%, 80%, "rampage.png"
+    image -210, -160, 60%, 60%, "rampage.png"
     image 200, -250, 20%, 20%, "NVIDIA Tesla P4Card.png"
     image 650, -200, 50%, 50%, "NEC Display.png"
     locally
         line_color "#36B600", fade_between(S, 1, 3)
         color "transparent"
         line_width 5
-        rectangle -249, -285, 150, 32
+        rectangle -249, -285, 140, 32
         line_arrow -160, -284, arrowhead, 34, -284, arrowhead
         line_width 10
         line_arrow 400, -284, arrowhead, 534, -284, arrowhead
 
+    locally
+        show fade_at(S, 2)
+        diagram_box "rgba(120,20,20,210)", 0, -100, 1000, 150 * fade_at(S,2), "Virtualization (Host kernel)"
+        diagram_box "#052", -200, -125, 350, 60, "Chipset Drivers"
+        locally
+            show 1 - fade_between(S, 4, 5)
+            diagram_box "#026", 200, -125, 350, 60, "GPU Driver"
     if S in 2.1..3.9 then
-        graphics_api_VMs fade_between(S, 3, 3)
+        graphics_api_VMs fade_between(S, 3, 3), 3
+    else if S in 4.1..5.9 then
+        graphics_api_VMs fade_between(S, 5, 5), 5
     else
         graphics_api_OS S
         graphics_api_app S
-    locally
-        show fade_at(S, 2)
-        diagram_box "darkred", 0, -100, 1000, 150 * fade_at(S,2), "Virtualization (Host kernel)"
-        diagram_box "#052", -200, -115, 350, 60, "Chipset Drivers"
-        diagram_box "#026", 200, -115, 350, 60, "GPU Driver"
-        translate_z 50
-        image -420, -30, 15%, 15%, "Intel CPU.png"
-        image -300, -30, 12%, 12%, "Motherboard.png"
-
 
 graphics_api_app_texture S:real ->
     rotate_time S:real ->
@@ -97,12 +93,18 @@ graphics_api_app S:real ->
             translate 200, 80 + 120 * fade_at(S, 2), 15
             rotate_z -90
             arrow 0, 0, 250, 100, 44, 0.32
+
             color "transparent"
             line_color "#44C"
             line_width 4
             texture ""
             arrow 0, 0, 250, 100, 44, 0.32
-        if S <> 3 then
+
+            show fade_between(S, 4, 4)
+            color "#44C"
+            arrow 230 + page_time mod 1 * 75, 0, 100 + page_time mod 1 * 150, 100, 44, 0.32
+
+        if S <> 3 and S <> 5 then
             rectangle 650, -180, 280, 160
 
 graphics_api_OS S:real ->
@@ -124,25 +126,45 @@ graphics_api_OS S:real ->
                 text "VGA Driver"
             else
                 text "GPU driver"
+        translate_z 50
+        image -420, -140, 15%, 15%, "Intel CPU.png"
+        image -300, -140, 12%, 12%, "Motherboard.png"
+        color "white", fade_between(S, 2, 3)
+        image  300, -140, 42%, 42%, "OldATICard.png"
+        color "white", fade_between(S, 5, 5)
+        image  300, -140, 12%, 12%, "NVIDIA Tesla P4Card.png"
 
-graphics_api_VMs S:real ->
+graphics_api_VMs S:real, APIIndex:real ->
     locally
-        translate -400, 25 * S, 0
+        translate -400, 55 * S, 0
         rotate_y -35 * S
         scale 100% - 25% * S
         show 100% - 0% * S
         translate 400, 0, -800 * S
-        graphics_api_OS 3
+        graphics_api_OS APIIndex
         translate_z 400 * S
-        graphics_api_OS 3
+        graphics_api_OS APIIndex
         translate_z 400 * S
-        graphics_api_OS 3
-        graphics_api_app 3
+        graphics_api_OS APIIndex
+        graphics_api_app APIIndex
     locally
-        graphics_api_app_texture 3
-        rectangle 650 - 30 * S, -180 + 30 * S, 280 - 60*S, 160 - 60 * S
+        graphics_api_app_texture APIIndex
+        rectangle 650 - 30*S, -180 + 30*S, 280 - 60*S, 160 - 60*S
         color "transparent"
-        line_color "red", S
-        line_width 4
         texture ""
-        rectangle 650 - 30 * S, -180 + 30 * S, 280 - 60*S, 160 - 60 * S
+        for I in 0..2 loop
+            line_color_hsv 50 * I, 80%, 80%, S
+            color_hsv 50 * I, 80%, 80%, S * I * 25%
+            line_width 4
+            rectangle 650 - (30 - 25*I) * S, -180 + (30 - 25*I) * S, 280 - 60*S, 160 - 60*S
+
+graphics_api_mark Color:text, Mark:text ->
+    picture
+        translate 400, -20, 50
+        rotate_z 20
+        scale 4 + sin(1.5*time)^4
+        show fade_at(page_time, 5)
+        color Color, 50%
+        line_color Color
+        font "Impact", 30
+        text Mark
