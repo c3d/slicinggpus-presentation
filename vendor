@@ -1,0 +1,6 @@
+...
+if mdev_type != target_mdev_type:
+    # If different type is already allocated and the vendor doesn't
+    # support different types, skip the device.
+    if vendor == '0x10de' and len(
+    ...

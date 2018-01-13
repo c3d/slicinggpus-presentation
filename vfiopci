@@ -1,0 +1,8 @@
+# modprobe vfio_pci
+# pwd
+/sys/bus/pci/devices/0000:07:00.0
+# echo vfio-pci > driver_override
+# echo "0000:07:00.0" > driver/unbind
+# echo "0000:07:00.0" > /sys/bus/pci/drivers_probe
+# readlink driver
+../../../../../../bus/pci/drivers/vfio-pci

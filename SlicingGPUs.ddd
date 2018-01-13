@@ -99,10 +99,10 @@ base_slide "Use cases for GPU virtualization",
         rotate_step 4, { star_chart }
         rotate_image 5, "Ark Survival Evolved.jpg"
         // From https://www.youtube.com/watch?v=c0Uh5OjEinM
-        rotate_movie 7, "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5485##stop-time=5545##input-repeat=-1"
+        //rotate_movie 7, "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5485##stop-time=5545##input-repeat=-1"
         rotate_image 8, "nvbio_string_search.jpg"
         // From https://www.youtube.com/watch?v=HfGt8ZwdOF4
-        rotate_movie 9, "movies/New Nvidia GTX 690 - Performance Using IRAY Renderer & 3D Studio Max 2013-HfGt8ZwdOF4.mkv##start-time=140##stop-time=260##input-repeat=-1"
+        //rotate_movie 9, "movies/New Nvidia GTX 690 - Performance Using IRAY Renderer & 3D Studio Max 2013-HfGt8ZwdOF4.mkv##start-time=140##stop-time=260##input-repeat=-1"
 
 star_chart ->
     SIZE -> 500
@@ -144,7 +144,7 @@ base_slide "GPU and virtualization?!",
     // TODO: try to visualize each example
     right_picture
         image_only_at 3,
-            image -100, 0, 100%, 100%, "tesla.jpg"
+            image -100, 0, 80%, 80%, "tesla.jpg"
 
 import "SlicingGPUs-API.ddd"
 
@@ -172,6 +172,7 @@ base_slide "Device assignment",
         ** "Intel VT-d and AMD-Vi"
         ** "IOMMU"
         ** "hardware quirks?"
+        * "and some PCI express awareness"
 
     right_picture
         recorder_listing_Y -> 200 * fade_at (smooth_step, 3)
@@ -195,24 +196,20 @@ base_slide "Device assignment",
             line_width 2
             rectangle -410, -200, 290, 50 + 5 * cos (5 * time)
 
+import "pcie.ddd"
 
 // ----------------------------------------------------------------------------
-base_slide "Device assignment API",
+base_slide "Device assignment API - QEMU",
 // ----------------------------------------------------------------------------
     title page_label
     stepping
     story
         paragraph "QEMU"
         * "which device?"
-        * "what about system?"
+        * "what about the system?"
         ** "unbind the device from the original driver"
         ** "bind it to vfio-pci"
-
-        paragraph "libvirt"
-        * "test"
-        * "test"
-        * "test"
-        * "test"
+        * "... for every device in the IOMMU group"
 
     picture
         only_at 0 .. 1,
@@ -227,12 +224,242 @@ base_slide "Device assignment API",
             color redhat_green1, 20%
             line_width 2
             rectangle -155, -160, 660, 27 + 5 * cos (5 * time)
+        only_at 3..4,
+            code_box 400, 0, 950, 500, "vfio-pci driver_override",
+                font_size 28
+                text load_text "vfiopci"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Device assignment API - libvirt",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+        paragraph "libvirt"
+        * "hostdev device"
+        * "managed/unmanaged mode"
+        * "not every device from IOMMU group needs to be assigned"
+
+    picture
+        only_at 1 .. 2,
+            code_box 250, 0, 1150, 600, "hostdev XML snippet",
+                font_size 26
+                text load_text "vfioxml"
+        only_at 2,
+            line_color redhat_red1
+            color redhat_red1, 20%
+            line_width 2
+            rectangle 30, 70, 200, 27 + 5 * cos (5 * time)
+
+
+// ----------------------------------------------------------------------------
+base_slide "Device assignment and management software",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+        * "QEMU & libvirt API is device-centered"
+        ** "assignment uses device address"
+        * "bad idea in the management layer..."
+        ** "host pinning"
+        ** { bold "no cloud!" }
+        * "inherently 1:1 GPU to VM mapping"
+
+    right_picture
+        image_only_at 3 .. 4,
+            image -100, 50, 90%, 90%, "ovirt-pinning.png"
+        image_only_at 5,
+            image -200, 100, 90%, 90%, "cloud.png"
+            picture
+                line_color "#FF0000"
+                line_width 15
+
+                line_arrow -600, 400, none, 200, -50, none
+                line_arrow -600, -50, none, 200, 400, none
 
 
 // ----------------------------------------------------------------------------
 base_slide "vfio-mdev",
 // ----------------------------------------------------------------------------
     title page_label
+    stepping
+    story
+        paragraph "could we solve VFIO issues?"
+        * "IOMMU grouping"
+        * "assignment by address"
+
+        at_current_step
+        paragraph "Say hello to vfio-mdev!"
+        * "mediated device management"
+        * "mdev_register_driver()"
+        * "mdev_register_device()"
+        ** "callbacks to the vendor driver"
+
+
+// ----------------------------------------------------------------------------
+base_slide "vfio-mdev sysfs interface",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+        paragraph "each mdev-capable device"
+        * "exposes several mdev types"
+        ** "type description"
+        ** "number of allocatable instances"
+        ** "allocated instances"
+        ** "creation endpoint"
+
+    picture
+        only_at 1..6,
+            code_box 400, 50, 1050, 650, "mdev",
+                font_size 26
+                text load_text "vfio-mdev"
+        only_at 2,
+            line_color redhat_green1
+            color redhat_green1, 20%
+            line_width 2
+            rectangle 5, 112, 190, 40
+        only_at 3,
+            line_color redhat_green1
+            color redhat_green1, 20%
+            line_width 2
+            rectangle 70, 172, 310, 40
+        only_at 4,
+            line_color redhat_green1
+            color redhat_green1, 20%
+            line_width 2
+            rectangle -20, 52, 140, 40
+        only_at 5,
+            line_color redhat_green1
+            color redhat_green1, 20%
+            line_width 2
+            rectangle -25, 142, 120, 40
+
+
+// ----------------------------------------------------------------------------
+base_slide "vfio-mdev sysfs limitations",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+        paragraph "what isn't exposed?"
+        at_current_step
+        paragraph "vendor driver limitations"
+        * "homogenous or heterogenous types?"
+        * "multiple instances from single device per VM?"
+        * "licensing?"
+        * "anything we don't know of?"
+
+    picture
+        only_at 1..6,
+            code_box 400, 200, 850, 330, "vendor hacks?",
+                font_size 30
+                text load_text "vendor"
+            line_color redhat_red3
+            color redhat_red3, 20%
+            line_width 2
+            rectangle 230, 105, 380, 40 + 5 * cos (5 * time)
+
+
+// ----------------------------------------------------------------------------
+base_slide "vfio-mdev sysfs interface cont'd",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+        paragraph "mdev operations"
+        * "creating mdev instance"
+        * "removing mdev instance"
+
+    picture
+        only_at 1 .. 2,
+            code_box 300, 250, 1100, 300, "create mdev",
+                font_size 28
+                text load_text "vfio-mdev-ops-create"
+        only_at 2,
+            code_box 300, -100, 1100, 250, "remove mdev",
+                font_size 28
+                text load_text "vfio-mdev-ops-delete"
+
+
+// ----------------------------------------------------------------------------
+base_slide "vfio-mdev in QEMU, libvirt",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+        paragraph "QEMU & libvirt"
+        * "both similar to plain VFIO"
+        * "QEMU"
+        at_current_step
+        * "libvirt"
+        at_current_step
+
+    picture
+        only_at 2,
+            code_box 270, 70, 1300, 389, "QEMU - plain VFIO",
+                font_size 26
+                text load_text "qemucmdline"
+        only_at 3,
+            code_box 270, 70, 1300, 389, "QEMU - vfio-mdev",
+                font_size 26
+                text load_text "qemucmdline-mdev"
+        only_at 4,
+            code_box 250, 70, 1200, 420, "libvirt - plain VFIO",
+                font_size 26
+                text load_text "vfioxml"
+        only_at 5,
+            code_box 250, 70, 1200, 420, "libvirt - vfio-mdev",
+                font_size 26
+                text load_text "mdevxml"
+
+// ----------------------------------------------------------------------------
+base_slide "vfio-mdev and management software",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+        * "VM just requests mdev type"
+        * "the user is responsible for guest setup"
+        * "and we're done"
+
+    right_picture
+        translate_x -200
+        translate_y 100
+        rotate_image 1, "ovirt-vgpu.png"
+        rotate_image 3, "ovirt-windows.png"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Does vfio-mdev help the management layer?",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+        paragraph "So, does vfio-mdev help?"
+        * "devices are addressed by a type"
+        * "we don't have to care about IOMMU"
+        * "few rough edges"
+        * "... win!"
+
+    right_picture
+        image_only_at 4,
+            image -100, 50, 90%, 90%, "cloud.png"
+        image_only_at 4,
+            image -100, 50, (10 * sin(page_time) + 100)%, (10 * sin(page_time) + 100)%, "ok.png"
+
+
+// ----------------------------------------------------------------------------
+base_slide "vfio-mdev caveat",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+        paragraph "Cool! Where can I get mdev-capable driver?"
+        at_current_step
+        font_size 100
+        paragraph "Ask your vendor."
 
 
 // ----------------------------------------------------------------------------

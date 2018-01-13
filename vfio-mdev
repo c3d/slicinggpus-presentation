@@ -1,0 +1,19 @@
+$ cd /sys/class/mdev_bus/0000:07:00.0
+$ tree mdev_supported_types/
+mdev_supported_types/
+nvidia-11
+   available_instances
+   create
+   description
+   device_api
+   devices
+   name
+nvidia-12
+   available_instances
+   create
+   description
+   device_api
+   devices
+   name
+nvidia-13
+   ...
