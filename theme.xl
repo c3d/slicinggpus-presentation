@@ -524,6 +524,21 @@ diagram_box Color:text, X:real, Y:real, W:real, H:real, Body ->
         render Body
 
 
+diagram_small Color:text, X:real, Y:real, W:real, H:real, Body ->
+// ----------------------------------------------------------------------------
+//   A text box for diagrams with smaller text
+// ----------------------------------------------------------------------------
+    diagram_box Color, X, Y, W, H, { font_size 26, Body }
+
+
+font_size FS, Body ->
+// ----------------------------------------------------------------------------
+//   Adjust font size
+// ----------------------------------------------------------------------------
+    font_size FS
+    render Body
+
+
 autoscale CX:real, CY:real, S1:real, S2:real, R:real ->
 // ----------------------------------------------------------------------------
 //   Auto-scale factor based on the mouse position
