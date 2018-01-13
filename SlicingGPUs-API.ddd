@@ -34,6 +34,11 @@ base_slide "VirtGL",
     subtitle "Split a virtualization capable GPU between multiple guests"
     graphics_api 6
 
+base_slide "VirtGL - Multi VMs",
+    title "virtio-gpu - Paravirtualized GPU"
+    subtitle "Split a virtualization capable GPU between multiple guests"
+    graphics_api 7
+
 
 graphics_api_step -> 0.0
 graphics_api N ->
@@ -64,10 +69,10 @@ graphics_api_picture S:real ->
 
     if S in 2.1..3.9 then
         graphics_api_VMs fade_between(S, 3, 3), 3
-    else if S in 4.1..5.5 then
+    else if S in 4.1..5.9 then
         graphics_api_VMs fade_between(S, 5, 5), 5
-    else if S in 5.5..6.9 then
-        graphics_api_VMs fade_between(S, 6, 6), 6
+    else if S in 6.1..7.9 then
+        graphics_api_VMs fade_between(S, 7, 7), 7
     else
         graphics_api_OS S
         graphics_api_app S
@@ -112,14 +117,14 @@ graphics_api_app S:real ->
             color "#44C"
             arrow 230 + page_time mod 1 * 75, 0, 100 + page_time mod 1 * 150, 100, 44, 0.32
 
-        if S <> 3 and S <> 5 and S <> 6 then
+        if S <> 3 and S <> 5 and S <> 7 then
             rectangle 650, -180, 280, 160
 
 graphics_api_OS S:real ->
     locally
         translate_y 120 * fade_at(S, 2)
         diagram_box "#298", 0, 260, 1000, 150, "Application"
-        diagram_box "#444", 0, 100, 1000, 150, "Graphics Environment"
+        diagram_box "#026", 0, 100, 1000, 150, "Graphics Environment"
         diagram_box "#A02", 0, -60, 1000, 150,
             if S < 1.5 then
                 text "Kernel"
@@ -131,7 +136,7 @@ graphics_api_OS S:real ->
         diagram_box "#063", -200, -85, 350, 60, "Chipset Drivers"
         if S in 1.5..3.5 then
             diagram_box "#03C", 200, -85, 350, 60, "VGA Driver"
-        else if S in 5.5..6.5 then
+        else if S in 5.5..7.5 then
             diagram_box "#66C", 200, -85, 350, 60, "VIRTIO GPU driver"
         else
             diagram_box "#038", 200, -85, 350, 60, "GPU driver"
