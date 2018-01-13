@@ -1,0 +1,27 @@
+base_slide "The mdev framework",
+    title "The mdev framework"
+    subtitle "Allow physical devices to share physical memory safely"
+    picture
+        diagram_box "#333", 0, -200, 1200, 150, "Hardware"
+        diagram_box "#A02", 0, 120, 1200, 450, "Kernel"
+
+        translate_z 50
+        diagram_box "#555", -300, -200, 150, 120, "RAM"
+        diagram_box "#3AE", -430, -200, 150, 50, "MMU"
+        diagram_box "#3AE", -170, -200, 150, 50, "IOMMU"
+        for I in 1..4 loop
+            diagram_box "#28D", 340 - 5 * I, -200 + 5 * I, 250, 80, "PCIe Device"
+            diagram_box "#C60", 340 - 5 * I, -50 + 5 * I, 300, 80, "Device driver"
+        diagram_box "#2A4", -300, 120, 450, 350, "Mediated core"
+        diagram_small "#284", -430, 20, 250, 100, "Mediated bus driver"
+        diagram_small "#284", -170, 20, 250, 100,   "Mediated callbacks"
+        diagram_small "#284", -430, 130, 250, 100, "mdev registry"
+        diagram_small "#284", -170, 130, 250, 100, "device registry"
+
+        diagram_small "#284",  110, 130, 120, 200, "VFIO mdev"
+        diagram_small "#222",  240, 130, 120, 200, "VFIO"
+        diagram_small "#222",  430, 130, 250, 200, "Type1 IOMMU"
+
+        diagram_small "#2A4", -300, 350, 450, 50, "SysFS for mdev"
+        diagram_small "#777",  430, 350, 250, 50, "IOMMU UAPI"
+        diagram_small "#777",  170, 350, 250, 50, "VFIO UAPI"
