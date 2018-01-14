@@ -1,0 +1,81 @@
+// ----------------------------------------------------------------------------
+base_slide "Comparison of GPU virtualization solutions",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Tradeoffs, tradeoffs, it's all about tradeoffs"
+    stepping
+    picture
+        consideration 0, "Hardware requirements"
+        consideration 1, "Software requirements"
+        consideration 2, "Performance"
+        consideration 3, "Security"
+        consideration 4, "Flexibility"
+        consideration 5, "Scalability"
+
+
+//  Percentage for...        H/W, S/W, Perf, Sec, Flex, Scal
+virt_type "Native GPU",      100, 100, 100,  100,   0,  20
+virt_type "Assigned GPU",     90,  90,  90,   90,  30,   0
+virt_type "VGPU",             50,  50,  70,   70,  70,  70
+virt_type "VirtIO GPU",      100,  90,  50,   90,  90,  50
+virt_type "Emulated GPU",    100, 100,   0,   90, 100,  20
+
+
+virt_type Type, HW, SW, Perf, Sec, Flex, Scal ->
+// ----------------------------------------------------------------------------
+//   Draw a star diagram for the given type
+// ----------------------------------------------------------------------------
+    base_slide "Tradeoffs for " & Type,
+        title page_label
+        subtitle "Tradeoffs, tradeoffs, it's all about tradeoffs"
+        stepping
+        picture
+            consideration -12, "Hardware availability"
+            consideration -11, "Software availability"
+            consideration -10, "Performance"
+            consideration -9, "Security"
+            consideration -8, "Flexibility"
+            consideration -7, "Scalability"
+
+            virt_type_hsv -> 0.0
+            interpolate 5%, page_number mod 6 * 60, virt_type_hsv
+            line_color_hsv virt_type_hsv, 80%, 70%, 90%
+            color_hsv virt_type_hsv, 20%, 70%, 60%
+            line_width 6
+            path
+                consideration_score 0, 0.0, HW
+                consideration_score 1, 0.0, SW
+                consideration_score 2, 0.0, Perf
+                consideration_score 3, 0.0, Sec
+                consideration_score 4, 0.0, Flex
+                consideration_score 5, 0.0, Scal
+                close_path
+
+
+consideration_score Cons, Current, Value ->
+// ----------------------------------------------------------------------------
+//   Indicate a color-coded score, where 0 = RED and 100 = GREEN
+// ----------------------------------------------------------------------------
+    interpolate 5%, Value, Current
+    line_to 550 * sin(pi*Cons/3)*(Current%+0.2)/1.4, 50 + 300*cos(pi*Cons/3)*(Current%+0.2)/1.4
+
+
+consideration Index:integer, Body ->
+// ----------------------------------------------------------------------------
+//   A text box representing one of the considerations being compared
+// ----------------------------------------------------------------------------
+    locally
+        show fade_at(page_time, 0.5 * Index + 1)
+        locally
+            line_color "#444", fade_at(page_time, 0.5 * Index + 1.25)
+            path
+                move_to 0, 50
+                line_to 550 * sin(pi * Index / 3), 50 + 300*cos(pi * Index / 3)
+            line_color "#AAA", fade_at(page_time, 0.5 * Index + 1.6)
+            path
+                move_to 471 * sin(pi * Index / 3), 50 + 257*cos(pi * Index / 3)
+                line_to 471 * sin(pi * (Index+1) / 3), 50 + 257*cos(pi * (Index+1) / 3)
+        translate 600 * sin(pi * Index / 3), 50 + 350*cos(pi * Index / 3), 0
+        text_box 0, 0, 250, 200,
+            style "consideration"
+            render Body

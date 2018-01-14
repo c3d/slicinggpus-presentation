@@ -37,6 +37,14 @@ theme_font  "RedHat", Master, "diagram"         -> font "Overpass"
 theme_size  "RedHat", Master, "diagram"         -> 35
 theme_color "RedHat", Master, "diagram"         -> color "white"
 theme_align "RedHat", Master, "diagram"         -> align 50%; vertical_align 10%
+theme_font  "RedHat", Master, "category"        -> font "Overpass", bold
+theme_size  "RedHat", Master, "category"        -> 35
+theme_color "RedHat", Master, "category"        -> color "black"
+theme_align "RedHat", Master, "category"        -> align 50%; vertical_align 5%
+theme_font  "RedHat", Master, "consideration"   -> font "Overpass", bold
+theme_size  "RedHat", Master, "consideration"   -> 28
+theme_color "RedHat", Master, "consideration"   -> color "black"
+theme_align "RedHat", Master, "consideration"   -> align 50%; vertical_align 50%
 
 theme_align "RedHat", Master,"story",N          -> margins 40*N, 0
 theme_color "RedHat", Master,"story",N          -> color "black", 0.99-0.2*N
