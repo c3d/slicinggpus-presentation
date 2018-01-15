@@ -26,7 +26,7 @@ virt_type Type, HW, SW, Perf, Sec, Flex, Scal ->
 //   Draw a star diagram for the given type
 // ----------------------------------------------------------------------------
     base_slide "Tradeoffs for " & Type,
-        title page_label
+        title Type
         subtitle "Tradeoffs, tradeoffs, it's all about tradeoffs"
         stepping
         picture
