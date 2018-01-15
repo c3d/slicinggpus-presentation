@@ -72,13 +72,13 @@ base_slide "About the presentation authors",
 
 
 // ----------------------------------------------------------------------------
-base_slide "Use cases for GPU virtualization",
+base_slide "Use cases for GPUs",
 // ----------------------------------------------------------------------------
     title page_label
-    subtitle "There are many reasons you may want to use a GPU in a virtual machine"
+    subtitle "GPUs accelerate a number of workloads, graphical or computational"
     stepping
     story
-        paragraph "Using GPUs for graphics"
+        paragraph "Accelerate graphics rendering"
         * "Playing video games"
         * "Design and modelling software"
         * "Playing video games"
@@ -87,7 +87,7 @@ base_slide "Use cases for GPU virtualization",
 
         at_current_step
         paragraph " "
-        paragraph "Using GPUs for computations"
+        paragraph "Accelerate parallelizable computations"
         * "Machine Learning & Artificial intelligence"
         * "Human genome"
         * "High-quality 3D rendering"
@@ -129,23 +129,13 @@ star_chart ->
     rounded_rectangle 0, 0, SIZE, SIZE, 80
 
 // ----------------------------------------------------------------------------
-base_slide "GPU and virtualization?!",
+section_slide "GPU and virtualization?!",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "We have a solution. Many solutions..."
     stepping
-    story
-        * "Fully emulated graphics device"
-        * "Paravirtualized graphics device"
-        * "GPU assignment"
-        * "vfio-mdev"
-        paragraph " "
-        paragraph "Illustrated below"
-
-    // TODO: try to visualize each example
-    right_picture
-        image_only_at 3,
-            image -100, 0, 80%, 80%, "tesla.jpg"
+    picture
+        image 600, 450, 40%, 40%, "tesla.png"
 
 import "APIs.ddd"
 
