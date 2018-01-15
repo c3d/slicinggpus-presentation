@@ -484,13 +484,14 @@ rotate_movie N, Movie:text ->
 //   Display a picture on a carousel
 // ----------------------------------------------------------------------------
     rotate_step N,
-        movie_texture Movie
-        if texture_width > 0 and texture_height > 0 then
-            scale min(1.0, 800.0 / texture_width, 800.0 / texture_height)
-            rectangle texture_width, texture_height
+        if file_exists Movie then
+            movie_texture Movie
+            if texture_width > 0 and texture_height > 0 then
+                scale min(1.0, 800.0 / texture_width, 800.0 / texture_height)
+                rectangle texture_width, texture_height
 
-        on "pageexit",
-            movie_drop Movie
+            on "pageexit",
+                movie_drop Movie
 
 
 rotate_step N, Body ->
