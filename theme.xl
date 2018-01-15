@@ -475,7 +475,7 @@ rotate_image N, Picture:text ->
     rotate_step N,
         texture Picture
         if texture_width > 0 and texture_height > 0 then
-            scale min(1.5, 1000.0 / texture_width, 800.0 / texture_height)
+            scale min(1.5, 1000.0 / texture_width, 600.0 / texture_height)
             rectangle texture_width, texture_height
 
 

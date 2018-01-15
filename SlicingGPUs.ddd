@@ -69,6 +69,12 @@ base_slide "About the presentation authors",
         paragraph "Also worked on DxO ONE, HP C++ compiler, etc"
         paragraph {blue "http://c3d.github.io" }
 
+    picture
+        texture "Martin.jpg"
+        circle -500, 320, 80
+        texture "Christophe.jpg"
+        circle  580, 320, 80
+
 
 
 // ----------------------------------------------------------------------------
@@ -100,7 +106,7 @@ base_slide "Use cases for GPUs",
         rotate_step 4, { star_chart }
         rotate_image 5, "Ark Survival Evolved.jpg"
         // From https://www.youtube.com/watch?v=c0Uh5OjEinM
-        rotate_movie 7, "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5485##stop-time=5545##input-repeat=-1"
+        rotate_movie 7, "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5485##stop-time=5525##input-repeat=-1"
         rotate_image 8, "nvbio_string_search.jpg"
         // From https://www.youtube.com/watch?v=HfGt8ZwdOF4
         rotate_movie 9, "movies/New Nvidia GTX 690 - Performance Using IRAY Renderer & 3D Studio Max 2013-HfGt8ZwdOF4.mkv##start-time=140##stop-time=260##input-repeat=-1"
@@ -128,27 +134,237 @@ star_chart ->
             star X -> false
     rounded_rectangle 0, 0, SIZE, SIZE, 80
 
+
+rotating_movie 0 -> "movies/New Nvidia GTX 690 - Performance Using IRAY Renderer & 3D Studio Max 2013-HfGt8ZwdOF4.mkv##start-time=140##stop-time=260##input-repeat=-1"
+// From https://www.youtube.com/watch?v=t-Acp-Gy3UY
+rotating_movie 1 -> "movies/Biomutant - Cinematic Trailer-t-Acp-Gy3UY.mkv####input-repeat=-1"
+rotating_movie 2 -> "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5485##stop-time=5525##input-repeat=-1"
+rotating_movie 3 -> rotating_movie 1
+rotating_movie 4 -> rotating_movie 0
+rotating_movie 5 -> "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5531##stop-time=5545##input-repeat=-1"
+
+
 // ----------------------------------------------------------------------------
-section_slide "GPU and virtualization?!",
+base_slide "How GPUs accelerate 3D graphics",
+// ----------------------------------------------------------------------------
+    title "How GPUs accelerate 3D graphics"
+    subtitle "Widely used APIs provide standard ways to drive very complex hardware"
+    graphics_api 0
+
+
+// ----------------------------------------------------------------------------
+base_slide "How GPUs accelerate 3D graphics - Data flow",
+// ----------------------------------------------------------------------------
+    title "How GPUs accelerate 3D graphics"
+    subtitle "Data flow for GPU acceleration on bare metal (non virtualized)"
+    graphics_api 1
+    picture
+        show fade_at(page_time, 5)
+        text_box 700, 80, 300, 200,
+            style "category"
+            font_size 25
+            text "Compute acceleration uses a similar structure with different APIs"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Why virtualize GPUs",
 // ----------------------------------------------------------------------------
     title page_label
-    subtitle "We have a solution. Many solutions..."
+    subtitle "Increase compatibility, flexibility and scalability"
+    stepping
+    story
+        paragraph "Compatibility"
+        * "Software development and testing"
+        * "Running a game operating systems"
+
+        at_current_step
+        paragraph " "
+        paragraph "Flexibility"
+        * "Video streaming, thin client, cloud gaming"
+        * "Scalable management for 3D software"
+
+        at_current_step
+        paragraph " "
+        paragraph "Scalability"
+        * "Deploy large GPU-accelerated workloads"
+        * "Swarms of GPU-accelerated nodes"
+
+    right_picture
+        translate_x -100
+        rotate_image 1, "170410-misaligned.png"
+        rotate_movie 2, rotating_movie 1
+        rotate_step 4,
+            image -250, 0, 50%, 50%, "GPU Server.png"
+            for I in 0..5 loop
+                locally
+                    translate 100 + 250 * sin(pi*I/5), 150 * cos(pi*I/5), 0
+                    image 0, 0, 20%, 20%, "NEC Display.png"
+                    movie_texture rotating_movie I
+                    color "white"
+                    rectangle 0, 10, 110, 60
+                    on "pageexit",
+                        movie_drop rotating_movie I
+                locally
+                    line_color redhat_red1
+                    color "transparent"
+                    line_width 6
+                    path
+                        endpoints_style NONE, ARROWHEAD
+                        move_to -100, 0
+                        line_to 0, 0
+                        quad_to 250, 0, 100+200*sin(pi*I/5), 100*cos(pi*I/5)
+        rotate_image 5, "openstack.png"
+        rotate_step 7,
+            texture "titansupercomputer.jpg"
+            texture_wrap true, true
+            texture_transform
+                translate_x 0.32 * (1 + sin(0.13 * time))
+                scale_x 1791.0/5034.0
+            rectangle 500, 500
+        rotate_image 8, "GPUFarm.jpg"
+
+
+
+// ============================================================================
+//
+section_slide "GPU and virtualization?",
+//
+// ============================================================================
+    title page_label
+    subtitle "So many solutions to choose from..."
     stepping
     picture
         image 600, 450, 40%, 40%, "tesla.png"
 
 import "APIs.ddd"
 
+
 // ----------------------------------------------------------------------------
 base_slide "Full emulation of graphics device",
 // ----------------------------------------------------------------------------
     title page_label
+    subtitle "Full software emulation of a VGA-class device"
+    graphics_api 2
+    graphics_api_mark "red", "Slow"
+    story
+        at_current_step
+        paragraph "Pros"
+        * "Compatibility (Old)"
+        ** "Old hardware"
+        ** "Old software"
+        * "Works at guest boot"
+        * "Virt. features"
+        ** "Migration"
+        ** "Remote access"
+
+        at_current_step
+        paragraph " "
+        paragraph "Cons"
+        * "(Very) slow"
+        * "No 3D, no compositing"
 
 
 // ----------------------------------------------------------------------------
-base_slide "Paravirtualized graphics device",
+base_slide "Full emulation enables many concurrent VMs",
 // ----------------------------------------------------------------------------
     title page_label
+    subtitle "It's all software, so creating multiple instances is easy"
+    graphics_api 3
+
+
+// ----------------------------------------------------------------------------
+base_slide "Paravirtualization: virtio-gpu, Virgil, GVT-s",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Intercept graphic commands in guest, perform rendering in host"
+    graphics_api 4
+    story
+        paragraph "Pros"
+        * "Some 3D"
+        * "Flexible"
+
+        at_current_step
+        paragraph " "
+        paragraph "Cons"
+        * "No vendor features"
+        * "No virt. features"
+
+        at_current_step
+        paragraph " "
+        paragraph "Similar: API intercept"
+        * "e.g. Intel GVT-s"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Paravirtualization and multiple virtual machines",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "The difference between theory and practice is..."
+    graphics_api 5
+    story
+        paragraph "Difficult problems:"
+        * "Rendering scheduling"
+        * "Resource allocation"
+        * "GPU capabilities"
+        * "Migration"
+        * "Remote access"
+
+
+// ----------------------------------------------------------------------------
+base_slide "GPU device assignment (aka pass-through)",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Assign the GPU to a single guest, poking a hole for GPU's memory mapped I/O "
+    graphics_api 6
+    story
+        at_current_step
+        paragraph "Pros"
+        * "Performance"
+        * "Compatibility (New)"
+        ** "Use vendor driver"
+        ** "Latest APIs"
+        * "Graphics features"
+
+        at_current_step
+        paragraph " "
+        paragraph "Cons"
+        * "Boot console"
+        * "Inflexible setup"
+        * "No virtualization features"
+
+
+// ----------------------------------------------------------------------------
+base_slide "GPU virtualization: vGPU, GVT-g, MxGPU",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Split a virtualization capable GPU between multiple guests"
+    graphics_api 7
+    story
+        at_current_step
+        paragraph "Pros"
+        * "Performance"
+        * "Compatibility (New)"
+        * "Graphics features"
+        * "Remote access"
+
+        at_current_step
+        paragraph " "
+        paragraph "Cons"
+        * "Medium flexibility"
+        * "H/W requirements"
+
+
+// ============================================================================
+//
+section_slide "Virtual machine configuration",
+//
+// ============================================================================
+    title page_label
+    subtitle "Considerations about libvirt and QEMU..."
+    stepping
+    picture
+        image 600, 450, 40%, 40%, "tesla.png"
+
 
 
 // ----------------------------------------------------------------------------
