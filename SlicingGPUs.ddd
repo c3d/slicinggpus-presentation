@@ -70,6 +70,7 @@ base_slide "About the presentation authors",
         paragraph {blue "http://c3d.github.io" }
 
 
+
 // ----------------------------------------------------------------------------
 base_slide "Use cases for GPU virtualization",
 // ----------------------------------------------------------------------------
@@ -146,7 +147,7 @@ base_slide "GPU and virtualization?!",
         image_only_at 3,
             image -100, 0, 80%, 80%, "tesla.jpg"
 
-import "SlicingGPUs-API.ddd"
+import "APIs.ddd"
 
 // ----------------------------------------------------------------------------
 base_slide "Full emulation of graphics device",
