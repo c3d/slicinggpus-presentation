@@ -37,6 +37,7 @@ main_title_slide "Main title",
         paragraph "Martin Polednik (mpolednik@redhat.com)"
         paragraph "Christophe de Dinechin (dinechin@redhat.com)"
 
+    stepping
     picture
         translate 600, 450, 20
         rotate_z -8
@@ -76,7 +77,6 @@ base_slide "About the presentation authors",
         circle  580, 320, 80
 
 
-
 // ----------------------------------------------------------------------------
 base_slide "Use cases for GPUs",
 // ----------------------------------------------------------------------------
@@ -103,7 +103,8 @@ base_slide "Use cases for GPUs",
         rotate_image 1, "TuxRacer.jpg"
         rotate_image 2, "BlenderUI.jpg"
         rotate_image 3, "Civilization.jpg"
-        rotate_step 4, { star_chart }
+        // From https://www.youtube.com/watch?v=65FXDxTPTWQ
+        rotate_movie 4, "movies/One billion data points-65FXDxTPTWQ.mkv##input-repeat=-1"
         rotate_image 5, "Ark Survival Evolved.jpg"
         // From https://www.youtube.com/watch?v=c0Uh5OjEinM
         rotate_movie 7, "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5485##stop-time=5525##input-repeat=-1"
@@ -112,6 +113,7 @@ base_slide "Use cases for GPUs",
         rotate_movie 9, "movies/New Nvidia GTX 690 - Performance Using IRAY Renderer & 3D Studio Max 2013-HfGt8ZwdOF4.mkv##start-time=140##stop-time=260##input-repeat=-1"
 
 star_chart ->
+  locally
     SIZE -> 500
     frame_texture SIZE, SIZE,
         background_color "black"
