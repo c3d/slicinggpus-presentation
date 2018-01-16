@@ -110,6 +110,7 @@ graphics_api_OS S:real ->
         image 430, 110, 10%, 10%, "vulkan.png"
         image 430, 150, 10%, 10%, "opengl.png"
         show 60%
+        color "white", fade_at(S, 2)
         image -420, -140, 15%, 15%, "Intel CPU.png"
         image -300, -140, 12%, 12%, "Motherboard.png"
         color "white", fade_between(S, 2, 3)
