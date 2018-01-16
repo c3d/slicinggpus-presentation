@@ -528,7 +528,7 @@ diagram_box Color:text, X:real, Y:real, W:real, H:real, Body ->
         color Color
         line_color "darkgrey"
         line_width 2
-        rectangle X, Y, W, H
+        rounded_rectangle X, Y, W, H, 10
     text_box X, Y, W, H,
         style "diagram"
         render Body
