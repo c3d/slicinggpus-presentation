@@ -618,11 +618,17 @@ locally
 // ============================================================================
 
 key "l" -> laser := 1 - laser
+key "L" -> show_coordinates := 1 -  show_coordinates
 laser -> 0
+show_coordinates -> 0
 locally
     translate_z 500
     color "red", 80% * laser
-    writeln "X=", mouse_x, " Y=", mouse_y
+    if show_coordinates > 0 then
+        text_box mouse_x + 60, mouse_y + 20, 100, 40,
+            font "Arial", 12, bold
+            paragraph "X=" & integer mouse_x
+            paragraph "Y=" & integer mouse_y
     rectangle mouse_x, 0, 1, 10000
     rectangle 0, mouse_y, 10000, 1
     circle mouse_x, mouse_y, 3
