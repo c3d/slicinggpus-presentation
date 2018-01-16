@@ -296,9 +296,9 @@ stepping ->
 // ----------------------------------------------------------------------------
     compute_smooth_step
     current_step := 1
+    highest_step := 0.1
     on "pageentry",
         skip_directly_to 0
-        highest_step := 0
 
 
 at_current_step ->

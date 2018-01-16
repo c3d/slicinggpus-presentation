@@ -45,7 +45,6 @@ main_title_slide "Main title",
         texture "GPU.jpg"
         color "white"
         rounded_rectangle 0, 0, texture_width, texture_height, 80
-        at_step 1
 
 
 // ----------------------------------------------------------------------------
@@ -80,8 +79,7 @@ base_slide "About the presentation authors",
         show fade_at(page_time, 2)
         texture "Christophe.jpg"
         circle  580, 320, 80
-        at_step 1
-
+4
 
 // ----------------------------------------------------------------------------
 base_slide "Use cases for GPUs",
@@ -243,7 +241,6 @@ section_slide "GPU and virtualization?",
     stepping
     picture
         image 600, 450, 40%, 40%, "tesla.png"
-        at_step 1
 
 import "APIs.ddd"
 
@@ -376,7 +373,6 @@ section_slide "Comparing the various approaches",
         translate 600, 450, 0
         rotate_z -4
         image 0, 0, 30%, 30%, "control-panel.jpg"
-        at_step 1
 
 import "comparisons.ddd"
 
@@ -403,7 +399,6 @@ section_slide "Virtual machine configuration",
             locally
                 translate 200 * sin(I + time), 150 * cos(I + time*1.3), 0
                 vm_configuration_image I
-        at_step 1
 
 
 import "mdev.ddd"

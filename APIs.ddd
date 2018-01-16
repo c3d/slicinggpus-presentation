@@ -4,7 +4,6 @@ graphics_api N ->
     picture
         interpolate 0.05, N, graphics_api_step
         graphics_api_picture graphics_api_step
-        at_step 1
 
 graphics_api_picture S:real ->
     image -210, -160, 60%, 60%, "rampage.png"
