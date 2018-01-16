@@ -363,6 +363,25 @@ base_slide "GPU virtualization: vGPU, GVT-g, MxGPU",
         * "H/W requirements"
 
 
+
+// ============================================================================
+//
+section_slide "Comparing the various approaches",
+//
+// ============================================================================
+    title page_label
+    subtitle "Attempting to visualize the tradeoffs..."
+    stepping
+    picture
+        translate 600, 450, 0
+        rotate_z -4
+        image 0, 0, 30%, 30%, "control-panel.jpg"
+        at_step 1
+
+import "comparisons.ddd"
+
+
+
 // ============================================================================
 //
 section_slide "Virtual machine configuration",

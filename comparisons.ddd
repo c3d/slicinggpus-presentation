@@ -11,7 +11,7 @@ base_slide "Comparison of GPU virtualization solutions",
         consideration 3, "Security"
         consideration 4, "Flexibility"
         consideration 5, "Scalability"
-
+        virt_type_hsv := 60 * page_number
 
 //  Percentage for...        H/W, S/W, Perf, Sec, Flex, Scal
 virt_type "Native GPU",      100, 100, 100,  100,   0,  20
@@ -21,6 +21,19 @@ virt_type "VGPU",             50,  70,  70,   70,  70,  70
 virt_type "VirtIO GPU",      100,  50,  50,   90,  90,  50
 
 
+// ----------------------------------------------------------------------------
+base_slide "Comparison - Conclusion",
+// ----------------------------------------------------------------------------
+    title "Conclusion: It's complicated™"
+    subtitle "There is no ""one-size-fits-all"" solution today"
+    picture
+        color "#23355D" // Facebook blue
+        rectangle 0, 0, 800, 400
+
+
+
+
+virt_type_hsv -> 0.0
 virt_type Type, HW, SW, Perf, Sec, Flex, Scal ->
 // ----------------------------------------------------------------------------
 //   Draw a star diagram for the given type
@@ -37,7 +50,6 @@ virt_type Type, HW, SW, Perf, Sec, Flex, Scal ->
             consideration -8, "Flexibility"
             consideration -7, "Scalability"
 
-            virt_type_hsv -> 0.0
             interpolate 5%, page_number * 60, virt_type_hsv
             line_color_hsv virt_type_hsv, 80%, 70%, 90%
             color_hsv virt_type_hsv, 40%, 70%, 60%
