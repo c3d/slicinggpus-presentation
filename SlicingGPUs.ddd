@@ -387,6 +387,8 @@ section_slide "Virtual machine configuration",
         at_step 1
 
 
+import "mdev.ddd"
+
 // ----------------------------------------------------------------------------
 base_slide "Device assignment",
 // ----------------------------------------------------------------------------
