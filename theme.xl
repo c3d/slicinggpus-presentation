@@ -484,7 +484,8 @@ rotate_movie N, Movie:text ->
 //   Display a picture on a carousel
 // ----------------------------------------------------------------------------
     rotate_step N,
-        if file_exists Movie then
+        file_without_options T:text -> text_range(T, 0, text_find(T, "##"))
+        if file_exists(file_without_options(Movie)) then
             movie_texture Movie
             if texture_width > 0 and texture_height > 0 then
                 scale min(1.0, 800.0 / texture_width, 800.0 / texture_height)
