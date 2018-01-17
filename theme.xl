@@ -334,6 +334,8 @@ only_at N:integer, Body ->
 **   Body -> at_current_step; bullet 2, Body
 ***  Body -> at_current_step; bullet 3, Body
 **** Body -> at_current_step; bullet 4, Body
+§    Body -> at_current_step; paragraph Body
+§         -> paragraph " "
 
 
 top_left     Body -> box -475,  150, 900, 350, { render Body }

@@ -91,10 +91,8 @@ base_slide "Use cases for GPUs",
         * "Playing video games"
         * "Data visualization"
         * "Playing video games"
-
-        at_current_step
-        paragraph " "
-        paragraph "Accelerate parallelizable computations"
+        §
+        § "Accelerate parallelizable computations"
         * "Machine Learning & Artificial intelligence"
         * "Human genome"
         * "High-quality 3D rendering"
@@ -138,15 +136,6 @@ star_chart ->
     rounded_rectangle 0, 0, SIZE, SIZE, 80
 
 
-rotating_movie 0 -> "movies/New Nvidia GTX 690 - Performance Using IRAY Renderer & 3D Studio Max 2013-HfGt8ZwdOF4.mkv##start-time=140##stop-time=260##input-repeat=-1"
-// From https://www.youtube.com/watch?v=t-Acp-Gy3UY
-rotating_movie 1 -> "movies/Biomutant - Cinematic Trailer-t-Acp-Gy3UY.mkv####input-repeat=-1"
-rotating_movie 2 -> "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5485##stop-time=5525##input-repeat=-1"
-rotating_movie 3 -> rotating_movie 1
-rotating_movie 4 -> rotating_movie 0
-rotating_movie 5 -> "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5531##stop-time=5545##input-repeat=-1"
-
-
 // ----------------------------------------------------------------------------
 base_slide "How GPUs accelerate 3D graphics",
 // ----------------------------------------------------------------------------
@@ -176,46 +165,23 @@ base_slide "Why virtualize GPUs",
     subtitle "Increase compatibility, flexibility and scalability"
     stepping
     story
-        paragraph "Compatibility"
+        § "Compatibility"
         * "Software development and testing"
         * "Running a game operating systems"
-
-        at_current_step
-        paragraph " "
-        paragraph "Flexibility"
+        §
+        § "Flexibility"
         * "Video streaming, thin client, cloud gaming"
         * "Scalable management for 3D software"
-
-        at_current_step
-        paragraph " "
-        paragraph "Scalability"
+        §
+        § "Scalability"
         * "Deploy large GPU-accelerated workloads"
         * "Swarms of GPU-accelerated nodes"
 
     right_picture
         translate_x -100
         rotate_image 1, "170410-misaligned.png"
-        rotate_movie 2, rotating_movie 1
-        rotate_step 4,
-            image -250, 0, 50%, 50%, "GPU Server.png"
-            for I in 0..5 loop
-                locally
-                    translate 100 + 250 * sin(pi*I/5), 150 * cos(pi*I/5), 0
-                    image 0, 0, 20%, 20%, "NEC Display.png"
-                    movie_texture rotating_movie I
-                    color "white"
-                    rectangle 0, 10, 110, 60
-                    on "pageexit",
-                        movie_drop rotating_movie I
-                locally
-                    line_color redhat_red1
-                    color "transparent"
-                    line_width 6
-                    path
-                        endpoints_style NONE, ARROWHEAD
-                        move_to -100, 0
-                        line_to 0, 0
-                        quad_to 250, 0, 100+200*sin(pi*I/5), 100*cos(pi*I/5)
+        rotate_movie 2, spice_server_movie 1
+        rotate_step 4, { spice_server_and_clients }
         rotate_image 5, "openstack.png"
         rotate_step 7,
             texture "titansupercomputer.jpg"
@@ -259,10 +225,8 @@ base_slide "Full emulation of graphics device",
         * "Virt. features"
         ** "Migration"
         ** "Remote access"
-
-        at_current_step
-        paragraph " "
-        paragraph "Cons"
+        §
+        § "Cons"
         * "(Very) slow"
         * "No 3D, no compositing"
 
@@ -285,16 +249,12 @@ base_slide "Paravirtualization: virtio-gpu, Virgil, GVT-s",
         paragraph "Pros"
         * "Some 3D"
         * "Flexible"
-
-        at_current_step
-        paragraph " "
-        paragraph "Cons"
+        §
+        § "Cons"
         * "No vendor features"
         * "No virt. features"
-
-        at_current_step
-        paragraph " "
-        paragraph "Similar: API intercept"
+        §
+        § "Similar: API intercept"
         * "e.g. Intel GVT-s"
 
 
@@ -327,10 +287,8 @@ base_slide "GPU device assignment (aka pass-through)",
         ** "Use vendor driver"
         ** "Latest APIs"
         * "Graphics features"
-
-        at_current_step
-        paragraph " "
-        paragraph "Cons"
+        §
+        § "Cons"
         * "Boot console"
         * "Inflexible setup"
         * "No virtualization features"
@@ -349,12 +307,27 @@ base_slide "GPU virtualization: vGPU, GVT-g, MxGPU",
         * "Compatibility (New)"
         * "Graphics features"
         * "Remote access"
-
-        at_current_step
-        paragraph " "
-        paragraph "Cons"
+        §
+        § "Cons"
         * "Medium flexibility"
         * "H/W requirements"
+
+
+
+// ============================================================================
+//
+section_slide "Remote access with SPICE",
+//
+// ============================================================================
+    title page_label
+    subtitle "Efficient remote access to virtual machines..."
+    stepping
+    picture
+        translate 600, 450, 0
+        rotate_z -4
+        image 0, 0, 30%, 30%, "control-panel.jpg"
+
+import "spice.ddd"
 
 
 
