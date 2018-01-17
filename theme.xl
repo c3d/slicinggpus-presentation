@@ -91,8 +91,8 @@ theme_box "RedHat",Master:text,"rightpic", X:real,Y:real,W:real,H:real -> false
 //
 // ============================================================================
 
-theme_slide_width  "RedHat" -> 1920
-theme_slide_height "RedHat" -> 1080
+theme_slide_width  "RedHat" -> 1600
+theme_slide_height "RedHat" -> 1440
 
 redhat_red1     -> "#8F1000"
 redhat_red2     -> "#B21600"
@@ -266,10 +266,10 @@ theme_layout "RedHat", Master:text ->
 // ----------------------------------------------------------------------------
 //    Centered flows
 // ----------------------------------------------------------------------------
-    flows   0,  400, 1800, 220, "title", "subtitle"
-    flow    0,  -80, 1800, 700, "story"
-    flow -475,  -80,  850, 700, "left"
-    flow  475,  -80,  850, 700, "right"
+    flows   0,  550, 1800, 220, "title", "subtitle"
+    flow    0,    0, 1800, 700, "story"
+    flow -475,    0,  850, 700, "left"
+    flow  475,    0,  850, 700, "right"
 
 
 presentation_author Body ->

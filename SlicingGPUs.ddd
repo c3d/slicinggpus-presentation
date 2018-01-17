@@ -39,12 +39,9 @@ main_title_slide "Main title",
 
     stepping
     picture
-        translate 600, 450, 20
+        translate 600, 500, 20
         rotate_z -8
-        scale 45%
-        texture "GPU.jpg"
-        color "white"
-        rounded_rectangle 0, 0, texture_width, texture_height, 80
+        image 0, 0, 45%, 45%, "GPU.jpg"
 
 
 // ----------------------------------------------------------------------------
@@ -75,11 +72,11 @@ base_slide "About the presentation authors",
     picture
         show fade_at(page_time, 1)
         texture "Martin.jpg"
-        circle -500, 320, 80
+        circle -500, 420, 80
         show fade_at(page_time, 2)
         texture "Christophe.jpg"
-        circle  580, 320, 80
-4
+        circle  580, 420, 80
+
 
 // ----------------------------------------------------------------------------
 base_slide "Use cases for GPUs",
@@ -226,7 +223,7 @@ base_slide "Why virtualize GPUs",
             texture_transform
                 translate_x 0.32 * (1 + sin(0.13 * time))
                 scale_x 1791.0/5034.0
-            rectangle 500, 500
+            rectangle 700, 700
         rotate_image 8, "GPUFarm.jpg"
 
 
