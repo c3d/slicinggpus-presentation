@@ -369,9 +369,6 @@ section_slide "Virtual machine configuration",
                 translate 200 * sin(I + time), 150 * cos(I + time*1.3), 0
                 vm_configuration_image I
 
-
-import "mdev.ddd"
-
 // ----------------------------------------------------------------------------
 base_slide "Device assignment",
 // ----------------------------------------------------------------------------
@@ -492,6 +489,27 @@ base_slide "Device assignment and management software",
 
 
 // ----------------------------------------------------------------------------
+base_slide "What about topology",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
+
+
+import "topo.ddd"
+
+
+// ----------------------------------------------------------------------------
+base_slide "What about topology con't",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
+    stepping
+    story
+        * "Not currently expressed"
+        * "p2p domains desired for GPU memory throughput"
+        * "future optimization point for ML/AI"
+
+// ----------------------------------------------------------------------------
 base_slide "vfio-mdev",
 // ----------------------------------------------------------------------------
     title page_label
@@ -507,6 +525,9 @@ base_slide "vfio-mdev",
         * "mdev_register_driver()"
         * "mdev_register_device()"
         ** "callbacks to the vendor driver"
+
+
+import "mdev.ddd"
 
 
 // ----------------------------------------------------------------------------
