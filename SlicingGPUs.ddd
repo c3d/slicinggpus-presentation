@@ -152,9 +152,8 @@ base_slide "How GPUs accelerate 3D graphics - Data flow",
     graphics_api 1
     picture
         at_step 1
-        text_box 700, 80, 300, 200,
-            style "category"
-            font_size 25
+        text_box 700, 50, 300, 300,
+            style "comment"
             text "Compute acceleration uses a similar structure with different APIs"
 
 
@@ -214,10 +213,8 @@ base_slide "Full emulation of graphics device",
     title page_label
     subtitle "Full software emulation of a VGA-class device"
     graphics_api 2
-    graphics_api_mark "red", "Slow"
     story
-        at_current_step
-        paragraph "Pros"
+        § "Pros"
         * "Compatibility (Old)"
         ** "Old hardware"
         ** "Old software"
@@ -229,6 +226,8 @@ base_slide "Full emulation of graphics device",
         § "Cons"
         * "(Very) slow"
         * "No 3D, no compositing"
+    at_step 10
+    graphics_api_mark "red", "Slow"
 
 
 // ----------------------------------------------------------------------------

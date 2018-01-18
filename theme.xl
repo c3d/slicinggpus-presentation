@@ -37,14 +37,18 @@ theme_font  "RedHat", Master, "diagram"         -> font "Overpass"
 theme_size  "RedHat", Master, "diagram"         -> 35
 theme_color "RedHat", Master, "diagram"         -> color "white"
 theme_align "RedHat", Master, "diagram"         -> align 50%; vertical_align 10%
-theme_font  "RedHat", Master, "category"        -> font "Overpass", bold
-theme_size  "RedHat", Master, "category"        -> 35
-theme_color "RedHat", Master, "category"        -> color "black"
-theme_align "RedHat", Master, "category"        -> align 50%; vertical_align 5%
-theme_font  "RedHat", Master, "consideration"   -> font "Overpass", bold
-theme_size  "RedHat", Master, "consideration"   -> 28
-theme_color "RedHat", Master, "consideration"   -> color "black"
-theme_align "RedHat", Master, "consideration"   -> align 50%; vertical_align 50%
+theme_font  "RedHat", Master, "comment"         -> font "Overpass", bold
+theme_size  "RedHat", Master, "comment"         -> 35
+theme_color "RedHat", Master, "comment"         -> color "black"
+theme_align "RedHat", Master, "comment"         -> align 50%; vertical_align 5%
+theme_font  "RedHat", Master, "column"          -> font "Overpass", bold
+theme_size  "RedHat", Master, "column"          -> 35
+theme_color "RedHat", Master, "column"          -> color "black"
+theme_align "RedHat", Master, "column"          -> align 50%; vertical_align 2%
+theme_font  "RedHat", Master, "row"             -> font "Overpass", bold
+theme_size  "RedHat", Master, "row"             -> 35
+theme_color "RedHat", Master, "row"             -> color "black"
+theme_align "RedHat", Master, "row"             -> align 2%; vertical_align 5%
 
 theme_align "RedHat", Master,"story",N          -> margins 40*N, 0
 theme_color "RedHat", Master,"story",N          -> color "black", 0.99-0.2*N
@@ -329,7 +333,6 @@ only_at N:integer, Body ->
             Body
 
 
-
 *    Body -> at_current_step; bullet 1, Body
 **   Body -> at_current_step; bullet 2, Body
 ***  Body -> at_current_step; bullet 3, Body
@@ -549,6 +552,35 @@ font_size FS, Body ->
 // ----------------------------------------------------------------------------
     font_size FS
     render Body
+
+
+column C:integer, Body ->
+// ----------------------------------------------------------------------------
+//   A table column
+// ----------------------------------------------------------------------------
+    cell "column", C * 650 - 100, 50, 640, 1000, Body
+
+
+row R:integer, Body ->
+// ----------------------------------------------------------------------------
+//   A table row
+// ----------------------------------------------------------------------------
+    cell "row", 0, 20 - R * 300, 1800, 290, Body
+
+
+cell Style:text, X:real, Y:real, W:real, H:real, Body ->
+// ----------------------------------------------------------------------------
+//   A text box for cells in a table
+// ----------------------------------------------------------------------------
+    locally
+        color "transparent"
+        line_color "darkgrey"
+        line_width 2
+        rounded_rectangle X, Y, W, H, 10
+    text_box X, Y, W, H,
+        style Style
+        render Body
+
 
 
 autoscale CX:real, CY:real, S1:real, S2:real, R:real ->
