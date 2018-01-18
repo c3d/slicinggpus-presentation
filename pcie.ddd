@@ -1,37 +1,37 @@
-base_slide "PCI express topology",
+base_slide "IOMMU topology",
     title page_label
-    pcie_topology
+    iommu_topology
 
 
 base_slide "IOMMU case 1",
     title page_label
-    pcie_topology
+    iommu_topology
     iommu_group_1
 
 
 base_slide "IOMMU case 2",
     title page_label
-    pcie_topology
+    iommu_topology
     iommu_group_2
     iommu_group_3
 
 
 base_slide "IOMMU case 3",
     title page_label
-    pcie_topology
+    iommu_topology
     iommu_group_4
 
 
 base_slide "IOMMU meets topology",
     title page_label
-    pcie_topology
+    iommu_topology
     iommu_group_1
     iommu_group_2
     iommu_group_3
     iommu_group_4
 
 
-pcie_topology ->
+iommu_topology ->
     picture
         diagram_box "#298", 0, 300, 100, 100, "CPU"
         diagram_box "#298", -500, 100, 200, 100, "device_0"
