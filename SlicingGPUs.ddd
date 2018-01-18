@@ -676,6 +676,7 @@ base_slide "Does vfio-mdev help the management layer?",
         paragraph "So, does vfio-mdev help?"
         * "devices are addressed by a type"
         * "we don't have to care about IOMMU"
+        * "doesn't fit use cases that require topology awareness*"
         * "few rough edges"
         * "... win!"
 
