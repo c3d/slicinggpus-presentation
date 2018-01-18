@@ -681,9 +681,9 @@ base_slide "Does vfio-mdev help the management layer?",
         * "... win!"
 
     right_picture
-        image_only_at 4,
+        image_only_at 5,
             image -100, 50, 90%, 90%, "cloud.png"
-        image_only_at 4,
+        image_only_at 5,
             image -100, 50, (10 * sin(page_time) + 100)%, (10 * sin(page_time) + 100)%, "ok.png"
 
 
