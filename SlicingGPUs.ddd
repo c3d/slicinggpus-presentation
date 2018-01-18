@@ -141,7 +141,7 @@ base_slide "How GPUs accelerate 3D graphics",
 // ----------------------------------------------------------------------------
     title "How GPUs accelerate 3D graphics"
     subtitle "Widely used APIs provide standard ways to drive very complex hardware"
-    graphics_api 0
+    graphics_api "Base"
 
 
 // ----------------------------------------------------------------------------
@@ -149,7 +149,7 @@ base_slide "How GPUs accelerate 3D graphics - Data flow",
 // ----------------------------------------------------------------------------
     title "How GPUs accelerate 3D graphics"
     subtitle "Data flow for GPU acceleration on bare metal (non virtualized)"
-    graphics_api 1
+    graphics_api "Dataflow"
     picture
         at_step 1
         text_box 700, 50, 300, 300,
@@ -211,8 +211,8 @@ import "APIs.ddd"
 base_slide "Full emulation of graphics device",
 // ----------------------------------------------------------------------------
     title page_label
-    subtitle "Full software emulation of a VGA-class device"
-    graphics_api 2
+    subtitle "Presents a VGA-class device to the guest with software rendering"
+    graphics_api "Emulation"
     story
         § "Pros"
         * "Compatibility (Old)"
@@ -225,6 +225,7 @@ base_slide "Full emulation of graphics device",
         §
         § "Cons"
         * "(Very) slow"
+        * "Legacy quirks"
         * "No 3D, no compositing"
     at_step 10
     graphics_api_mark "red", "Slow"
@@ -235,7 +236,7 @@ base_slide "Full emulation enables many concurrent VMs",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "It's all software, so creating multiple instances is easy"
-    graphics_api 3
+    graphics_api "Emulation+VMs"
 
 
 // ----------------------------------------------------------------------------
@@ -243,7 +244,7 @@ base_slide "Paravirtualization: virtio-gpu, Virgil, GVT-s",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "Intercept graphic commands in guest, perform rendering in host"
-    graphics_api 4
+    graphics_api "Paravirt"
     story
         paragraph "Pros"
         * "Some 3D"
@@ -262,7 +263,7 @@ base_slide "Paravirtualization and multiple virtual machines",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "The difference between theory and practice is..."
-    graphics_api 5
+    graphics_api "Paravirt+VMs"
     story
         paragraph "Difficult problems:"
         * "Rendering scheduling"
@@ -277,7 +278,7 @@ base_slide "GPU device assignment (aka pass-through)",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "Assign the GPU to a single guest, poking a hole for GPU's memory mapped I/O "
-    graphics_api 6
+    graphics_api "Passthru"
     story
         at_current_step
         paragraph "Pros"
@@ -290,7 +291,8 @@ base_slide "GPU device assignment (aka pass-through)",
         § "Cons"
         * "Boot console"
         * "Inflexible setup"
-        * "No virtualization features"
+        * "Migration?"
+        * "Sharing?"
 
 
 // ----------------------------------------------------------------------------
@@ -298,14 +300,14 @@ base_slide "GPU virtualization: vGPU, GVT-g, MxGPU",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "Split a virtualization capable GPU between multiple guests"
-    graphics_api 7
+    graphics_api (if smooth_step < 3 then "vGPU" else "vGPU+VMs")
     story
         at_current_step
         paragraph "Pros"
         * "Performance"
         * "Compatibility (New)"
         * "Graphics features"
-        * "Remote access"
+        * "Multiple VMs"
         §
         § "Cons"
         * "Medium flexibility"
@@ -368,6 +370,9 @@ section_slide "Virtual machine configuration",
             locally
                 translate 200 * sin(I + time), 150 * cos(I + time*1.3), 0
                 vm_configuration_image I
+
+
+import "mdev.ddd"
 
 // ----------------------------------------------------------------------------
 base_slide "Device assignment",
@@ -489,27 +494,6 @@ base_slide "Device assignment and management software",
 
 
 // ----------------------------------------------------------------------------
-base_slide "What about topology",
-// ----------------------------------------------------------------------------
-    title page_label
-    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
-
-
-import "topo.ddd"
-
-
-// ----------------------------------------------------------------------------
-base_slide "What about topology con't",
-// ----------------------------------------------------------------------------
-    title page_label
-    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
-    stepping
-    story
-        * "Not currently expressed"
-        * "p2p domains desired for GPU memory throughput"
-        * "future optimization point for ML/AI"
-
-// ----------------------------------------------------------------------------
 base_slide "vfio-mdev",
 // ----------------------------------------------------------------------------
     title page_label
@@ -525,9 +509,6 @@ base_slide "vfio-mdev",
         * "mdev_register_driver()"
         * "mdev_register_device()"
         ** "callbacks to the vendor driver"
-
-
-import "mdev.ddd"
 
 
 // ----------------------------------------------------------------------------

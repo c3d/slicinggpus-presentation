@@ -271,9 +271,9 @@ theme_layout "RedHat", Master:text ->
 //    Centered flows
 // ----------------------------------------------------------------------------
     flows   0,  550, 1800, 220, "title", "subtitle"
-    flow    0,    0, 1800, 700, "story"
-    flow -475,    0,  850, 700, "left"
-    flow  475,    0,  850, 700, "right"
+    flow    0,    0, 1800, 800, "story"
+    flow -475,    0,  850, 800, "left"
+    flow  475,    0,  850, 800, "right"
 
 
 presentation_author Body ->
