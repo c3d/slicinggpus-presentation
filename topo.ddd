@@ -1,0 +1,147 @@
+base_slide "Single socket, single GPU",
+    title page_label
+    pcie_topology_simple
+
+
+base_slide "Single socket, two GPUs",
+    title page_label
+    stepping
+
+    pcie_topology_2
+    at_current_step
+    p2p_domain 0, -30, 800, 800
+
+
+base_slide "Single socket, 4 GPUs",
+    title page_label
+    stepping
+
+    pcie_topology_3
+    at_current_step
+    p2p_domain 0, -30, 2400, 800
+
+
+base_slide "Dual socket, 4 GPUs",
+    title page_label
+    stepping
+
+    pcie_topology_4
+    at_current_step
+    p2p_domain -500, 50, 1200, 900
+    p2p_domain 500, 50, 1200, 900
+
+
+pcie_topology_simple ->
+    picture
+        diagram_box "#298", 0, 500, 100, 100, "CPU"
+        diagram_box "#298", 0, 300, 200, 100, "PCH"
+        diagram_box "#298", 0, 100, 200, 100, "PCIe bridge"
+        image 0, -200, 30%, 30%, "tesla.png"
+
+    pcie_link_16x 0, 450, 0, 350, 70, 0
+    pcie_link_16x 0, 250, 0, 150, 70, 0
+    pcie_link_16x 0, 50, 0, -100, 70, 0
+
+
+pcie_topology_2 ->
+    picture
+        diagram_box "#298", 0, 500, 100, 100, "CPU"
+        diagram_box "#298", 0, 300, 200, 100, "PCH"
+        diagram_box "#298", 0, 100, 200, 100, "PCIe bridge"
+        image -200, -200, 30%, 30%, "tesla.png"
+        image 200, -200, 30%, 30%, "tesla.png"
+
+    pcie_link_16x 0, 450, 0, 350, 70, 0
+    pcie_link_16x 0, 250, 0, 150, 70, 0
+    pcie_link_16x -100, 50, -130, -80, 70, 0
+    pcie_link_16x 100, 50, 130, -80, 70, 0
+
+
+pcie_topology_3 ->
+    picture
+        diagram_box "#298", 0, 500, 100, 100, "CPU"
+        diagram_box "#298", 0, 300, 200, 100, "PCH"
+        translate_x -200
+        diagram_box "#298", -400, 100, 200, 100, "PCIe bridge"
+        image -600, -200, 30%, 30%, "tesla.png"
+        image -200, -200, 30%, 30%, "tesla.png"
+        diagram_box "#298", 800, 100, 200, 100, "PCIe bridge"
+        image 600, -200, 30%, 30%, "tesla.png"
+        image 1000, -200, 30%, 30%, "tesla.png"
+
+    pcie_link_16x 0, 450, 0, 350, 70, 0
+    pcie_link_16x -100, 250, -500, 150, 0, 40
+    pcie_link_16x 100, 250, 500, 150, 0, 40
+    pcie_link_16x -700, 50, -730, -80, -70, 0
+    pcie_link_16x -500, 50, -470, -80, 70, 0
+    pcie_link_16x 700, 50, 730, -80, 70, 0
+    pcie_link_16x 500, 50, 470, -80, -70, 0
+
+
+pcie_topology_4 ->
+    picture
+        diagram_box "#298", -100, 500, 100, 100, "CPU"
+        diagram_box "#298", 100, 500, 100, 100, "CPU"
+        diagram_box "#298", -150, 300, 200, 100, "PCH"
+        diagram_box "#298", 150, 300, 200, 100, "PCH"
+        translate_x -200
+        diagram_box "#298", -400, 100, 200, 100, "PCIe bridge"
+        image -600, -200, 30%, 30%, "tesla.png"
+        image -200, -200, 30%, 30%, "tesla.png"
+        diagram_box "#298", 800, 100, 200, 100, "PCIe bridge"
+        image 600, -200, 30%, 30%, "tesla.png"
+        image 1000, -200, 30%, 30%, "tesla.png"
+
+    qpi_link -50, 500, 50, 500, 40, 20
+    pcie_link_16x -100, 450, -100, 350, 70, 0
+    pcie_link_16x -100, 450, -100, 350, 70, 0
+    pcie_link_16x 100, 450, 100, 350, 70, 0
+    pcie_link_16x -150, 250, -500, 150, 0, 40
+    pcie_link_16x 150, 250, 500, 150, 0, 40
+    pcie_link_16x -700, 50, -730, -80, -70, 0
+    pcie_link_16x -500, 50, -470, -80, 70, 0
+    pcie_link_16x 700, 50, 730, -80, 70, 0
+    pcie_link_16x 500, 50, 470, -80, -70, 0
+
+
+pcie_link_16x X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real -> 
+    picture
+        text_box ((X + tX) / 2) + fdX, ((Y + tY) / 2) + fdY, 120, 40, 
+            font "Menlo", 24 
+            align 0% 
+            vertical_align 50% 
+            color "black" 
+            render "PCIe 16x"
+
+        line_color "#000000"
+        line_width 5
+        line_arrow X, Y, none, tX, tY, arrowhead
+
+
+qpi_link X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real -> 
+    picture
+        text_box ((X + tX) / 2) + fdX, ((Y + tY) / 2) + fdY, 120, 40, 
+            font "Menlo", 24 
+            align 0% 
+            vertical_align 50% 
+            color "black" 
+            render "QPI"
+
+        line_color "#000000"
+        line_width 5
+        line_arrow X, Y, arrowhead, tX, tY, arrowhead
+
+
+p2p_domain X:real, Y:real, W:real, H:real -> 
+    picture
+        line_color redhat_green1
+        color "#000", 20%
+        line_width 2
+        ellipse X, Y, W, H
+
+        text_box X, Y - H/2 - 30, 184, 40, 
+            font "Menlo", 24 
+            align 0% 
+            vertical_align 50% 
+            color "black" 
+            render "p2p domain"

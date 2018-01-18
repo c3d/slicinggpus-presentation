@@ -517,6 +517,27 @@ base_slide "Device assignment and management software",
 
 
 // ----------------------------------------------------------------------------
+base_slide "What about topology",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
+
+
+import "topo.ddd"
+
+
+// ----------------------------------------------------------------------------
+base_slide "What about topology con't",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
+    stepping
+    story
+        * "Not currently expressed"
+        * "p2p domains desired for GPU memory throughput"
+        * "future optimization point for ML/AI"
+
+// ----------------------------------------------------------------------------
 base_slide "vfio-mdev",
 // ----------------------------------------------------------------------------
     title page_label
