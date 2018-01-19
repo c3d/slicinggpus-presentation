@@ -394,7 +394,38 @@ section_slide "Virtual machine configuration",
                 vm_configuration_image I
 
 
-import "mdev.ddd"
+// ----------------------------------------------------------------------------
+base_slide "Emulated & paravirtualized GPU",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+
+
+// ----------------------------------------------------------------------------
+base_slide "Emulated & paravirtualized GPU libvirt/QEMU API",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+
+
+// ----------------------------------------------------------------------------
+base_slide "Emulated & paravirtualized GPU management layer",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+       * "Can be almost always present..."
+       ** "convenient VM installation"
+       ** "migration works, SPICE/VNC over separate network"
+       ** "QXL occupies VGA region, device passthrough "
+
+       paragraph " "
+       * "Only omitted for specific use-cases, such as"
+       ** "headless VMs"
+       ** "high performance VMs"
+
 
 // ----------------------------------------------------------------------------
 base_slide "Device assignment",
