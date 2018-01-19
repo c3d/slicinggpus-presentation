@@ -300,7 +300,11 @@ base_slide "GPU virtualization: vGPU, GVT-g, MxGPU",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "Split a virtualization capable GPU between multiple guests"
-    graphics_api (if smooth_step < 3 then "vGPU" else "vGPU+VMs")
+    // graphics_api (if smooth_step < 3 then "vGPU" else "vGPU+VMs")
+    if smooth_step < 4.5 then
+        graphics_api "vGPU"
+    else
+        graphics_api "vGPU+VMs"
     story
         at_current_step
         paragraph "Pros"
@@ -312,6 +316,35 @@ base_slide "GPU virtualization: vGPU, GVT-g, MxGPU",
         § "Cons"
         * "Medium flexibility"
         * "H/W requirements"
+        * "Migration?"
+
+
+// ----------------------------------------------------------------------------
+base_slide "This is all very much work in progress",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Live migration of NVIDIA GPUs announced at Xen Summit 2018"
+    stepping
+    picture
+        locally
+            frame_texture 1900, 1000,
+                image 0, -300 + 400 * smooth_step, 100%, 100%, "LiveMigration.png"
+            show fade_out_at(smooth_step, 3)
+            rectangle 1900, 1000
+        if smooth_step >= 2.01 then
+            locally
+                show fade_at(smooth_step, 3)
+                // From https://www.youtube.com/watch?v=y2SkU5JODIY
+                INTEL_LIVE_MIGRATION -> "movies/Intel GVT-g Live Migration Demo-y2SkU5JODIY.mp4##start-time=8"
+                movie 0, 0, 200%, 200%, INTEL_LIVE_MIGRATION
+                on "pageexit",
+                    movie_drop INTEL_LIVE_MIGRATION
+        text_box 0, 520, 1600, 150,
+            style "code"
+            paragraph "https://blogs.nvidia.com/blog/2018/01/04/vgpu-xenmotion-technology/"
+            at_step 3
+            style "story"
+            paragraph "(Live migration was demoed for Intel GVT-g at Xen Summit 2016)"
 
 
 
