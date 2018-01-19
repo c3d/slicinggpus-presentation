@@ -212,13 +212,17 @@ base_slide "Full emulation of graphics device",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "Presents a VGA-class device to the guest with software rendering"
-    graphics_api "Emulation"
+    if smooth_step < 6.5 then
+        graphics_api "Emulation"
+    else
+        graphics_api "Emulation+VMs"
     pros
         * "Compatibility (Old)"
         ** "Old hardware"
         ** "Old software"
         * "Works at guest boot"
         * "Virt. features"
+        ** "Many concurrent VMs"
         ** "Migration"
         ** "Remote access"
     cons
@@ -226,16 +230,9 @@ base_slide "Full emulation of graphics device",
         * "Legacy quirks"
         * "No 3D"
         * "No compositing"
-    at_step 10
+        * "Modern desktops lag"
+    at_step 11
     graphics_api_mark "red", "Slow"
-
-
-// ----------------------------------------------------------------------------
-base_slide "Full emulation enables many concurrent VMs",
-// ----------------------------------------------------------------------------
-    title page_label
-    subtitle "It's all software, so creating multiple instances is easy"
-    graphics_api "Emulation+VMs"
 
 
 // ----------------------------------------------------------------------------
@@ -245,6 +242,7 @@ base_slide "Paravirtualization: virtio-gpu, Virgil, GVT-s",
     subtitle "Intercept graphic commands in guest, perform rendering in host"
     graphics_api "Paravirt"
     pros
+        * "Accelerates 2D"
         * "Some 3D"
         * "Flexible"
     cons

@@ -154,7 +154,7 @@ graphics_api_adjust "Emulation" ->
     show_VGPU           0
     show_PGPU           0
     guest_kernel        "Guest kernel"
-    guest_GPU           "VGA/QXL driver"
+    guest_GPU           "VGA-class driver"
     guest_chipset       "Chipset drivers"
     guest_graphics      "Graphics API"
     guest_manager       "Window manager"
@@ -187,7 +187,7 @@ graphics_api_adjust "Emulation+VMs" ->
     show_VGPU           0
     show_PGPU           0
     guest_kernel        "Guest kernel"
-    guest_GPU           "VGA/QXL driver"
+    guest_GPU           "VGA-class driver"
     guest_chipset       "Chipset drivers"
     guest_graphics      "Graphics API"
     guest_manager       "Window manager"
