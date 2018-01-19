@@ -247,7 +247,8 @@ base_slide "Paravirtualization: virtio-gpu, Virgil, GVT-s",
         * "Flexible"
     cons
         * "No vendor features"
-        * "No virt. features"
+        * "Limited virt. features"
+        * "Medium performance"
 
 
 
@@ -332,6 +333,19 @@ base_slide "This is all very much work in progress",
             at_step 3
             style "story"
             paragraph "(Live migration was demoed for Intel GVT-g at Xen Summit 2016)"
+
+
+
+// ----------------------------------------------------------------------------
+base_slide "Resource allocation and sharing",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Vendors are still looking for the best approach"
+    stepping
+    picture
+        show fade_at(page_time, 1)
+        image 0, 0, 250%, 250%, "GPUComparison.png"
+        at_step 1
 
 
 
