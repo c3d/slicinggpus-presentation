@@ -26,10 +26,10 @@ base_slide "Several types of remote access solutions",
     picture
         column 0,
             paragraph "From guest"
-            anchor { graphics_api_picture "GuestRemoteSmall" }
+            anchor {  }
         column 1,
             paragraph "From host"
-            anchor { graphics_api_picture "HostRemoteSmall" }
+            anchor {  }
 
         row 0,
             paragraph "Graphic commands"
@@ -93,6 +93,20 @@ base_slide "Host-based remote access",
     title page_label
     subtitle "Networked graphics rendering is performed through the SPICE server"
     graphics_api "HostRemote"
+
+// ----------------------------------------------------------------------------
+base_slide "Guest-side SPICE streaming server (NVIDIA)",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Render and compress H264 stream using vGPU"
+    graphics_api "GuestStreaming"
+
+// ----------------------------------------------------------------------------
+base_slide "Host-side SPICE streaming server (Intel?)",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Render and compress H264 stream using host GPU"
+    graphics_api "HostStreaming"
 
 import "APIs.ddd"
 
