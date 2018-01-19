@@ -563,6 +563,8 @@ base_slide "vfio-mdev",
         * "mdev_register_device()"
         ** "callbacks to the vendor driver"
 
+import "mdev.ddd"
+
 
 // ----------------------------------------------------------------------------
 base_slide "vfio-mdev sysfs interface",
