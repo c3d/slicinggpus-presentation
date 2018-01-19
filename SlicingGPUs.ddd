@@ -406,7 +406,47 @@ section_slide "Virtual machine configuration",
                 vm_configuration_image I
 
 
-import "mdev.ddd"
+// ----------------------------------------------------------------------------
+base_slide "Emulated & paravirtualized GPU libvirt/QEMU API",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+       paragraph "Simple to use, hard to configure:"
+       at_current_step
+       paragraph "Which model?"
+       at_current_step
+       paragraph "(for emulated models)"
+       paragraph "How much (v)ram?"
+       paragraph "How many heads?"
+       paragraph "How many outputs?"
+
+    picture
+        code_box 300, 200, 1100, 250, "QEMU command line",
+            font_size 26
+            text load_text "qemucmdline-emu"
+        code_box 300, -150, 1100, 250, "libvirt XML",
+            font_size 26
+            text load_text "emuxml"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Emulated & paravirtualized GPU management layer",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    story
+       * "Can be almost always present..."
+       ** "convenient VM installation"
+       ** "migration works, SPICE/VNC over separate network"
+       ** "QXL occupies VGA region, device passthrough"
+       * "difficulty: calculating overhead"
+
+       paragraph " "
+       * "Only omitted for specific use-cases, such as"
+       ** "headless VMs"
+       ** "high performance VMs"
+
 
 // ----------------------------------------------------------------------------
 base_slide "Device assignment",
@@ -512,7 +552,7 @@ base_slide "Device assignment and management software",
         * "bad idea in the management layer..."
         ** "host pinning"
         ** { bold "no cloud!" }
-        * "inherently 1:1 GPU to VM mapping"
+        * "GPU cannot be shared"
 
     right_picture
         image_only_at 3 .. 4,
@@ -526,6 +566,26 @@ base_slide "Device assignment and management software",
                 line_arrow -600, 400, none, 200, -50, none
                 line_arrow -600, -50, none, 200, 400, none
 
+// ----------------------------------------------------------------------------
+base_slide "What about topology",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
+
+import "topo.ddd"
+
+
+// ----------------------------------------------------------------------------
+base_slide "What about topology con't",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
+    stepping
+    story
+        * "Currently not expressed"
+        * "p2p domains desired for GPU memory throughput"
+        * "future optimization point for ML/AI"
+
 
 // ----------------------------------------------------------------------------
 base_slide "vfio-mdev",
@@ -534,7 +594,7 @@ base_slide "vfio-mdev",
     stepping
     story
         paragraph "could we solve VFIO issues?"
-        * "IOMMU grouping"
+        * "IOMMU"
         * "assignment by address"
 
         at_current_step
@@ -543,6 +603,8 @@ base_slide "vfio-mdev",
         * "mdev_register_driver()"
         * "mdev_register_device()"
         ** "callbacks to the vendor driver"
+
+import "mdev.ddd"
 
 
 // ----------------------------------------------------------------------------
@@ -688,13 +750,14 @@ base_slide "Does vfio-mdev help the management layer?",
         paragraph "So, does vfio-mdev help?"
         * "devices are addressed by a type"
         * "we don't have to care about IOMMU"
+        * "doesn't fit use cases that require topology awareness*"
         * "few rough edges"
         * "... win!"
 
     right_picture
-        image_only_at 4,
+        image_only_at 5,
             image -100, 50, 90%, 90%, "cloud.png"
-        image_only_at 4,
+        image_only_at 5,
             image -100, 50, (10 * sin(page_time) + 100)%, (10 * sin(page_time) + 100)%, "ok.png"
 
 
