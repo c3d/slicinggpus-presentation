@@ -531,7 +531,7 @@ base_slide "Device assignment and management software",
         * "bad idea in the management layer..."
         ** "host pinning"
         ** { bold "no cloud!" }
-        * "inherently 1:1 GPU to VM mapping"
+        * "GPU cannot be shared"
 
     right_picture
         image_only_at 3 .. 4,
@@ -561,7 +561,7 @@ base_slide "What about topology con't",
     subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
     stepping
     story
-        * "Not currently expressed"
+        * "Currently not expressed"
         * "p2p domains desired for GPU memory throughput"
         * "future optimization point for ML/AI"
 
@@ -573,7 +573,7 @@ base_slide "vfio-mdev",
     stepping
     story
         paragraph "could we solve VFIO issues?"
-        * "IOMMU grouping"
+        * "IOMMU"
         * "assignment by address"
 
         at_current_step
