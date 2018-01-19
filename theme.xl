@@ -49,6 +49,10 @@ theme_font  "RedHat", Master, "row"             -> font "Overpass", bold
 theme_size  "RedHat", Master, "row"             -> 35
 theme_color "RedHat", Master, "row"             -> color "black"
 theme_align "RedHat", Master, "row"             -> align 2%; vertical_align 5%
+theme_font  "RedHat", Master, "cell"            -> font "Overpass"
+theme_size  "RedHat", Master, "cell"            -> 32
+theme_color "RedHat", Master, "cell"            -> color "black"
+theme_align "RedHat", Master, "cell"            -> align 0%; vertical_align 30%
 
 theme_align "RedHat", Master,"story",N          -> margins 40*N, 0
 theme_color "RedHat", Master,"story",N          -> color "black", 0.99-0.2*N
@@ -566,6 +570,15 @@ row R:integer, Body ->
 //   A table row
 // ----------------------------------------------------------------------------
     cell "row", 0, 20 - R * 300, 1800, 290, Body
+
+
+cell R:integer, C:integer, Body ->
+// ----------------------------------------------------------------------------
+//    A cell within a table
+// ----------------------------------------------------------------------------
+    text_box C * 650 - 100, 20 - R * 300, 600, 280,
+        style "cell"
+        render Body
 
 
 cell Style:text, X:real, Y:real, W:real, H:real, Body ->

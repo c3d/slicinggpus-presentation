@@ -14,9 +14,12 @@
 
 // Visibility settings
 show_API N      -> interpolate 5%, N, show_API
+show_app N      -> interpolate 5%, N, show_app
 show_cables N   -> interpolate 5%, N, show_cables
+show_network N  -> interpolate 5%, N, show_network
 show_devices N  -> interpolate 5%, N, show_devices
 show_virt N     -> interpolate 5%, N, show_virt
+show_spice N    -> interpolate 5%, N, show_spice
 show_VMs N      -> interpolate 5%, N, show_VMs
 show_host_GPU N -> interpolate 5%, N, show_host_GPU
 show_passthru N -> interpolate 5%, N, show_passthru
@@ -26,9 +29,12 @@ show_VGPU N     -> interpolate 5%, N, show_VGPU
 show_PGPU N     -> interpolate 5%, N, show_PGPU
 
 show_API        -> 0.0
+show_app        -> 0.0
 show_cables     -> 0.0
+show_network    -> 0.0
 show_devices    -> 0.0
 show_virt       -> 0.0
+show_spice      -> 0.0
 show_VMs        -> 0.0
 show_host_GPU   -> 0.0
 show_passthru   -> 0.0
@@ -38,21 +44,23 @@ show_VGPU       -> 0.0
 show_PGPU       -> 0.0
 
 // Text parameters
-host_kernel N   -> host_kernel := N
-host_GPU N      -> host_GPU := N
-host_chipset N  -> host_chipset := N
 guest_kernel N  -> guest_kernel := N
 guest_GPU N     -> guest_GPU := N
 guest_chipset N -> guest_chipset := N
+guest_graphics N-> guest_graphics := N
 protocol_color N-> protocol_color := N
+host_kernel N   -> host_kernel := N
+host_GPU N      -> host_GPU := N
+host_chipset N  -> host_chipset := N
 
-host_kernel     -> "Host kernel"
-host_GPU        -> "GPU Driver"
-host_chipset    -> "Chipset drivers"
 guest_kernel    -> "Guest kernel"
 guest_GPU       -> "Guest Driver"
 guest_chipset   -> "Chipset drivers"
+guest_graphics  -> "Graphics API"
 protocol_color  -> "#48C"
+host_kernel     -> "Host kernel"
+host_GPU        -> "GPU Driver"
+host_chipset    -> "Chipset drivers"
 
 
 
@@ -67,9 +75,12 @@ graphics_api_adjust "Base" ->
 //   Adjust for smple box diagram
 // ----------------------------------------------------------------------------
     show_API            0
+    show_app            0
     show_cables         0
+    show_network        0
     show_devices        0
     show_virt           0
+    show_spice          0
     show_VMs            0
     show_host_GPU       0
     show_passthru       0
@@ -77,12 +88,13 @@ graphics_api_adjust "Base" ->
     show_VGA            0
     show_VGPU           0
     show_PGPU           0
-    host_kernel         "Kernel"
-    host_GPU            "GPU driver"
-    host_chipset        "Chipset drivers"
     guest_kernel        "Guest kernel"
     guest_GPU           "GPU driver"
     guest_chipset       "Chipset drivers"
+    guest_graphics      "Graphics API"
+    host_kernel         "Kernel"
+    host_GPU            "GPU driver"
+    host_chipset        "Chipset drivers"
 
 
 graphics_api_adjust "Dataflow" ->
@@ -90,9 +102,12 @@ graphics_api_adjust "Dataflow" ->
 //   Adjust for API data flow illustration
 // ----------------------------------------------------------------------------
     show_API            1
+    show_app            1
     show_cables         1
+    show_network        0
     show_devices        1
     show_virt           0
+    show_spice          0
     show_VMs            0
     show_host_GPU       0
     show_passthru       0
@@ -100,12 +115,13 @@ graphics_api_adjust "Dataflow" ->
     show_VGA            0
     show_VGPU           0
     show_PGPU           0
-    host_kernel         "Kernel"
-    host_GPU            "GPU driver"
-    host_chipset        "Chipset drivers"
     guest_kernel        "Guest kernel"
     guest_GPU           "GPU driver"
     guest_chipset       "Chipset drivers"
+    guest_graphics      "Graphics API"
+    host_kernel         "Kernel"
+    host_GPU            "GPU driver"
+    host_chipset        "Chipset drivers"
 
 
 graphics_api_adjust "Emulation" ->
@@ -113,9 +129,12 @@ graphics_api_adjust "Emulation" ->
 //   Adjust for full emulation with VGA device
 // ----------------------------------------------------------------------------
     show_API            1
+    show_app            1
     show_cables         1
+    show_network        0
     show_devices        1
     show_virt           1
+    show_spice          0
     show_VMs            0
     show_host_GPU       1
     show_passthru       0
@@ -123,13 +142,14 @@ graphics_api_adjust "Emulation" ->
     show_VGA            1
     show_VGPU           0
     show_PGPU           0
-    host_kernel         "Host kernel"
-    host_GPU            "GPU driver"
-    host_chipset        "Chipset drivers"
     guest_kernel        "Guest kernel"
     guest_GPU           "VGA/QXL driver"
     guest_chipset       "Chipset drivers"
-    protocol_color      "orange"
+    guest_graphics      "Graphics API"
+    host_kernel         "Host kernel"
+    host_GPU            "GPU driver"
+    host_chipset        "Chipset drivers"
+    protocol_color      "blue"
 
 
 graphics_api_adjust "Emulation+VMs" ->
@@ -137,9 +157,12 @@ graphics_api_adjust "Emulation+VMs" ->
 //   Adjust for full emulation with many VMs
 // ----------------------------------------------------------------------------
     show_API            1
+    show_app            1
     show_cables         1
+    show_network        0
     show_devices        1
     show_virt           1
+    show_spice          0
     show_VMs            1
     show_host_GPU       1
     show_passthru       0
@@ -147,13 +170,14 @@ graphics_api_adjust "Emulation+VMs" ->
     show_VGA            1
     show_VGPU           0
     show_PGPU           0
-    host_kernel         "Host kernel"
-    host_GPU            "GPU driver"
-    host_chipset        "Chipset drivers"
     guest_kernel        "Guest kernel"
     guest_GPU           "VGA/QXL driver"
     guest_chipset       "Chipset drivers"
-    protocol_color      "orange"
+    guest_graphics      "Graphics API"
+    host_kernel         "Host kernel"
+    host_GPU            "GPU driver"
+    host_chipset        "Chipset drivers"
+    protocol_color      "blue"
 
 
 graphics_api_adjust "Paravirt" ->
@@ -161,9 +185,12 @@ graphics_api_adjust "Paravirt" ->
 //   Adjust for paravirtualized case
 // ----------------------------------------------------------------------------
     show_API            1
+    show_app            1
     show_cables         1
+    show_network        0
     show_devices        1
     show_virt           1
+    show_spice          0
     show_VMs            0
     show_host_GPU       1
     show_passthru       0
@@ -171,12 +198,13 @@ graphics_api_adjust "Paravirt" ->
     show_VGA            0
     show_VGPU           1
     show_PGPU           0
-    host_kernel         "Host kernel"
-    host_GPU            "GPU driver"
-    host_chipset        "Chipset drivers"
     guest_kernel        "Guest kernel"
     guest_GPU           "VirtIO-GPU"
     guest_chipset       "Chipset drivers"
+    guest_graphics      "Graphics API"
+    host_kernel         "Host kernel"
+    host_GPU            "GPU driver"
+    host_chipset        "Chipset drivers"
     protocol_color      "yellow"
 
 
@@ -185,9 +213,12 @@ graphics_api_adjust "Paravirt+VMs" ->
 //   Adjust for paravirtualized case
 // ----------------------------------------------------------------------------
     show_API            1
+    show_app            1
     show_cables         1
+    show_network        0
     show_devices        1
     show_virt           1
+    show_spice          0
     show_VMs            1
     show_host_GPU       1
     show_passthru       0
@@ -195,12 +226,13 @@ graphics_api_adjust "Paravirt+VMs" ->
     show_VGA            0
     show_VGPU           1
     show_PGPU           0
-    host_kernel         "Host kernel"
-    host_GPU            "GPU driver"
-    host_chipset        "Chipset drivers"
     guest_kernel        "Guest kernel"
     guest_GPU           "VirtIO-GPU"
     guest_chipset       "Chipset drivers"
+    guest_graphics      "Graphics API"
+    host_kernel         "Host kernel"
+    host_GPU            "GPU driver"
+    host_chipset        "Chipset drivers"
     protocol_color      "yellow"
 
 
@@ -209,9 +241,12 @@ graphics_api_adjust "Passthru" ->
 //   Adjust for pass-thru case
 // ----------------------------------------------------------------------------
     show_API            1
+    show_app            1
     show_cables         1
+    show_network        0
     show_devices        1
     show_virt           1
+    show_spice          0
     show_VMs            0
     show_host_GPU       0
     show_passthru       1
@@ -219,12 +254,13 @@ graphics_api_adjust "Passthru" ->
     show_VGA            0
     show_VGPU           0
     show_PGPU           1
-    host_kernel         "Host kernel (VT-d)"
-    host_GPU            "GPU driver"
-    host_chipset        "IOMMU + pci-stub"
     guest_kernel        "Guest kernel"
     guest_GPU           "Vendor driver"
     guest_chipset       "Chipset drivers"
+    guest_graphics      "Graphics API"
+    host_kernel         "Host kernel (VT-d)"
+    host_GPU            "GPU driver"
+    host_chipset        "IOMMU + pci-stub"
     protocol_color      "lightgreen"
 
 
@@ -233,22 +269,26 @@ graphics_api_adjust "vGPU" ->
 //   Adjust for pass-thru case
 // ----------------------------------------------------------------------------
     show_API            1
+    show_app            1
     show_cables         1
+    show_network        0
     show_devices        1
     show_virt           1
+    show_spice          0
     show_VMs            0
     show_host_GPU       20%
     show_passthru       1
     show_slow           0
     show_VGA            0
-    show_VGPU           1
-    show_PGPU           0
-    host_kernel         "Host kernel (VT-d)"
-    host_GPU            "Vendor driver"
-    host_chipset        "VFIO + mdev"
+    show_VGPU           0
+    show_PGPU           1
     guest_kernel        "Guest kernel"
     guest_GPU           "Vendor driver"
     guest_chipset       "Chipset drivers"
+    guest_graphics      "Graphics API"
+    host_kernel         "Host kernel (VT-d)"
+    host_GPU            "Vendor driver"
+    host_chipset        "VFIO + mdev"
     protocol_color      "lightgreen"
 
 
@@ -257,23 +297,101 @@ graphics_api_adjust "vGPU+VMs" ->
 //   Adjust for pass-thru case
 // ----------------------------------------------------------------------------
     show_API            1
+    show_app            1
     show_cables         1
+    show_network        0
     show_devices        1
     show_virt           1
+    show_spice          0
     show_VMs            1
     show_host_GPU       20%
-    show_passthru       1
+    show_passthru       0
     show_slow           0
     show_VGA            0
-    show_VGPU           1
-    show_PGPU           0
-    host_kernel         "Host kernel (VT-d)"
-    host_GPU            "Vendor driver"
-    host_chipset        "VFIO + mdev"
+    show_VGPU           0
+    show_PGPU           1
     guest_kernel        "Guest kernel"
     guest_GPU           "Vendor driver"
     guest_chipset       "Chipset drivers"
+    guest_graphics      "Graphics API"
+    host_kernel         "Host kernel (VT-d)"
+    host_GPU            "Vendor driver"
+    host_chipset        "VFIO + mdev"
     protocol_color      "lightgreen"
+
+
+graphics_api_adjust "GuestRemote" ->
+// ----------------------------------------------------------------------------
+//   Adjust for pass-thru case
+// ----------------------------------------------------------------------------
+    show_API            1
+    show_app            1
+    show_cables         0
+    show_network        1
+    show_devices        0
+    show_virt           1
+    show_spice          0
+    show_VMs            0
+    show_host_GPU       1
+    show_passthru       0
+    show_slow           0
+    show_VGA            0
+    show_VGPU           0
+    show_PGPU           0
+    guest_kernel        "Guest kernel"
+    guest_GPU           "Network driver"
+    guest_chipset       "Guest chipset"
+    guest_graphics      "Networked Graphics"
+    host_kernel         "Host kernel"
+    host_GPU            "Network driver"
+    host_chipset        "Host chipset"
+    protocol_color      "orange"
+
+
+graphics_api_adjust "HostRemote" ->
+// ----------------------------------------------------------------------------
+//   Adjust for pass-thru case
+// ----------------------------------------------------------------------------
+    show_API            1
+    show_app            1
+    show_cables         0
+    show_network        1
+    show_devices        0
+    show_virt           1
+    show_spice          1
+    show_VMs            0
+    show_host_GPU       1
+    show_passthru       0
+    show_slow           0
+    show_VGA            0
+    show_VGPU           0
+    show_PGPU           0
+    guest_kernel        "Guest kernel"
+    guest_GPU           "VirtIO driver (QXL)"
+    guest_chipset       "Guest chipset"
+    guest_graphics      "Graphics API"
+    host_kernel         "Host OS"
+    host_GPU            "Network driver"
+    host_chipset        "Host chipset"
+    protocol_color      "#F8F"
+
+
+graphics_api_adjust "GuestRemoteSmall" ->
+// ----------------------------------------------------------------------------
+//   Adjust for pass-thru case
+// ----------------------------------------------------------------------------
+    translate           -50, -150, 0
+    scale               35%
+    graphics_api_adjust "GuestRemote"
+
+
+graphics_api_adjust "HostRemoteSmall" ->
+// ----------------------------------------------------------------------------
+//   Adjust for pass-thru case
+// ----------------------------------------------------------------------------
+    translate           -50, -150, 0
+    scale               35%
+    graphics_api_adjust "HostRemote"
 
 
 graphics_api_adjust Text:text ->
@@ -305,28 +423,45 @@ graphics_api_picture Name ->
 // ----------------------------------------------------------------------------
     graphics_api_adjust Name
 
+    translate_y -60 * show_spice
     locally
-        show show_devices
+        color "white", show_devices + show_network
         image -210, -210, 60%, 60%, "rampage.png"
-        image  200, -300, 20%, 20%, "NVIDIA Tesla P4Card.png"
+        color "white", show_devices
         image  700, -280, 50%, 50%, "NEC Display.png"
+        image  200, -300, 20%, 20%, "NVIDIA Tesla P4Card.png"
+        color "white", show_network
+        image  700, -290, 25%, 25%, "Laptop.png"
+        image  200, -300, 20%, 20%, "NetworkCard.png"
 
+    if show_spice > 1% then locally
+        show show_spice
+        diagram_box "#038", 0, 60, 1000, 150 * show_spice, "QEMU"
+        diagram_box "#25A", 200, 35, 350, 60 * show_spice, "SPICE Server"
     locally
         show show_virt
         diagram_box "#A02", 0, -100, 1000, 150 * show_virt, host_kernel
-        diagram_box "#052", -200, -125, 350, 60, host_chipset
+        diagram_box "#B42", -200, -125, 350, 60, host_chipset
         show show_host_GPU
-        diagram_box "#026", 200, -125, 350, 60, host_GPU
+        diagram_box "#B42", 200, -125, 350, 60, host_GPU
 
     // Depending on the step we are in, draw either one or three OS images
-    if show_VMs > 1% then
-        graphics_api_VMs show_VMs
-    else
-        graphics_api_OS
-        show 99%
-        graphics_api_app
+    graphics_api_system
     graphics_api_cables
     graphics_api_screen
+
+
+graphics_api_system ->
+// ----------------------------------------------------------------------------
+//    Show the system (OS + VMs)
+// ----------------------------------------------------------------------------
+    locally
+        if show_VMs > 1% then
+            graphics_api_VMs show_VMs
+        else
+            graphics_api_OS
+            show 99%
+            graphics_api_app
 
 
 graphics_api_app_texture ->
@@ -350,7 +485,7 @@ graphics_api_app_texture ->
                 color_hsv 80 * I + 12 * rotate_time, 60%, 100%
                 sphere 30 - 2 * I * sin(0.7 * I + rotate_time)
     color "white"
-    show show_API
+    show show_app
 
 
 graphics_outline_color C, Body ->
@@ -367,25 +502,30 @@ graphics_outline_color C, Body ->
         do Body
 
 
+graphics_api_virt_offset -> 120 * show_virt + 160 * show_spice
+
 graphics_api_app ->
 // ----------------------------------------------------------------------------
 //   Illustrates how data propagates along the API chain
 // ----------------------------------------------------------------------------
-    if show_API > 1% then locally
+    if show_app > 1% then locally
         graphics_api_app_texture
         locally
             Transform
-            ellipse 200, 260 + 120 * show_virt, 200, 100
+            ellipse 200, 260 + graphics_api_virt_offset, 200, 100
             locally
-                translate 200, 80 + 120 * show_virt, 15
+                translate 200, 80 + graphics_api_virt_offset, 15
                 rotate_z -90
-                graphics_outline_color "#44C",
-                    arrow 0, 0, 250, 100, 44, 0.32
+                graphics_outline_color "cyan",
+                    arrow -80, 0, 100, 100, 44, 0.52
+                    arrow  90, 0, 100, 100, 44, 0.52
                 graphics_outline_color protocol_color,
                     show show_virt
                     scale show_virt
-                    translate_x 250
-                    arrow 0 + 75 * show_passthru, 0, 120 + 150 * show_passthru, 100, 44, 0.32
+                    translate_x 250 + 160 * show_virt + 75 * show_passthru
+                    arrow 0, 0, 100 + 150 * show_passthru, 100, 44, 0.52
+                    show show_spice
+                    arrow -170, 0, 100, 100, 44, 0.52
 
 
 graphics_api_cables ->
@@ -397,8 +537,16 @@ graphics_api_cables ->
             graphics_api_app_texture
             show show_cables
             graphics_outline_color "#36B600",
-                arrow -50, -270, 250, 100, 44, 0.32
-                arrow 450, -270, 250, 100, 44, 0.32
+                arrow -50, -270, 250, 100, 44, 0.52
+                arrow 450, -270, 250, 100, 44, 0.52
+                rectangle -250, -270, 150, 140
+    if show_network > 1% then
+        locally
+            graphics_api_app_texture
+            show show_network
+            graphics_outline_color protocol_color,
+                arrow -50, -270, 250, 80, 44, 0.52
+                arrow 450, -270, 250, 80, 44, 0.52
                 rectangle -250, -270, 150, 140
 
 
@@ -407,27 +555,31 @@ graphics_api_OS ->
 //   Image of an operating system (either standalone or running in a VM)
 // ----------------------------------------------------------------------------
     locally
-        translate_y 120 * show_virt
-        diagram_box "#298", 0, 260, 1000, 150, "Application"
-        diagram_box "#026", 0, 100, 1000, 150, "Graphics Environment"
+        translate_y graphics_api_virt_offset
         show 100% - 30% * show_virt
+        diagram_box "#298", 0, 260, 1000, 150, "Application"
+        diagram_box "#038", 0, 100, 1000, 150, "User-space Graphics"
         diagram_box "#A02", 0, -60, 1000, 150, guest_kernel
+
         translate_z 30
-        diagram_box "#7A7", -200, 80, 350, 60, "Window Manager"
-        diagram_box "#063", -200, -85, 350, 60, guest_chipset
-        diagram_box "#77A", 200, 80, 350, 60, "Graphics API"
-        diagram_box "#038", 200, -85, 350, 60, guest_GPU
+        diagram_box "#25A", -200, 80, 350, 60, "Window Manager"
+        diagram_box "#B42", -200, -85, 350, 60, guest_chipset
+        diagram_box "#25A", 200, 80, 350, 60, guest_graphics
+        diagram_box "#B42", 200, -85, 350, 60, guest_GPU
+
         translate_z 50
         color "white", show_API
         image 430, 60, 15%, 15%, "DirectX12.png"
         image 430, 110, 10%, 10%, "vulkan.png"
         image 430, 150, 10%, 10%, "opengl.png"
-        show 60%
+        show 80%
         color "white", show_virt
         image -420, -140, 15%, 15%, "Intel CPU.png"
         image -300, -140, 12%, 12%, "Motherboard.png"
         color "white", show_VGA
         image  300, -140, 42%, 42%, "OldATICard.png"
+        color "white", show_network
+        image  300, -140, 12%, 12%, "NetworkCard.png"
         color "white", show_VGPU
         image  300, -140, 30%, 30%, "Virtual GPU.png"
         color "white", show_PGPU

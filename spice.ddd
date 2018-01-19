@@ -1,0 +1,137 @@
+// ----------------------------------------------------------------------------
+base_slide "Why remote access matters",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Most virtual machines are used remotely"
+    stepping
+    picture
+        translate 400 * fade_at(smooth_step, 1), 80, 50
+        scale 180% - 60% * fade_at(smooth_step, 1)
+        spice_mobile_client := 6 * fade_at(smooth_step, 2) - 3 * fade_at(smooth_step, 3)
+        spice_server_and_clients
+    story
+        § "Any cloud-based VM host is accessed remotely"
+        § "Cloud gaming: stream high-quality 3D to your phone"
+        § "Bring your work environment to any device"
+        §
+        § "For most KVM users, this means SPICE"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Several types of remote access solutions",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "A relatively simple matrix"
+    stepping
+    picture
+        column 0,
+            paragraph "From guest"
+            anchor { graphics_api_picture "GuestRemoteSmall" }
+        column 1,
+            paragraph "From host"
+            anchor { graphics_api_picture "HostRemoteSmall" }
+
+        row 0,
+            paragraph "Graphic commands"
+            anchor
+                color "red", 50%
+                line_color "red"
+                rectangle 100, -100, 100, 70
+                color "blue", 50%
+                line_color "blue"
+                circle 150, -80, 30
+                text_box 250, -120, 200, 100,
+                    color "green", 50%
+                    line_color "green"
+                    font "Times", 60
+                    text "Text"
+        row 1,
+            paragraph "Video streaming"
+            anchor
+                graphics_api_app_texture
+                color "white"
+                rounded_rectangle 200, -100, 300, 200, 30
+
+        at_step 1
+        cell 0, 0,
+            paragraph { bold "Guest-provided solutions:" }
+            paragraph "VNC server"
+            paragraph "Microsoft Remote Desktop"
+            paragraph "Apple Screen Sharing"
+            paragraph { italic "Require network access to guest" }
+        at_step 2
+        cell 0, 1,
+            paragraph { bold "SPICE server:" }
+            paragraph "Accelerated by QXL driver"
+            paragraph { italic "Only 2D at the moment" }
+            paragraph "3D support with Virgil planned"
+        at_step 3
+        cell 1, 0,
+            paragraph { bold "SPICE streaming agent:" }
+            paragraph "Uses H/W acceleration for NVIDIA cards"
+            paragraph "Communicates with SPICE server"
+            paragraph { italic "Requires H264 (patents)" }
+            paragraph { italic "Separate boot screen" }
+        at_step 4
+        cell 1, 1,
+            paragraph { bold "SPICE server streaming (planned):" }
+            paragraph { italic "Depends on Virgil and dma-buf" }
+            paragraph "Possible to encode VP8 / VP9?"
+            paragraph "Only 2D at the moment"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Guest-based remote access",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Services natively offered by the guest operating systems"
+    graphics_api "GuestRemote"
+
+// ----------------------------------------------------------------------------
+base_slide "Host-based remote access",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Networked graphics rendering is performed through the SPICE server"
+    graphics_api "HostRemote"
+
+import "APIs.ddd"
+
+
+spice_server_movie 0 -> "movies/New Nvidia GTX 690 - Performance Using IRAY Renderer & 3D Studio Max 2013-HfGt8ZwdOF4.mkv##start-time=140##stop-time=260##input-repeat=-1"
+// From https://www.youtube.com/watch?v=t-Acp-Gy3UY
+spice_server_movie 1 -> "movies/Biomutant - Cinematic Trailer-t-Acp-Gy3UY.mkv####input-repeat=-1"
+spice_server_movie 2 -> "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5485##stop-time=5525##input-repeat=-1"
+spice_server_movie 3 -> spice_server_movie 1
+spice_server_movie 4 -> spice_server_movie 0
+spice_server_movie 5 -> "movies/FULL Nvidia Robotaxi Presentation at GTC 2017-c0Uh5OjEinM.mkv##start-time=5531##stop-time=5545##input-repeat=-1"
+
+
+spice_mobile_client -> 0.0
+spice_server_and_clients ->
+// ----------------------------------------------------------------------------
+//   Draw an animated server with various things displayed on screens
+// ----------------------------------------------------------------------------
+    image -250, 0, 50%, 50%, "GPU Server.png"
+    for I in 0..5 loop
+        locally
+            translate 100 + 250 * sin(pi*I/5), 150 * cos(pi*I/5), 0
+            color "white", fade_at(I, spice_mobile_client)
+            image 0, 0, 20%, 20%, "NEC Display.png"
+            color "white", fade_out_at(I, spice_mobile_client)
+            image 0, 1, 20%, 20%, "iPhone.png"
+            movie_texture spice_server_movie I
+            color "white"
+            rectangle 0, 10, 110, 60
+            on "pageexit",
+                movie_drop spice_server_movie I
+        locally
+            line_color redhat_red1
+            color "transparent"
+            line_width 6
+            path
+                endpoints_style NONE, ARROWHEAD
+                move_to -250, -250
+                move_to  250,  250
+                move_to -100, 0
+                line_to 0, 0
+                quad_to 250, 0, 100+200*sin(pi*I/5), 100*cos(pi*I/5)
