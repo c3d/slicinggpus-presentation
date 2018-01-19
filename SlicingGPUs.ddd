@@ -178,18 +178,18 @@ base_slide "Why virtualize GPUs",
 
     right_picture
         translate_x -100
-        rotate_image 1, "170410-misaligned.png"
-        rotate_movie 2, spice_server_movie 1
-        rotate_step 4, { spice_server_and_clients }
-        rotate_image 5, "openstack.png"
-        rotate_step 7,
+        rotate_image 2, "170410-misaligned.png"
+        rotate_movie 3, spice_server_movie 1
+        rotate_step  5, { spice_server_and_clients }
+        rotate_image 6, "openstack.png"
+        rotate_step  8,
             texture "titansupercomputer.jpg"
             texture_wrap true, true
             texture_transform
                 translate_x 0.32 * (1 + sin(0.13 * time))
                 scale_x 1791.0/5034.0
             rectangle 700, 700
-        rotate_image 8, "GPUFarm.jpg"
+        rotate_image 9, "GPUFarm.jpg"
 
 
 
