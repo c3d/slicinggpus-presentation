@@ -86,6 +86,13 @@ base_slide "Guest-based remote access",
     title page_label
     subtitle "Services natively offered by the guest operating systems"
     graphics_api "GuestRemote"
+    pros
+        * "Widely available"
+        * "User transparent"
+    cons
+        * "Post-boot only"
+        * "Requires guest network"
+
 
 // ----------------------------------------------------------------------------
 base_slide "Host-based remote access",

@@ -130,6 +130,8 @@ graphics_api_adjust "Dataflow" ->
     host_kernel         "Kernel"
     host_GPU            "GPU driver"
     host_chipset        "Chipset drivers"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, "#36B600", "Physical graphic bistreams"
 
 
 graphics_api_adjust "Emulation" ->
@@ -160,6 +162,9 @@ graphics_api_adjust "Emulation" ->
     host_GPU            "GPU driver"
     host_chipset        "Chipset drivers"
     protocol_color      "blue"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, "#36B600", "Physical graphic bistreams"
+    color_legend        2, protocol_color, "VGA screen buffer data"
 
 
 graphics_api_adjust "Emulation+VMs" ->
@@ -190,6 +195,9 @@ graphics_api_adjust "Emulation+VMs" ->
     host_GPU            "GPU driver"
     host_chipset        "Chipset drivers"
     protocol_color      "blue"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, "#36B600", "Physical graphic bistreams"
+    color_legend        2, protocol_color, "VGA screen buffer data"
 
 
 graphics_api_adjust "Paravirt" ->
@@ -220,6 +228,9 @@ graphics_api_adjust "Paravirt" ->
     host_GPU            "GPU driver"
     host_chipset        "Chipset drivers"
     protocol_color      "yellow"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, "#36B600", "Physical graphic bistreams"
+    color_legend        2, protocol_color, "Paravirtualized commands"
 
 
 graphics_api_adjust "Paravirt+VMs" ->
@@ -250,6 +261,9 @@ graphics_api_adjust "Paravirt+VMs" ->
     host_GPU            "GPU driver"
     host_chipset        "Chipset drivers"
     protocol_color      "yellow"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, "#36B600", "Physical graphic bistreams"
+    color_legend        2, protocol_color, "Paravirtualized commands"
 
 
 graphics_api_adjust "Passthru" ->
@@ -280,6 +294,9 @@ graphics_api_adjust "Passthru" ->
     host_GPU            "GPU driver"
     host_chipset        "IOMMU + pci-stub"
     protocol_color      "lightgreen"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, "#36B600", "Physical graphic bistreams"
+    color_legend        2, protocol_color, "Vendor-specific commands"
 
 
 graphics_api_adjust "vGPU" ->
@@ -310,6 +327,9 @@ graphics_api_adjust "vGPU" ->
     host_GPU            "Vendor driver"
     host_chipset        "VFIO + mdev"
     protocol_color      "lightgreen"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, "#36B600", "Physical graphic bistreams"
+    color_legend        2, protocol_color, "Vendor-specific commands"
 
 
 graphics_api_adjust "vGPU+VMs" ->
@@ -340,6 +360,9 @@ graphics_api_adjust "vGPU+VMs" ->
     host_GPU            "Vendor driver"
     host_chipset        "VFIO + mdev"
     protocol_color      "lightgreen"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, "#36B600", "Physical graphic bistreams"
+    color_legend        2, protocol_color, "Vendor-specific commands"
 
 
 graphics_api_adjust "GuestRemote" ->
@@ -370,6 +393,8 @@ graphics_api_adjust "GuestRemote" ->
     host_GPU            "Network driver"
     host_chipset        "Host chipset"
     protocol_color      "orange"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, protocol_color, "Network graphics stream"
 
 
 graphics_api_adjust "HostRemote" ->
@@ -400,6 +425,8 @@ graphics_api_adjust "HostRemote" ->
     host_GPU            "Network driver"
     host_chipset        "Host chipset"
     protocol_color      "#F8F"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, protocol_color, "SPICE graphics stream"
 
 
 graphics_api_adjust "GuestStreaming" ->
@@ -429,7 +456,10 @@ graphics_api_adjust "GuestStreaming" ->
     host_kernel         "Host OS"
     host_GPU            "Network driver"
     host_chipset        "(Vendor GPU driver)"
-    protocol_color      "#F8F"
+    protocol_color      "yellow"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, "lightgreen", "Vendor-specific commands"
+    color_legend        2, protocol_color, "H26 stream"
 
 
 graphics_api_adjust "HostStreaming" ->
@@ -443,10 +473,10 @@ graphics_api_adjust "HostStreaming" ->
     show_devices        0
     show_virt           1
     show_spice          1
-    show_stream         1
+    show_stream         2
     show_VMs            0
     show_host_GPU       1
-    show_passthru       0
+    show_passthru       1
     show_slow           0
     show_VGA            0
     show_VGPU           0
@@ -459,7 +489,10 @@ graphics_api_adjust "HostStreaming" ->
     host_kernel         "Host OS"
     host_GPU            "Network driver"
     host_chipset        "(Vendor GPU driver)"
-    protocol_color      "#F8F"
+    protocol_color      "yellow"
+    color_legend        0, "cyan", "Graphic commands"
+    color_legend        1, "lightgreen", "Vendor-specific commands"
+    color_legend        2, protocol_color, "H26 stream"
 
 
 graphics_api_adjust Text:text ->
@@ -495,12 +528,12 @@ graphics_api_picture Name ->
     locally
         color "white", show_devices + show_network - show_stream
         image -210, -210, 60%, 60%, "rampage.png"
-        color "white", show_devices
+        color "white", show_devices * 99%
         image  700, -280, 50%, 50%, "NEC Display.png"
         color "white", show_devices + show_stream
         image  graphics_api_x, -300, 20%, 20%, "NVIDIA Tesla P4Card.png"
-        color "white", show_network
-        image  700, -290, 25%, 25%, "Laptop.png"
+        color "white", show_network * 99%
+        image  700, -293, 26%, 26%, "Laptop.png"
         image  200, -300, 20%, 20%, "NetworkCard.png"
 
     if show_spice > 1% then locally
@@ -553,7 +586,7 @@ graphics_api_app_texture ->
                 translate_z 10 + 6 * I
                 color_hsv 80 * I + 12 * rotate_time, 60%, 100%
                 sphere 30 - 2 * I * sin(0.7 * I + rotate_time)
-    color "white"
+    color "white", 99%
     show show_app
 
 
@@ -572,7 +605,7 @@ graphics_outline_color C, Body ->
 
 
 graphics_api_virt_offset -> 120 * show_virt + 160 * show_spice
-graphics_api_x -> 200 - 400 * show_stream
+graphics_api_x -> 200 - 400 * fade_at(show_stream, 1)
 
 graphics_api_app ->
 // ----------------------------------------------------------------------------
@@ -586,34 +619,51 @@ graphics_api_app ->
                 translate graphics_api_x, 80 + graphics_api_virt_offset, 15
                 rotate_z -90
                 graphics_outline_color "cyan",
+                    // Application to Graphics API
                     arrow -80, 0, 100, 100, 44, 0.52
+                    // Graphics API to guest driver
+                    show 1-show_network * (1-show_spice)
                     arrow  90, 0, 100, 100, 44, 0.52
                 graphics_outline_color protocol_color,
-                    show show_virt
-                    scale show_virt
-                    translate_x 250 + 160 * (show_virt-show_stream) + 75 * max(show_passthru, show_stream)
-                    arrow 0, 0, 100 + 150 * max(show_passthru, show_stream), 100, 44, 0.52
-                    show show_spice - show_stream
-                    arrow -170, 0, 100, 100, 44, 0.52
+                    // Graphics API to guest driver, network case
+                    show show_network * (1-show_spice)
+                    arrow  90, 0, 100, 100, 44, 0.52
+                graphics_outline_color protocol_color,
+                    // Guest driver to either host driver or card
+                    translate_x 250
+                    scale show_virt * (1 - show_passthru)
+                    arrow 0, 0, 100, 100, 44, 0.52
+                graphics_outline_color "lightgreen",
+                    // Guess pass-thru (from guest to host driver)
+                    translate_x 250 + 75 * show_passthru
+                    scale show_passthru
+                    arrow 0, 0, 100 + 150 * show_passthru, 100, 44, 0.52
+                graphics_outline_color protocol_color,
+                    // SPICE server to network driver
+                    translate_x 400
+                    scale show_spice * (1 - show_passthru)
+                    arrow 0, 0, 100, 100, 44, 0.52
+
+
         if show_stream > 1% then locally
-            show show_stream
+            show 99% * fade_at(show_stream, 1)
             translate_y graphics_api_virt_offset
             locally
-                translate_y -300 * (1 - show_passthru)
-                rotate_z 45 * show_stream
-                scale show_stream
+                translate_y -300 * fade_at(show_stream, 2)
+                rotate_z 45 * fade_at(show_stream, 1)
+                scale fade_at(show_stream, 1)
                 graphics_outline_color "yellow",
                     double_arrow 0, 0, 200, 100, 44, 0.52
             locally
                 translate_x 200
                 rotate_z -90
-                scale show_stream
-                graphics_outline_color "yellow",
-                    show show_passthru
-                    arrow 160, 0, 100, 100, 44, 0.52
-                    arrow   0, 0, 100, 100, 44, 0.52
                 graphics_outline_color protocol_color,
                     arrow 320, 0, 100, 100, 44, 0.52
+                scale show_stream
+                graphics_outline_color "yellow",
+                    show fade_out_at(show_stream, 2)
+                    arrow 160, 0, 100, 100, 44, 0.52
+                    arrow   0, 0, 100, 100, 44, 0.52
 
 
 graphics_api_cables ->
@@ -634,7 +684,7 @@ graphics_api_cables ->
             show show_network
             graphics_outline_color protocol_color,
                 arrow 450, -270, 250, 80, 44, 0.52
-                show 1 - show_stream
+                show fade_out_at(show_stream, 1)
                 arrow -50, -270, 250, 80, 44, 0.52
                 rectangle -250, -270, 150, 140
 
@@ -702,7 +752,7 @@ graphics_api_screen ->
 //   Draw the screen with the application textures
 // ----------------------------------------------------------------------------
     locally
-        if show_VMs < 5% then
+        if show_VMs < 1% then
             graphics_api_app_texture
             rectangle 700, -260, 280, 160
         else
@@ -724,10 +774,23 @@ graphics_api_mark Color:text, Mark:text ->
 //   A highlight mark, e.g. "Slow!"
 // ----------------------------------------------------------------------------
     picture
-        translate 400, -20, 50
+        translate 500, 500, 50
         rotate_z 20
         scale 4 + sin(1.5*time)^4
         color Color, 50%
         line_color Color
         font "Impact", 30
         text Mark
+
+
+color_legend Index, Color, Body ->
+// ----------------------------------------------------------------------------
+//   Show a color legend
+// ----------------------------------------------------------------------------
+    text_box -650, -450 + 60 * Index, 550, 80,
+        style "comp"
+        color Color
+        rectangle 0, 10, 40, 40
+        color "#444"
+        text "  "
+        render Body

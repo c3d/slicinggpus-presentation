@@ -213,8 +213,7 @@ base_slide "Full emulation of graphics device",
     title page_label
     subtitle "Presents a VGA-class device to the guest with software rendering"
     graphics_api "Emulation"
-    story
-        § "Pros"
+    pros
         * "Compatibility (Old)"
         ** "Old hardware"
         ** "Old software"
@@ -222,11 +221,11 @@ base_slide "Full emulation of graphics device",
         * "Virt. features"
         ** "Migration"
         ** "Remote access"
-        §
-        § "Cons"
+    cons
         * "(Very) slow"
         * "Legacy quirks"
-        * "No 3D, no compositing"
+        * "No 3D"
+        * "No compositing"
     at_step 10
     graphics_api_mark "red", "Slow"
 
@@ -245,17 +244,13 @@ base_slide "Paravirtualization: virtio-gpu, Virgil, GVT-s",
     title page_label
     subtitle "Intercept graphic commands in guest, perform rendering in host"
     graphics_api "Paravirt"
-    story
-        paragraph "Pros"
+    pros
         * "Some 3D"
         * "Flexible"
-        §
-        § "Cons"
+    cons
         * "No vendor features"
         * "No virt. features"
-        §
-        § "Similar: API intercept"
-        * "e.g. Intel GVT-s"
+
 
 
 // ----------------------------------------------------------------------------
@@ -279,16 +274,13 @@ base_slide "GPU device assignment (aka pass-through)",
     title page_label
     subtitle "Assign the GPU to a single guest, poking a hole for GPU's memory mapped I/O "
     graphics_api "Passthru"
-    story
-        at_current_step
-        paragraph "Pros"
+    pros
         * "Performance"
         * "Compatibility (New)"
         ** "Use vendor driver"
         ** "Latest APIs"
         * "Graphics features"
-        §
-        § "Cons"
+    cons
         * "Boot console"
         * "Inflexible setup"
         * "Migration?"
@@ -305,15 +297,12 @@ base_slide "GPU virtualization: vGPU, GVT-g, MxGPU",
         graphics_api "vGPU"
     else
         graphics_api "vGPU+VMs"
-    story
-        at_current_step
-        paragraph "Pros"
+    pros
         * "Performance"
         * "Compatibility (New)"
         * "Graphics features"
         * "Multiple VMs"
-        §
-        § "Cons"
+    cons
         * "Medium flexibility"
         * "H/W requirements"
         * "Migration?"

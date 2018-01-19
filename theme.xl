@@ -53,6 +53,18 @@ theme_font  "RedHat", Master, "cell"            -> font "Overpass"
 theme_size  "RedHat", Master, "cell"            -> 32
 theme_color "RedHat", Master, "cell"            -> color "black"
 theme_align "RedHat", Master, "cell"            -> align 0%; vertical_align 30%
+theme_font  "RedHat", Master, "pros"            -> font "Overpass", bold
+theme_size  "RedHat", Master, "pros"            -> 55
+theme_color "RedHat", Master, "pros"            -> color "#063"
+theme_align "RedHat", Master, "pros"            -> align 5%; vertical_align 30%
+theme_font  "RedHat", Master, "cons"            -> font "Overpass", bold
+theme_size  "RedHat", Master, "cons"            -> 55
+theme_color "RedHat", Master, "cons"            -> color "#A02"
+theme_align "RedHat", Master, "cons"            -> align 5%; vertical_align 30%
+theme_font  "RedHat", Master, "comp"            -> font "Overpass", regular
+theme_size  "RedHat", Master, "comp"            -> 32
+theme_color "RedHat", Master, "comp"            -> color "black"
+theme_align "RedHat", Master, "comp"            -> align 0%
 
 theme_align "RedHat", Master,"story",N          -> margins 40*N, 0
 theme_color "RedHat", Master,"story",N          -> color "black", 0.99-0.2*N
@@ -280,13 +292,39 @@ theme_layout "RedHat", Master:text ->
     flow  475,    0,  850, 800, "right"
 
 
+pros Body ->
+// ----------------------------------------------------------------------------
+//   Information in the "Pros" column
+// ----------------------------------------------------------------------------
+    picture
+        at_current_step
+        text_box -750, 50, 400, 800,
+            style "pros"
+            paragraph "Pros:"
+            style "comp"
+            Body
+
+
+cons Body ->
+// ----------------------------------------------------------------------------
+//   Information in the "Cons" column
+// ----------------------------------------------------------------------------
+    picture
+        at_current_step
+        text_box 750, 50, 400, 800,
+            style "cons"
+            paragraph "Cons:"
+            style "comp"
+            Body
+
+
 presentation_author Body ->
 // ----------------------------------------------------------------------------
 //    Format the presentation author on the main title page
 // ----------------------------------------------------------------------------
-        box 0, -400, 1200, 200,
-            font_size 45
-            render Body
+    box 0, -400, 1200, 200,
+        font_size 45
+        render Body
 
 
 
@@ -593,7 +631,6 @@ cell Style:text, X:real, Y:real, W:real, H:real, Body ->
     text_box X, Y, W, H,
         style Style
         render Body
-
 
 
 autoscale CX:real, CY:real, S1:real, S2:real, R:real ->
