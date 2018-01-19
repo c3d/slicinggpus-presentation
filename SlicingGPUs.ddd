@@ -395,19 +395,27 @@ section_slide "Virtual machine configuration",
 
 
 // ----------------------------------------------------------------------------
-base_slide "Emulated & paravirtualized GPU",
-// ----------------------------------------------------------------------------
-    title page_label
-    stepping
-    story
-
-
-// ----------------------------------------------------------------------------
 base_slide "Emulated & paravirtualized GPU libvirt/QEMU API",
 // ----------------------------------------------------------------------------
     title page_label
     stepping
     story
+       paragraph "Simple to use, hard to configure:"
+       at_current_step
+       paragraph "Which model?"
+       at_current_step
+       paragraph "(for emulated models)"
+       paragraph "How much (v)ram?"
+       paragraph "How many heads?"
+       paragraph "How many outputs?"
+
+    picture
+        code_box 300, 200, 1100, 250, "QEMU command line",
+            font_size 26
+            text load_text "qemucmdline-emu"
+        code_box 300, -150, 1100, 250, "libvirt XML",
+            font_size 26
+            text load_text "emuxml"
 
 
 // ----------------------------------------------------------------------------
@@ -419,7 +427,8 @@ base_slide "Emulated & paravirtualized GPU management layer",
        * "Can be almost always present..."
        ** "convenient VM installation"
        ** "migration works, SPICE/VNC over separate network"
-       ** "QXL occupies VGA region, device passthrough "
+       ** "QXL occupies VGA region, device passthrough"
+       * "difficulty: calculating overhead"
 
        paragraph " "
        * "Only omitted for specific use-cases, such as"
