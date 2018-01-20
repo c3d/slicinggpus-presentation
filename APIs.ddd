@@ -524,6 +524,7 @@ graphics_api_picture Name ->
 // ----------------------------------------------------------------------------
     graphics_api_adjust Name
 
+    scale 80%
     translate_y -60 * show_spice
     locally
         color "white", show_devices + show_network - show_stream
@@ -787,7 +788,7 @@ color_legend Index, Color, Body ->
 // ----------------------------------------------------------------------------
 //   Show a color legend
 // ----------------------------------------------------------------------------
-    text_box -650, -450 + 60 * Index, 550, 80,
+    text_box -500, -380 + 60 * Index, 500, 80,
         style "comp"
         color Color
         rectangle 0, 10, 40, 40

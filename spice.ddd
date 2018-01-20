@@ -6,7 +6,7 @@ base_slide "Why remote access matters",
     stepping
     picture
         translate 400 * fade_at(smooth_step, 1), 80, 50
-        scale 180% - 60% * fade_at(smooth_step, 1)
+        scale 180% - 90% * fade_at(smooth_step, 1)
         spice_mobile_client := 6 * fade_at(smooth_step, 2) - 3 * fade_at(smooth_step, 3)
         spice_server_and_clients
     story
@@ -51,7 +51,7 @@ base_slide "Several types of remote access solutions",
                 show_app 1
                 graphics_api_app_texture
                 color "white"
-                rounded_rectangle 200, -100, 300, 200, 30
+                rounded_rectangle 150, -80, 300, 150, 10
 
         at_step 1
         cell 0, 0,

@@ -1,5 +1,6 @@
 base_slide "Single socket, single GPU",
     title page_label
+    scale 80%
     pcie_topology_simple
 
 
@@ -7,6 +8,7 @@ base_slide "Single socket, two GPUs",
     title page_label
     stepping
 
+    scale 80%
     pcie_topology_2
     at_current_step
     p2p_domain 0, -30, 800, 800
@@ -16,6 +18,7 @@ base_slide "Single socket, 4 GPUs",
     title page_label
     stepping
 
+    scale 80%
     pcie_topology_3
     at_current_step
     p2p_domain 0, -30, 2400, 800
@@ -25,6 +28,7 @@ base_slide "Dual socket, 4 GPUs",
     title page_label
     stepping
 
+    scale 80%
     pcie_topology_4
     at_current_step
     p2p_domain -500, 50, 1200, 900
@@ -104,13 +108,13 @@ pcie_topology_4 ->
     pcie_link_16x 500, 50, 470, -80, -70, 0
 
 
-pcie_link_16x X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real -> 
+pcie_link_16x X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real ->
     picture
-        text_box ((X + tX) / 2) + fdX, ((Y + tY) / 2) + fdY, 120, 40, 
-            font "Menlo", 24 
-            align 0% 
-            vertical_align 50% 
-            color "black" 
+        text_box ((X + tX) / 2) + fdX, ((Y + tY) / 2) + fdY, 120, 40,
+            font "Menlo", 24
+            align 0%
+            vertical_align 50%
+            color "black"
             render "PCIe 16x"
 
         line_color "#000000"
@@ -118,13 +122,13 @@ pcie_link_16x X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real ->
         line_arrow X, Y, none, tX, tY, arrowhead
 
 
-qpi_link X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real -> 
+qpi_link X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real ->
     picture
-        text_box ((X + tX) / 2) + fdX, ((Y + tY) / 2) + fdY, 120, 40, 
-            font "Menlo", 24 
-            align 0% 
-            vertical_align 50% 
-            color "black" 
+        text_box ((X + tX) / 2) + fdX, ((Y + tY) / 2) + fdY, 120, 40,
+            font "Menlo", 24
+            align 0%
+            vertical_align 50%
+            color "black"
             render "QPI"
 
         line_color "#000000"
@@ -132,16 +136,16 @@ qpi_link X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real ->
         line_arrow X, Y, arrowhead, tX, tY, arrowhead
 
 
-p2p_domain X:real, Y:real, W:real, H:real -> 
+p2p_domain X:real, Y:real, W:real, H:real ->
     picture
         line_color redhat_green1
         color "#000", 20%
         line_width 2
         ellipse X, Y, W, H
 
-        text_box X, Y - H/2 - 30, 184, 40, 
-            font "Menlo", 24 
-            align 0% 
-            vertical_align 50% 
-            color "black" 
+        text_box X, Y - H/2 - 30, 184, 40,
+            font "Menlo", 24
+            align 0%
+            vertical_align 50%
+            color "black"
             render "p2p domain"

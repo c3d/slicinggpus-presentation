@@ -54,11 +54,11 @@ theme_size  "RedHat", Master, "cell"            -> 32
 theme_color "RedHat", Master, "cell"            -> color "black"
 theme_align "RedHat", Master, "cell"            -> align 0%; vertical_align 30%
 theme_font  "RedHat", Master, "pros"            -> font "Overpass", bold
-theme_size  "RedHat", Master, "pros"            -> 55
+theme_size  "RedHat", Master, "pros"            -> 40
 theme_color "RedHat", Master, "pros"            -> color "#063"
 theme_align "RedHat", Master, "pros"            -> align 5%; vertical_align 30%
 theme_font  "RedHat", Master, "cons"            -> font "Overpass", bold
-theme_size  "RedHat", Master, "cons"            -> 55
+theme_size  "RedHat", Master, "cons"            -> 40
 theme_color "RedHat", Master, "cons"            -> color "#A02"
 theme_align "RedHat", Master, "cons"            -> align 5%; vertical_align 30%
 theme_font  "RedHat", Master, "comp"            -> font "Overpass", regular
@@ -68,11 +68,11 @@ theme_align "RedHat", Master, "comp"            -> align 0%
 
 theme_align "RedHat", Master,"story",N          -> margins 40*N, 0
 theme_color "RedHat", Master,"story",N          -> color "black", 0.99-0.2*N
-theme_size  "RedHat", Master,"story",N          -> 36 - N * 2
+theme_size  "RedHat", Master,"story",N          -> 28 - N * 2
 
 theme_color "RedHat", Master,"picture"          -> color "white"
 theme_font  "RedHat", Master,"story"            -> font "Overpass", "Arial"
-theme_size  "RedHat", Master,"story"            -> 40
+theme_size  "RedHat", Master,"story"            -> 32
 
 theme_font  "RedHat", Master, Theme             -> font "Overpass", "Arial"
 theme_color "RedHat", Master,Style              -> color "black"
@@ -112,7 +112,7 @@ theme_box "RedHat",Master:text,"rightpic", X:real,Y:real,W:real,H:real -> false
 // ============================================================================
 
 theme_slide_width  "RedHat" -> 1600
-theme_slide_height "RedHat" -> 1440
+theme_slide_height "RedHat" -> 1200
 
 redhat_red1     -> "#8F1000"
 redhat_red2     -> "#B21600"
@@ -263,33 +263,33 @@ theme_layout "RedHat", "main" ->
 // ----------------------------------------------------------------------------
 //    Centered flows
 // ----------------------------------------------------------------------------
-    flow 0,   50, 1200, 200, "title"
-    flow 0, -100, 1200, 300, "subtitle"
+    flow 0,   50, 1500, 200, "title"
+    flow 0, -100, 1300, 300, "subtitle"
 
 
 theme_layout "RedHat", "section" ->
 // ----------------------------------------------------------------------------
 //    Centered flows
 // ----------------------------------------------------------------------------
-    flow 0, 50, 1800, 250, "title"
-    flow 0, -100, 1800, 150, "subtitle"
+    flow 0,   50, 1500, 250, "title"
+    flow 0, -100, 1300, 150, "subtitle"
 
 
 theme_layout "RedHat", "blank" ->
 // ----------------------------------------------------------------------------
 //    Centered flows
 // ----------------------------------------------------------------------------
-    flow 0, 0, 1800, 750, "story"
+    flow 0, 0, 1500, 750, "story"
 
 
 theme_layout "RedHat", Master:text ->
 // ----------------------------------------------------------------------------
 //    Centered flows
 // ----------------------------------------------------------------------------
-    flows   0,  550, 1800, 220, "title", "subtitle"
-    flow    0,    0, 1800, 800, "story"
-    flow -475,    0,  850, 800, "left"
-    flow  475,    0,  850, 800, "right"
+    flows   0,  490, 1500, 220, "title", "subtitle"
+    flow    0,    0, 1500, 800, "story"
+    flow -375,    0,  700, 800, "left"
+    flow  375,    0,  700, 800, "right"
 
 
 pros Body ->
@@ -298,7 +298,7 @@ pros Body ->
 // ----------------------------------------------------------------------------
     picture
         at_current_step
-        text_box -750, 50, 400, 800,
+        text_box -600, 50, 350, 800,
             style "pros"
             paragraph "Pros:"
             style "comp"
@@ -311,7 +311,7 @@ cons Body ->
 // ----------------------------------------------------------------------------
     picture
         at_current_step
-        text_box 750, 50, 400, 800,
+        text_box 600, 50, 350, 800,
             style "cons"
             paragraph "Cons:"
             style "comp"
@@ -600,21 +600,21 @@ column C:integer, Body ->
 // ----------------------------------------------------------------------------
 //   A table column
 // ----------------------------------------------------------------------------
-    cell "column", C * 650 - 100, 50, 640, 1000, Body
+    cell "column", C * 550 - 100, 50, 540, 800, Body
 
 
 row R:integer, Body ->
 // ----------------------------------------------------------------------------
 //   A table row
 // ----------------------------------------------------------------------------
-    cell "row", 0, 20 - R * 300, 1800, 290, Body
+    cell "row", 0, 40 - R * 250, 1500, 240, Body
 
 
 cell R:integer, C:integer, Body ->
 // ----------------------------------------------------------------------------
 //    A cell within a table
 // ----------------------------------------------------------------------------
-    text_box C * 650 - 100, 20 - R * 300, 600, 280,
+    text_box C * 550 - 100, 40 - R * 250, 520, 240,
         style "cell"
         render Body
 

@@ -41,7 +41,7 @@ main_title_slide "Main title",
     picture
         translate 600, 500, 20
         rotate_z -8
-        image 0, 0, 45%, 45%, "GPU.jpg"
+        image 0, 0, 40%, 40%, "GPU.jpg"
 
 
 // ----------------------------------------------------------------------------
@@ -52,7 +52,9 @@ base_slide "About the presentation authors",
     stepping
     left_column
         show fade_at(page_time, 1)
-        paragraph {bold "Martin Polednik" }
+        paragraph
+            bold "Martin Polednik"
+            anchor { color "white"; texture "Martin.jpg"; circle 150, 80, 80 }
         paragraph "Software Engineer at Red Hat"
         paragraph "oVirt/RHV developer"
         paragraph "focused on hypervisor features"
@@ -61,21 +63,15 @@ base_slide "About the presentation authors",
 
     right_column
         show fade_at(page_time, 2)
-        paragraph {bold "Christophe de Dinechin" }
+        paragraph
+            bold "Christophe de Dinechin"
+            anchor { color "white"; texture "Christophe.jpg"; circle 150, 80, 80 }
         paragraph "Senior Principal Software Engineer at Red Hat"
         paragraph "Working on SPICE (remote computing)"
         paragraph "Started many open-source projects"
         paragraph "Created HP Integrity Virtual Machines"
         paragraph "Also worked on DxO ONE, HP C++ compiler, etc"
         paragraph {blue "http://c3d.github.io" }
-
-    picture
-        show fade_at(page_time, 1)
-        texture "Martin.jpg"
-        circle -500, 420, 80
-        show fade_at(page_time, 2)
-        texture "Christophe.jpg"
-        circle  580, 420, 80
 
 
 // ----------------------------------------------------------------------------
@@ -152,7 +148,7 @@ base_slide "How GPUs accelerate 3D graphics - Data flow",
     graphics_api "Dataflow"
     picture
         at_step 1
-        text_box 700, 50, 300, 300,
+        text_box 600, 50, 300, 300,
             style "comment"
             text "Compute acceleration uses a similar structure with different APIs"
 
@@ -314,6 +310,7 @@ base_slide "This is all very much work in progress",
     subtitle "Live migration of NVIDIA GPUs announced at Xen Summit 2018"
     stepping
     picture
+        scale 80%
         locally
             frame_texture 1900, 1000,
                 image 0, -300 + 400 * smooth_step, 100%, 100%, "LiveMigration.png"
@@ -327,7 +324,7 @@ base_slide "This is all very much work in progress",
                 movie 0, 0, 200%, 200%, INTEL_LIVE_MIGRATION
                 on "pageexit",
                     movie_drop INTEL_LIVE_MIGRATION
-        text_box 0, 520, 1600, 150,
+        text_box 0, 520, 1500, 150,
             style "code"
             paragraph "https://blogs.nvidia.com/blog/2018/01/04/vgpu-xenmotion-technology/"
             at_step 3
@@ -344,7 +341,7 @@ base_slide "Resource allocation and sharing",
     stepping
     picture
         show fade_at(page_time, 1)
-        image 0, 0, 250%, 250%, "GPUComparison.png"
+        image 0, 0, 200%, 200%, "GPUComparison.png"
         at_step 1
 
 
@@ -467,7 +464,7 @@ base_slide "Device assignment",
         image_only_at 1,
             image 0, 100, 130%, 130%, "meme-assign.jpg"
         image_only_at 4,
-            image 0, 100, 50%, 50%, "bios.png"
+            image -150, 100, 50%, 50%, "bios.png"
         image_only_at 5 .. 6,
             code_box -300, -100, 1200, 400, "IOMMU on kernel cmdline",
                 font_size 40
@@ -511,7 +508,7 @@ base_slide "Device assignment API - QEMU",
             line_color redhat_green1
             color redhat_green1, 20%
             line_width 2
-            rectangle -155, -160, 660, 27 + 5 * cos (5 * time)
+            rectangle -155, -155, 660, 27 + 5 * cos (5 * time)
         only_at 3..4,
             code_box 400, 0, 950, 500, "vfio-pci driver_override",
                 font_size 28
@@ -531,14 +528,14 @@ base_slide "Device assignment API - libvirt",
 
     picture
         only_at 1 .. 2,
-            code_box 250, 0, 1150, 600, "hostdev XML snippet",
+            code_box 200, 0, 1150, 600, "hostdev XML snippet",
                 font_size 26
                 text load_text "vfioxml"
         only_at 2,
             line_color redhat_red1
             color redhat_red1, 20%
             line_width 2
-            rectangle 30, 70, 200, 27 + 5 * cos (5 * time)
+            rectangle -20, 80, 200, 27 + 5 * cos (5 * time)
 
 
 // ----------------------------------------------------------------------------
@@ -556,7 +553,7 @@ base_slide "Device assignment and management software",
 
     right_picture
         image_only_at 3 .. 4,
-            image -100, 50, 90%, 90%, "ovirt-pinning.png"
+            image -200, -50, 80%, 80%, "ovirt-pinning.png"
         image_only_at 5,
             image -200, 100, 90%, 90%, "cloud.png"
             picture
@@ -622,29 +619,29 @@ base_slide "vfio-mdev sysfs interface",
 
     picture
         only_at 1..6,
-            code_box 400, 50, 1050, 650, "mdev",
+            code_box 300, 50, 850, 650, "mdev",
                 font_size 26
                 text load_text "vfio-mdev"
         only_at 2,
             line_color redhat_green1
             color redhat_green1, 20%
             line_width 2
-            rectangle 5, 112, 190, 40
+            rectangle 5, 115, 190, 40
         only_at 3,
             line_color redhat_green1
             color redhat_green1, 20%
             line_width 2
-            rectangle 70, 172, 310, 40
+            rectangle 70, 175, 310, 40
         only_at 4,
             line_color redhat_green1
             color redhat_green1, 20%
             line_width 2
-            rectangle -20, 52, 140, 40
+            rectangle -20, 55, 140, 40
         only_at 5,
             line_color redhat_green1
             color redhat_green1, 20%
             line_width 2
-            rectangle -25, 142, 120, 40
+            rectangle -25, 145, 120, 40
 
 
 // ----------------------------------------------------------------------------
@@ -663,13 +660,13 @@ base_slide "vfio-mdev sysfs limitations",
 
     picture
         only_at 1..6,
-            code_box 400, 200, 850, 330, "vendor hacks?",
+            code_box 300, -50, 850, 330, "vendor hacks?",
                 font_size 30
                 text load_text "vendor"
             line_color redhat_red3
             color redhat_red3, 20%
             line_width 2
-            rectangle 230, 105, 380, 40 + 5 * cos (5 * time)
+            rectangle 130, -140, 380, 40 + 5 * cos (5 * time)
 
 
 // ----------------------------------------------------------------------------
@@ -684,11 +681,11 @@ base_slide "vfio-mdev sysfs interface cont'd",
 
     picture
         only_at 1 .. 2,
-            code_box 300, 250, 1100, 300, "create mdev",
+            code_box -50, 0, 1100, 300, "create mdev",
                 font_size 28
                 text load_text "vfio-mdev-ops-create"
         only_at 2,
-            code_box 300, -100, 1100, 250, "remove mdev",
+            code_box 150, -250, 1100, 250, "remove mdev",
                 font_size 28
                 text load_text "vfio-mdev-ops-delete"
 
@@ -708,19 +705,19 @@ base_slide "vfio-mdev in QEMU, libvirt",
 
     picture
         only_at 2,
-            code_box 270, 70, 1300, 389, "QEMU - plain VFIO",
+            code_box 100, 0, 1200, 420, "QEMU - plain VFIO",
                 font_size 26
                 text load_text "qemucmdline"
         only_at 3,
-            code_box 270, 70, 1300, 389, "QEMU - vfio-mdev",
+            code_box 100, 0, 1200, 420, "QEMU - vfio-mdev",
                 font_size 26
                 text load_text "qemucmdline-mdev"
         only_at 4,
-            code_box 250, 70, 1200, 420, "libvirt - plain VFIO",
+            code_box 100, 0, 1200, 420, "libvirt - plain VFIO",
                 font_size 26
                 text load_text "vfioxml"
         only_at 5,
-            code_box 250, 70, 1200, 420, "libvirt - vfio-mdev",
+            code_box 100, 0, 1200, 420, "libvirt - vfio-mdev",
                 font_size 26
                 text load_text "mdevxml"
 
@@ -781,15 +778,12 @@ section_slide "Thank you",
     stepping
 
     picture
-        translate 600, 450, 20
+        translate 600, 500, 20
         rotate_z -8
-        scale 45%
-        texture "GPU.jpg"
-        color "white"
-        rounded_rectangle 0, 0, texture_width, texture_height, 80
+        image 0, 0, 40%, 40%, "GPU.jpg"
 
     contents 0,
-        text_box 500, -400, 600, 200,
+        text_box 300, -400, 600, 200,
             style "story"
             font_size 30
             anchor
