@@ -48,6 +48,7 @@ base_slide "Several types of remote access solutions",
         row 1,
             paragraph "Video streaming"
             anchor
+                show_app 1
                 graphics_api_app_texture
                 color "white"
                 rounded_rectangle 200, -100, 300, 200, 30
@@ -102,14 +103,14 @@ base_slide "Host-based remote access",
     graphics_api "HostRemote"
 
 // ----------------------------------------------------------------------------
-base_slide "Guest-side SPICE streaming server (NVIDIA)",
+base_slide "Guest-side SPICE streaming server (NVIDIA, soon)",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "Render and compress H264 stream using vGPU"
     graphics_api "GuestStreaming"
 
 // ----------------------------------------------------------------------------
-base_slide "Host-side SPICE streaming server (Intel?)",
+base_slide "Host-side SPICE streaming server (Intel, someday?)",
 // ----------------------------------------------------------------------------
     title page_label
     subtitle "Render and compress H264 stream using host GPU"
