@@ -68,7 +68,7 @@ theme_align "RedHat", Master, "comp"            -> align 0%
 
 theme_align "RedHat", Master,"story",N          -> margins 40*N, 0
 theme_color "RedHat", Master,"story",N          -> color "black", 0.99-0.2*N
-theme_size  "RedHat", Master,"story",N          -> 28 - N * 2
+theme_size  "RedHat", Master,"story",N          -> 32 - N * 2
 
 theme_color "RedHat", Master,"picture"          -> color "white"
 theme_font  "RedHat", Master,"story"            -> font "Overpass", "Arial"
