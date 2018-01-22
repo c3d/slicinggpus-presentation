@@ -50,7 +50,7 @@ theme_size  "RedHat", Master, "row"             -> 35
 theme_color "RedHat", Master, "row"             -> color "black"
 theme_align "RedHat", Master, "row"             -> align 2%; vertical_align 5%
 theme_font  "RedHat", Master, "cell"            -> font "Overpass"
-theme_size  "RedHat", Master, "cell"            -> 32
+theme_size  "RedHat", Master, "cell"            -> 30
 theme_color "RedHat", Master, "cell"            -> color "black"
 theme_align "RedHat", Master, "cell"            -> align 0%; vertical_align 30%
 theme_font  "RedHat", Master, "pros"            -> font "Overpass", bold
