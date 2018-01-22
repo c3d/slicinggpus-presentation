@@ -596,10 +596,6 @@ base_slide "vfio-mdev",
 
         at_current_step
         paragraph "Say hello to vfio-mdev!"
-        * "mediated device management"
-        * "mdev_register_driver()"
-        * "mdev_register_device()"
-        ** "callbacks to the vendor driver"
 
 import "mdev.ddd"
 
