@@ -433,11 +433,11 @@ base_slide "Emulated & paravirtualized GPU management layer",
     title page_label
     stepping
     story
-       * "Can be almost always present..."
+       * "Can be present most of the time:"
        ** "convenient VM installation"
        ** "migration works, SPICE/VNC over separate network"
        ** "QXL occupies VGA region, device passthrough"
-       * "difficulty: calculating overhead"
+       * "What about overhead?"
 
        paragraph " "
        * "Only omitted for specific use-cases, such as"
@@ -451,7 +451,7 @@ base_slide "Device assignment",
     title page_label
     stepping
     story
-        * "Assign the whole GPU to the VM"
+        * "Idea: assign the whole GPU to the VM"
         * "Not that easy, we need hardware support:"
         ** "hardware that works"
         ** "Intel VT-d and AMD-Vi"
@@ -500,8 +500,8 @@ base_slide "What about topology con't",
     subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
     stepping
     story
-        * "p2p domains desired for GPU memory throughput"
-        * "optimization point for ML/AI"
+        * "p2p domains for GPU memory throughput"
+        * "optimization for ML/AI models"
 
 // ----------------------------------------------------------------------------
 base_slide "Device assignment API - QEMU",
@@ -514,7 +514,7 @@ base_slide "Device assignment API - QEMU",
         * "what about the system?"
         ** "unbind the device from the original driver"
         ** "bind it to vfio-pci"
-        * "... for every device in the IOMMU group"
+        * "^ for every device in the IOMMU group"
 
     picture
         only_at 0 .. 1,
@@ -566,7 +566,7 @@ base_slide "Device assignment and management software",
     story
         * "QEMU & libvirt API is device-centered"
         ** "assignment uses device address"
-        * "bad idea in the management layer..."
+        * "bad for management layer
         ** "host pinning"
         ** { bold "no cloud!" }
         * "GPU cannot be shared"
@@ -729,7 +729,7 @@ base_slide "vfio-mdev and management software",
     story
         * "VM just requests mdev type"
         * "the user is responsible for guest setup"
-        * "and we're done"
+        * "profit"
 
     right_picture
         translate_x -200
@@ -746,7 +746,7 @@ base_slide "Does vfio-mdev help the management layer?",
     story
         paragraph "So, does vfio-mdev help?"
         * "devices are addressed by a type"
-        * "we don't have to care about IOMMU"
+        * "no IOMMU"
         * "doesn't fit use cases that require topology awareness*"
         * "few rough edges"
         * "... win!"
