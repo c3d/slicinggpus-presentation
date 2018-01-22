@@ -428,16 +428,34 @@ base_slide "Emulated & paravirtualized GPU libvirt/QEMU API",
 
 
 // ----------------------------------------------------------------------------
+base_slide "Emulated GPU settings",
+// ----------------------------------------------------------------------------
+    title page_label
+    stepping
+    skip_directly_to 7
+    story
+      * "QXL"
+      ** "vgamem = 16 MB * number_of_heads"
+      ** "ram = 4 * vgamem"
+      ** "vram = 2 * vgamem for RHEL-7 guest OS"
+      ** "vram = 8 MB for other guest OSes"
+      * "vnc/vga and vnc/cirrus:"
+      ** "vram = 16 MB"
+      paragraph "from https://www.ovirt.org/documentation/draft/video-ram/"
+
+
+// ----------------------------------------------------------------------------
 base_slide "Emulated & paravirtualized GPU management layer",
 // ----------------------------------------------------------------------------
     title page_label
     stepping
     story
-       * "Can be almost always present..."
+       * "Can be present most of the time:"
        ** "convenient VM installation"
        ** "migration works, SPICE/VNC over separate network"
        ** "QXL occupies VGA region, device passthrough"
-       * "difficulty: calculating overhead"
+       * "What about overhead?"
+       ** "total memory used by VM includes ram + vram"
 
        paragraph " "
        * "Only omitted for specific use-cases, such as"
@@ -451,7 +469,7 @@ base_slide "Device assignment",
     title page_label
     stepping
     story
-        * "Assign the whole GPU to the VM"
+        * "Idea: assign the whole GPU to the VM"
         * "Not that easy, we need hardware support:"
         ** "hardware that works"
         ** "Intel VT-d and AMD-Vi"
@@ -483,6 +501,26 @@ base_slide "Device assignment",
 
 import "pcie.ddd"
 
+
+// ----------------------------------------------------------------------------
+base_slide "What about topology",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
+
+import "topo.ddd"
+
+
+// ----------------------------------------------------------------------------
+base_slide "What about topology con't",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
+    stepping
+    story
+        * "p2p domains for GPU memory throughput"
+        * "optimization for ML/AI models"
+
 // ----------------------------------------------------------------------------
 base_slide "Device assignment API - QEMU",
 // ----------------------------------------------------------------------------
@@ -494,7 +532,7 @@ base_slide "Device assignment API - QEMU",
         * "what about the system?"
         ** "unbind the device from the original driver"
         ** "bind it to vfio-pci"
-        * "... for every device in the IOMMU group"
+        * "^ for every device in the IOMMU group"
 
     picture
         only_at 0 .. 1,
@@ -546,7 +584,7 @@ base_slide "Device assignment and management software",
     story
         * "QEMU & libvirt API is device-centered"
         ** "assignment uses device address"
-        * "bad idea in the management layer..."
+        * "bad for management layer"
         ** "host pinning"
         ** { bold "no cloud!" }
         * "GPU cannot be shared"
@@ -563,26 +601,6 @@ base_slide "Device assignment and management software",
                 line_arrow -600, 400, none, 200, -50, none
                 line_arrow -600, -50, none, 200, 400, none
 
-// ----------------------------------------------------------------------------
-base_slide "What about topology",
-// ----------------------------------------------------------------------------
-    title page_label
-    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
-
-import "topo.ddd"
-
-
-// ----------------------------------------------------------------------------
-base_slide "What about topology con't",
-// ----------------------------------------------------------------------------
-    title page_label
-    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
-    stepping
-    story
-        * "Currently not expressed"
-        * "p2p domains desired for GPU memory throughput"
-        * "future optimization point for ML/AI"
-
 
 // ----------------------------------------------------------------------------
 base_slide "vfio-mdev",
@@ -596,10 +614,6 @@ base_slide "vfio-mdev",
 
         at_current_step
         paragraph "Say hello to vfio-mdev!"
-        * "mediated device management"
-        * "mdev_register_driver()"
-        * "mdev_register_device()"
-        ** "callbacks to the vendor driver"
 
 import "mdev.ddd"
 
@@ -729,7 +743,7 @@ base_slide "vfio-mdev and management software",
     story
         * "VM just requests mdev type"
         * "the user is responsible for guest setup"
-        * "and we're done"
+        * "profit"
 
     right_picture
         translate_x -200
@@ -746,7 +760,7 @@ base_slide "Does vfio-mdev help the management layer?",
     story
         paragraph "So, does vfio-mdev help?"
         * "devices are addressed by a type"
-        * "we don't have to care about IOMMU"
+        * "no IOMMU"
         * "doesn't fit use cases that require topology awareness*"
         * "few rough edges"
         * "... win!"

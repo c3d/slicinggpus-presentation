@@ -37,9 +37,9 @@ base_slide "Dual socket, 4 GPUs",
 
 pcie_topology_simple ->
     picture
-        diagram_box "#298", 0, 500, 100, 100, "CPU"
-        diagram_box "#298", 0, 300, 200, 100, "PCH"
-        diagram_box "#298", 0, 100, 200, 100, "PCIe bridge"
+        diagram_box "#28D", 0, 500, 100, 100, "CPU"
+        diagram_box "#A02", 0, 300, 200, 100, "PCH"
+        diagram_box "#2A4", 0, 100, 200, 100, "PCIe bridge"
         image 0, -200, 30%, 30%, "tesla.png"
 
     pcie_link_16x 0, 450, 0, 350, 70, 0
@@ -49,9 +49,9 @@ pcie_topology_simple ->
 
 pcie_topology_2 ->
     picture
-        diagram_box "#298", 0, 500, 100, 100, "CPU"
-        diagram_box "#298", 0, 300, 200, 100, "PCH"
-        diagram_box "#298", 0, 100, 200, 100, "PCIe bridge"
+        diagram_box "#28D", 0, 500, 100, 100, "CPU"
+        diagram_box "#A02", 0, 300, 200, 100, "PCH"
+        diagram_box "#2A4", 0, 100, 200, 100, "PCIe bridge"
         image -200, -200, 30%, 30%, "tesla.png"
         image 200, -200, 30%, 30%, "tesla.png"
 
@@ -63,13 +63,13 @@ pcie_topology_2 ->
 
 pcie_topology_3 ->
     picture
-        diagram_box "#298", 0, 500, 100, 100, "CPU"
-        diagram_box "#298", 0, 300, 200, 100, "PCH"
+        diagram_box "#28D", 0, 500, 100, 100, "CPU"
+        diagram_box "#A02", 0, 300, 200, 100, "PCH"
         translate_x -200
-        diagram_box "#298", -400, 100, 200, 100, "PCIe bridge"
+        diagram_box "#2A4", -400, 100, 200, 100, "PCIe bridge"
         image -600, -200, 30%, 30%, "tesla.png"
         image -200, -200, 30%, 30%, "tesla.png"
-        diagram_box "#298", 800, 100, 200, 100, "PCIe bridge"
+        diagram_box "#2A4", 800, 100, 200, 100, "PCIe bridge"
         image 600, -200, 30%, 30%, "tesla.png"
         image 1000, -200, 30%, 30%, "tesla.png"
 
@@ -84,15 +84,15 @@ pcie_topology_3 ->
 
 pcie_topology_4 ->
     picture
-        diagram_box "#298", -100, 500, 100, 100, "CPU"
-        diagram_box "#298", 100, 500, 100, 100, "CPU"
-        diagram_box "#298", -150, 300, 200, 100, "PCH"
-        diagram_box "#298", 150, 300, 200, 100, "PCH"
+        diagram_box "#28D", -100, 500, 100, 100, "CPU"
+        diagram_box "#28D", 100, 500, 100, 100, "CPU"
+        diagram_box "#A02", -150, 300, 200, 100, "PCH"
+        diagram_box "#A02", 150, 300, 200, 100, "PCH"
         translate_x -200
-        diagram_box "#298", -400, 100, 200, 100, "PCIe bridge"
+        diagram_box "#2A4", -400, 100, 200, 100, "PCIe bridge"
         image -600, -200, 30%, 30%, "tesla.png"
         image -200, -200, 30%, 30%, "tesla.png"
-        diagram_box "#298", 800, 100, 200, 100, "PCIe bridge"
+        diagram_box "#2A4", 800, 100, 200, 100, "PCIe bridge"
         image 600, -200, 30%, 30%, "tesla.png"
         image 1000, -200, 30%, 30%, "tesla.png"
 
@@ -119,7 +119,7 @@ pcie_link_16x X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real ->
 
         line_color "#000000"
         line_width 5
-        line_arrow X, Y, none, tX, tY, arrowhead
+        line_arrow X, Y, arrowhead, tX, tY, arrowhead
 
 
 qpi_link X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real ->
