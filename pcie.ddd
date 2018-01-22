@@ -33,28 +33,25 @@ base_slide "IOMMU meets topology",
 
 iommu_topology ->
     picture
-        diagram_box "#298", 0, 300, 100, 100, "CPU"
-        diagram_box "#298", -500, 100, 200, 100, "device_0"
-        diagram_box "#298", -100, 100, 200, 100, "bridge_0"
-        diagram_box "#298", -250, -100, 200, 100, "device_1"
-        diagram_box "#298", 50, -100, 200, 100, "device_2"
-        diagram_box "#298", 500, 100, 200, 100, "bridge_1"
-        diagram_box "#298", 350, -100, 200, 100, "device_3"
-        diagram_box "#298", 650, -100, 200, 100, "device_4"
+        diagram_box "#28D", 0, 300, 100, 100, "CPU"
+        diagram_box "#333", -500, 100, 200, 100, "device_0"
+        diagram_box "#2A4", -100, 100, 200, 100, "bridge_0"
+        diagram_box "#333", -250, -100, 200, 100, "device_1"
+        diagram_box "#333", 50, -100, 200, 100, "device_2"
+        diagram_box "#2A4", 500, 100, 200, 100, "bridge_1"
+        diagram_box "#333", 350, -100, 200, 100, "device_3"
+        diagram_box "#333", 650, -100, 200, 100, "device_4"
 
-        line_color "#000000"
-        line_width 5
+    // draw the arrows as BFS
+    pcie_link -50, 250, -500, 150, 0, 20
+    pcie_link 0, 250, -100, 150, -10, 0
+    pcie_link 50, 250, 500, 150, 0, 30
 
-        // draw the arrows as BFS
-        line_arrow -50, 250, none, -500, 150, arrowhead
-        line_arrow 0, 250, none, -100, 150, arrowhead
-        line_arrow 50, 250, none, 500, 150, arrowhead
+    pcie_link -200, 50, -250, -50, -10, 0
+    pcie_link 0, 50, 50, -50, 70, 0
 
-        line_arrow -200, 50, none, -250, -50, arrowhead
-        line_arrow 0, 50, none, 50, -50, arrowhead
-
-        line_arrow 400, 50, none, 350, -50, arrowhead
-        line_arrow 600, 50, none, 650, -50, arrowhead
+    pcie_link 400, 50, 350, -50, -10, 0
+    pcie_link 600, 50, 650, -50, 70, 0
 
 iommu_group X:real, Y:real, R:real, Body -> 
     picture
@@ -97,3 +94,17 @@ iommu_group_4 ->
         color "#000", 20%
         line_width 2
         iommu_group 500, 125, 300, "IOMMU group 4"
+
+
+pcie_link X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real ->
+    picture
+        text_box ((X + tX) / 2) + fdX, ((Y + tY) / 2) + fdY, 120, 40,
+            font "Menlo", 24
+            align 0%
+            vertical_align 50%
+            color "black"
+            render "PCIe"
+
+        line_color "#000000"
+        line_width 5
+        line_arrow X, Y, arrowhead, tX, tY, arrowhead
