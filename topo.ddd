@@ -119,7 +119,7 @@ pcie_link_16x X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real ->
 
         line_color "#000000"
         line_width 5
-        line_arrow X, Y, none, tX, tY, arrowhead
+        line_arrow X, Y, arrowhead, tX, tY, arrowhead
 
 
 qpi_link X:real, Y:real, tX:real, tY:real, fdX:real, fdY:real ->
