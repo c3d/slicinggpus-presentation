@@ -24,7 +24,17 @@ theme_align "RedHat", "main", "subtitle"        -> align_left
 theme_color "RedHat", "main", Theme             -> color "white"
 theme_color "RedHat", "section", Theme          -> color "white"
 
-theme_font  "RedHat", Master, "title"           -> font "Overpass", weight 300
+theme_font  "RedHat", "main", "title"           -> font "Overpass"
+theme_size  "RedHat", "main", "title"           -> 60
+theme_font  "RedHat", "main", "subtitle"        -> font "Overpass"
+theme_size  "RedHat", "main", "subtitle"        -> 45
+
+theme_font  "RedHat", "section", "title"        -> font "Overpass"
+theme_size  "RedHat", "section", "title"        -> 60
+theme_font  "RedHat", "section", "subtitle"     -> font "Overpass"
+theme_size  "RedHat", "section", "subtitle"     -> 45
+
+theme_font  "RedHat", Master, "title"           -> font "Overpass"
 theme_size  "RedHat", Master, "title"           -> 60
 theme_font  "RedHat", Master, "subtitle"        -> font "Overpass"
 theme_size  "RedHat", Master, "subtitle"        -> 35
@@ -33,7 +43,7 @@ theme_font  "RedHat", Master, "code"            -> font "Menlo", 40
 theme_color "RedHat", Master, "code"            -> color "#003388"
 theme_font  "RedHat", Master, "boxtitle"        -> font "Overpass", bold, 40
 theme_align "RedHat", Master, "boxtitle"        -> align 80%
-theme_font  "RedHat", Master, "diagram"         -> font "Overpass"
+theme_font  "RedHat", Master, "diagram"         -> font "Overpass", bold
 theme_size  "RedHat", Master, "diagram"         -> 35
 theme_color "RedHat", Master, "diagram"         -> color "white"
 theme_align "RedHat", Master, "diagram"         -> align 50%; vertical_align 10%
@@ -66,15 +76,16 @@ theme_size  "RedHat", Master, "comp"            -> 32
 theme_color "RedHat", Master, "comp"            -> color "black"
 theme_align "RedHat", Master, "comp"            -> align 0%
 
+theme_color "RedHat", Master,"picture"          -> color "white"
+
+theme_font  "RedHat", Master,"story"            -> font "Overpass SemiBold"
+theme_size  "RedHat", Master,"story"            -> 32
 theme_align "RedHat", Master,"story",N          -> margins 40*N, 0
+theme_font  "RedHat", Master,"story",N          -> font "Overpass SemiBold"
 theme_color "RedHat", Master,"story",N          -> color "black", 0.99-0.2*N
 theme_size  "RedHat", Master,"story",N          -> 32 - N * 2
 
-theme_color "RedHat", Master,"picture"          -> color "white"
-theme_font  "RedHat", Master,"story"            -> font "Overpass", "Arial"
-theme_size  "RedHat", Master,"story"            -> 32
-
-theme_font  "RedHat", Master, Theme             -> font "Overpass", "Arial"
+theme_font  "RedHat", Master, Theme             -> font "Overpass SemiBold"
 theme_color "RedHat", Master,Style              -> color "black"
 
 
@@ -193,8 +204,8 @@ theme_background "RedHat", Master ->
             for I in 0..8 loop
                 rectangle 10 * I, 10 * I
         texture_transform
-            translate -time * 0.2 mod 1, 0.0, 0
-            scale 20 + 10 * sin (0.1 * time)
+            translate -time * 0.003 mod 1, 0.0, 0
+            scale 20 + 10 * sin (0.001 * time)
         texture_wrap true, true
         color "lightgray", 60% // 30
         locally
@@ -225,7 +236,7 @@ theme_background "RedHat", Master ->
         font_size 30 * min(0.5, min(window_width / slide_width, window_height / slide_height))
         text_box 0, 0, bottom_width - 30, 50,
             align 0%
-            text "Page " & page_number & "/" & page_count
+            text "Page " & page_number //  & "/" & page_count
         text_box 0, 0, bottom_width - 2.5 * text_width("Page 99/99"), 50,
             align 0%
             text PresentationTitle
@@ -298,7 +309,7 @@ pros Body ->
 // ----------------------------------------------------------------------------
     picture
         at_current_step
-        text_box -600, 50, 350, 800,
+        text_box -620, 50, 350, 800,
             style "pros"
             paragraph "Pros:"
             style "comp"
@@ -311,7 +322,7 @@ cons Body ->
 // ----------------------------------------------------------------------------
     picture
         at_current_step
-        text_box 600, 50, 350, 800,
+        text_box 620, 50, 350, 800,
             style "cons"
             paragraph "Cons:"
             style "comp"
@@ -323,7 +334,6 @@ presentation_author Body ->
 //    Format the presentation author on the main title page
 // ----------------------------------------------------------------------------
     box 0, -400, 1200, 200,
-        font_size 45
         render Body
 
 

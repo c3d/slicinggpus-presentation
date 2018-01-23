@@ -57,7 +57,7 @@ base_slide "About the presentation authors",
             anchor { color "white"; texture "Martin.jpg"; circle 150, 80, 80 }
         paragraph "Software Engineer at Red Hat"
         paragraph "oVirt/RHV developer"
-        paragraph "focused on hypervisor features"
+        paragraph "Focusing on hypervisor features"
         paragraph "NUMA, (v)GPU, SR-IOV, device assignment"
         paragraph {blue "https://mpolednik.github.io" }
 
@@ -70,7 +70,7 @@ base_slide "About the presentation authors",
         paragraph "Working on SPICE (remote computing)"
         paragraph "Started many open-source projects"
         paragraph "Created HP Integrity Virtual Machines"
-        paragraph "Also worked on DxO ONE, HP C++ compiler, etc"
+        paragraph "Worked on DxO ONE, HP C++ compiler,..."
         paragraph {blue "http://c3d.github.io" }
 
 
@@ -148,7 +148,7 @@ base_slide "How GPUs accelerate 3D graphics - Data flow",
     graphics_api "Dataflow"
     picture
         at_step 1
-        text_box 600, 50, 300, 300,
+        text_box 600, 50, 250, 300,
             style "comment"
             text "Compute acceleration uses a similar structure with different APIs"
 
@@ -389,18 +389,19 @@ section_slide "Virtual machine configuration",
     subtitle "Considerations about libvirt and QEMU..."
     stepping
     picture
-        vm_configuration_image 0 -> image 0, 0, 30%, 30%, "tesla.png"
+        vm_configuration_image 0 -> image 0, 0, 20%, 20%, "tesla.png"
         vm_configuration_image 1 -> image 0, 0, 10%, 10%, "bios.png"
-        vm_configuration_image 2 -> image 0, 0, 40%, 40%, "GPU Server.png"
-        vm_configuration_image 3 -> image 0, 0, 30%, 30%, "Intel CPU.png"
-        vm_configuration_image 4 -> image 0, 0, 25%, 25%, "Motherboard.png"
+        vm_configuration_image 2 -> image 0, 0, 30%, 30%, "GPU Server.png"
+        vm_configuration_image 3 -> image 0, 0, 20%, 20%, "Intel CPU.png"
+        vm_configuration_image 4 -> image 0, 0, 15%, 15%, "Motherboard.png"
         vm_configuration_image 5 -> image 0, 0, 60%, 60%, "OldATICard.png"
 
-        translate 600, 400, 50
+        translate 450, 450, 50
         for I in 0..5 loop
             locally
-                translate 200 * sin(I + time), 150 * cos(I + time*1.3), 0
+                translate 220 * sin(I + time), 100 * cos(I + time*1.3), 0
                 vm_configuration_image I
+        refresh 0
 
 
 // ----------------------------------------------------------------------------
@@ -434,6 +435,7 @@ base_slide "Emulated GPU settings",
     stepping
     skip_directly_to 7
     story
+      scale 140%
       * "QXL"
       ** "vgamem = 16 MB * number_of_heads"
       ** "ram = 4 * vgamem"
@@ -450,6 +452,7 @@ base_slide "Emulated & paravirtualized GPU management layer",
     title page_label
     stepping
     story
+       scale 140%
        * "Can be present most of the time:"
        ** "convenient VM installation"
        ** "migration works"
@@ -470,6 +473,7 @@ base_slide "Device assignment",
     title page_label
     stepping
     story
+        scale 140%
         * "Idea: assign the whole GPU to the VM"
         * "Not that easy, we need hardware support:"
         ** "hardware that works"
@@ -504,10 +508,10 @@ import "pcie.ddd"
 
 
 // ----------------------------------------------------------------------------
-base_slide "What about topology",
+section_slide "Why device topology matters...",
 // ----------------------------------------------------------------------------
     title page_label
-    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
+    subtitle "ML/AI applications can benefit from p2p GPU communication..."
 
 import "topo.ddd"
 
@@ -519,6 +523,7 @@ base_slide "What about topology con't",
     subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
     stepping
     story
+        scale 140%
         * "p2p domains for GPU memory throughput"
         * "optimization for ML/AI models"
 
@@ -528,6 +533,7 @@ base_slide "Device assignment API - QEMU",
     title page_label
     stepping
     story
+        scale 140%
         paragraph "QEMU"
         * "which device?"
         * "what about the system?"
@@ -549,7 +555,7 @@ base_slide "Device assignment API - QEMU",
             line_width 2
             rectangle -155, -155, 660, 27 + 5 * cos (5 * time)
         only_at 3..4,
-            code_box 400, 0, 950, 500, "vfio-pci driver_override",
+            code_box 200, -200, 950, 500, "vfio-pci driver_override",
                 font_size 28
                 text load_text "vfiopci"
 
@@ -560,6 +566,7 @@ base_slide "Device assignment API - libvirt",
     title page_label
     stepping
     story
+        scale 140%
         paragraph "libvirt"
         * "hostdev device"
         * "managed/unmanaged mode"
@@ -567,14 +574,14 @@ base_slide "Device assignment API - libvirt",
 
     picture
         only_at 1 .. 2,
-            code_box 200, 0, 1150, 600, "hostdev XML snippet",
+            code_box 100, -150, 1150, 600, "hostdev XML snippet",
                 font_size 26
                 text load_text "vfioxml"
         only_at 2,
             line_color redhat_red1
             color redhat_red1, 20%
             line_width 2
-            rectangle -20, 80, 200, 27 + 5 * cos (5 * time)
+            rectangle -120, -70, 200, 27 + 5 * cos (5 * time)
 
 
 // ----------------------------------------------------------------------------
@@ -583,6 +590,7 @@ base_slide "Device assignment and management software",
     title page_label
     stepping
     story
+        scale 140%
         * "QEMU & libvirt API is device-centered"
         ** "assignment uses device address"
         * "bad for management layer"
@@ -592,8 +600,12 @@ base_slide "Device assignment and management software",
 
     right_picture
         image_only_at 3 .. 4,
-            image -200, -50, 80%, 80%, "ovirt-pinning.png"
+            ovirt_adjust fade_at(smooth_step, 4)
+            ovirt_adjust S:real  ->
+                translate_z -150
+                image -450 + 200 * S, -320 - 200 * S, 120% + 40% * S, 120% + 40% * S, "ovirt-pinning.png"
         image_only_at 5,
+            translate_y -150
             image -200, 100, 90%, 90%, "cloud.png"
             picture
                 line_color "#FF0000"
@@ -609,6 +621,7 @@ base_slide "vfio-mdev",
     title page_label
     stepping
     story
+        scale 140%
         paragraph "could we solve VFIO issues?"
         * "IOMMU"
         * "assignment by address"
@@ -625,6 +638,7 @@ base_slide "vfio-mdev sysfs interface",
     title page_label
     stepping
     story
+        scale 140%
         paragraph "each mdev-capable device"
         * "exposes several mdev types"
         ** "type description"
@@ -634,29 +648,29 @@ base_slide "vfio-mdev sysfs interface",
 
     picture
         only_at 1..6,
-            code_box 300, 50, 850, 650, "mdev",
+            code_box 300, 50, 650, 650, "mdev",
                 font_size 26
                 text load_text "vfio-mdev"
         only_at 2,
             line_color redhat_green1
             color redhat_green1, 20%
             line_width 2
-            rectangle 5, 115, 190, 40
+            rectangle 105, 115, 190, 40
         only_at 3,
             line_color redhat_green1
             color redhat_green1, 20%
             line_width 2
-            rectangle 70, 175, 310, 40
+            rectangle 170, 175, 310, 40
         only_at 4,
             line_color redhat_green1
             color redhat_green1, 20%
             line_width 2
-            rectangle -20, 55, 140, 40
+            rectangle 80, 55, 140, 40
         only_at 5,
             line_color redhat_green1
             color redhat_green1, 20%
             line_width 2
-            rectangle -25, 145, 120, 40
+            rectangle 75, 145, 120, 40
 
 
 // ----------------------------------------------------------------------------
@@ -665,6 +679,7 @@ base_slide "vfio-mdev sysfs limitations",
     title page_label
     stepping
     story
+        scale 140%
         paragraph "what isn't exposed?"
         at_current_step
         paragraph "vendor driver limitations"
@@ -674,14 +689,14 @@ base_slide "vfio-mdev sysfs limitations",
         * "anything we don't know of?"
 
     picture
-        only_at 1..6,
-            code_box 300, -50, 850, 330, "vendor hacks?",
+        only_at 1..4,
+            code_box 300, -100, 850, 330, "vendor hacks?",
                 font_size 30
                 text load_text "vendor"
             line_color redhat_red3
             color redhat_red3, 20%
             line_width 2
-            rectangle 130, -140, 380, 40 + 5 * cos (5 * time)
+            rectangle 130, -190, 380, 40 + 5 * cos (5 * time)
 
 
 // ----------------------------------------------------------------------------
@@ -690,6 +705,7 @@ base_slide "vfio-mdev sysfs interface cont'd",
     title page_label
     stepping
     story
+        scale 140%
         paragraph "mdev operations"
         * "creating mdev instance"
         * "removing mdev instance"
@@ -711,6 +727,7 @@ base_slide "vfio-mdev in QEMU, libvirt",
     title page_label
     stepping
     story
+        scale 140%
         paragraph "QEMU & libvirt"
         * "both similar to plain VFIO"
         * "QEMU"
@@ -742,13 +759,14 @@ base_slide "vfio-mdev and management software",
     title page_label
     stepping
     story
+        scale 140%
+        vertical_align 10%
         * "VM just requests mdev type"
         * "the user is responsible for guest setup"
         * "profit"
 
     right_picture
-        translate_x -200
-        translate_y 100
+        translate -200, 50, 0
         rotate_image 1, "ovirt-vgpu.png"
         rotate_image 3, "ovirt-windows.png"
 
@@ -759,6 +777,7 @@ base_slide "Does vfio-mdev help the management layer?",
     title page_label
     stepping
     story
+        scale 140%
         paragraph "So, does vfio-mdev help?"
         * "devices are addressed by a type"
         * "no IOMMU"
@@ -768,9 +787,9 @@ base_slide "Does vfio-mdev help the management layer?",
 
     right_picture
         image_only_at 5,
-            image -100, 50, 90%, 90%, "cloud.png"
+            image -100, -50, 90%, 90%, "cloud.png"
         image_only_at 5,
-            image -100, 50, (10 * sin(page_time) + 100)%, (10 * sin(page_time) + 100)%, "ok.png"
+            image -100, -50, (10 * sin(page_time) + 100)%, (10 * sin(page_time) + 100)%, "ok.png"
 
 
 // ----------------------------------------------------------------------------
@@ -779,6 +798,7 @@ base_slide "vfio-mdev caveat",
     title page_label
     stepping
     story
+        scale 140%
         paragraph "Cool! Where can I get mdev-capable driver?"
         at_current_step
         font_size 100
