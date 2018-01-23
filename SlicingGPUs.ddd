@@ -441,7 +441,7 @@ base_slide "Emulated GPU settings",
       ** "vram = 8 MB for other guest OSes"
       * "vnc/vga and vnc/cirrus:"
       ** "vram = 16 MB"
-      paragraph "from https://www.ovirt.org/documentation/draft/video-ram/"
+      paragraph { text "from "; code "https://www.ovirt.org/documentation/draft/video-ram/" }
 
 
 // ----------------------------------------------------------------------------
@@ -452,7 +452,8 @@ base_slide "Emulated & paravirtualized GPU management layer",
     story
        * "Can be present most of the time:"
        ** "convenient VM installation"
-       ** "migration works, SPICE/VNC over separate network"
+       ** "migration works"
+       ** "SPICE/VNC even if guest on separate network"
        ** "QXL occupies VGA region, device passthrough"
        * "What about overhead?"
        ** "total memory used by VM includes ram + vram"

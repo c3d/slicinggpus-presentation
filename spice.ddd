@@ -56,7 +56,7 @@ base_slide "Several types of remote access solutions",
         at_step 1
         cell 0, 0,
             paragraph { bold "Guest-provided solutions:" }
-            paragraph "VNC server"
+            paragraph "VNC server (X11vnc, vino)"
             paragraph "Microsoft Remote Desktop"
             paragraph "Apple Screen Sharing"
             paragraph { italic "Require network access to guest" }
@@ -66,19 +66,19 @@ base_slide "Several types of remote access solutions",
             paragraph "Accelerated by QXL driver"
             paragraph { italic "Only 2D at the moment" }
             paragraph "3D support with Virgil planned"
+            paragraph "VNC in QEMU"
         at_step 3
         cell 1, 0,
             paragraph { bold "SPICE streaming agent:" }
             paragraph "Uses H/W acceleration for NVIDIA cards"
             paragraph "Communicates with SPICE server"
-            paragraph { italic "Requires H264 (patents)" }
+            paragraph { italic "H264 requires patents, VP9 coming soon" }
             paragraph { italic "Separate boot screen" }
         at_step 4
         cell 1, 1,
             paragraph { bold "SPICE server streaming (planned):" }
             paragraph { italic "Depends on Virgil and dma-buf" }
             paragraph "Possible to encode VP8 / VP9?"
-            paragraph "Only 2D at the moment"
 
 
 // ----------------------------------------------------------------------------

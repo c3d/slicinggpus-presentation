@@ -93,7 +93,7 @@ graphics_api_adjust "Base" ->
     show_VGA            0
     show_VGPU           0
     show_PGPU           0
-    guest_kernel        "Guest kernel"
+    guest_kernel        "Kernel"
     guest_GPU           "GPU driver"
     guest_chipset       "Chipset drivers"
     guest_graphics      "Graphics API"
@@ -122,7 +122,7 @@ graphics_api_adjust "Dataflow" ->
     show_VGA            0
     show_VGPU           0
     show_PGPU           0
-    guest_kernel        "Guest kernel"
+    guest_kernel        "Kernel"
     guest_GPU           "GPU driver"
     guest_chipset       "Chipset drivers"
     guest_graphics      "Graphics API"
@@ -417,7 +417,7 @@ graphics_api_adjust "HostRemote" ->
     show_VGPU           0
     show_PGPU           0
     guest_kernel        "Guest kernel"
-    guest_GPU           "VirtIO driver (QXL)"
+    guest_GPU           "VirtIO / QXL driver (QXL)"
     guest_chipset       "Guest chipset"
     guest_graphics      "Graphics API"
     guest_manager       "Window manager"
@@ -426,7 +426,7 @@ graphics_api_adjust "HostRemote" ->
     host_chipset        "Host chipset"
     protocol_color      "#F8F"
     color_legend        0, "cyan", "Graphic commands"
-    color_legend        1, protocol_color, "SPICE graphics stream"
+    color_legend        1, protocol_color, "SPICE protocol"
 
 
 graphics_api_adjust "GuestStreaming" ->
@@ -459,7 +459,7 @@ graphics_api_adjust "GuestStreaming" ->
     protocol_color      "yellow"
     color_legend        0, "cyan", "Graphic commands"
     color_legend        1, "lightgreen", "Vendor-specific commands"
-    color_legend        2, protocol_color, "H26 stream"
+    color_legend        2, protocol_color, "H264 stream"
 
 
 graphics_api_adjust "HostStreaming" ->

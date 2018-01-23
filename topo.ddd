@@ -26,6 +26,7 @@ base_slide "Single socket, 4 GPUs",
 
 base_slide "Dual socket, 4 GPUs",
     title page_label
+    subtitle "Performance is reduced if cards need to communicate over QPI"
     stepping
 
     scale 80%
