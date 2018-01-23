@@ -26,12 +26,12 @@ base_slide "The mdev framework",
         diagram_small "#777",  430, 350, 250, 50, "IOMMU UAPI"
         diagram_small "#777",  170, 350, 250, 50, "VFIO UAPI"
 
-base_slide "The mdev framework presentation",
-
-    text_box 0, 0, 700, 200,
-        font_size 16
-        align 50%
-        vertical_align 50%
-        paragraph "more details in talk"
-        paragraph "vGPU on KVM - A VFIO Based Framework @ KVM Forum '16 Toronto"
-        paragraph "http://www.linux-kvm.org/images/5/59/02x03-Neo_Jia_and_Kirti_Wankhede-vGPU_on_KVM-A_VFIO_based_Framework.pdf"
+base_slide "See also: mdev framework presentation",
+    title page_label
+    subtitle "vGPU on KVM - A VFIO Based Framework @ KVM Forum '16 Toronto"
+    picture
+        image 0, 40, 80%, 80%, "NVIDIA-mdev.png"
+        text_box 0, 400, 1500, 200,
+            align 50%
+            font_size 22
+            code "http://www.linux-kvm.org/images/5/59/02x03-Neo_Jia_and_Kirti_Wankhede-vGPU_on_KVM-A_VFIO_based_Framework.pdf"
