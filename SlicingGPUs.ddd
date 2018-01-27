@@ -263,123 +263,6 @@ base_slide "Paravirtualization and multiple virtual machines",
         * "Remote access"
 
 
-// ----------------------------------------------------------------------------
-base_slide "GPU device assignment (aka pass-through)",
-// ----------------------------------------------------------------------------
-    title page_label
-    subtitle "Assign the GPU to a single guest, poking a hole for GPU's memory mapped I/O "
-    graphics_api "Passthru"
-    pros
-        * "Performance"
-        * "Compatibility (New)"
-        ** "Use vendor driver"
-        ** "Latest APIs"
-        * "Graphics features"
-    cons
-        * "Boot console"
-        * "Inflexible setup"
-        * "Migration?"
-        * "Sharing?"
-
-
-// ----------------------------------------------------------------------------
-base_slide "GPU virtualization: vGPU, GVT-g, MxGPU",
-// ----------------------------------------------------------------------------
-    title page_label
-    subtitle "Split a virtualization capable GPU between multiple guests"
-    // graphics_api (if smooth_step < 3 then "vGPU" else "vGPU+VMs")
-    if smooth_step < 4.5 then
-        graphics_api "vGPU"
-    else
-        graphics_api "vGPU+VMs"
-    pros
-        * "Performance"
-        * "Compatibility (New)"
-        * "Graphics features"
-        * "Multiple VMs"
-    cons
-        * "Medium flexibility"
-        * "H/W requirements"
-        * "Migration?"
-
-
-// ----------------------------------------------------------------------------
-base_slide "This is all very much work in progress",
-// ----------------------------------------------------------------------------
-    title page_label
-    subtitle "Live migration of NVIDIA GPUs announced at Xen Summit 2018"
-    stepping
-    picture
-        scale 80%
-        locally
-            frame_texture 1900, 1000,
-                image 0, -300 + 400 * smooth_step, 100%, 100%, "LiveMigration.png"
-            show fade_out_at(smooth_step, 3)
-            rectangle 1900, 1000
-        if smooth_step >= 2.01 then
-            locally
-                show fade_at(smooth_step, 3)
-                // From https://www.youtube.com/watch?v=y2SkU5JODIY
-                INTEL_LIVE_MIGRATION -> "movies/Intel GVT-g Live Migration Demo-y2SkU5JODIY.mp4##start-time=8"
-                movie 0, 0, 200%, 200%, INTEL_LIVE_MIGRATION
-                on "pageexit",
-                    movie_drop INTEL_LIVE_MIGRATION
-        text_box 0, 520, 1500, 150,
-            style "code"
-            paragraph "https://blogs.nvidia.com/blog/2018/01/04/vgpu-xenmotion-technology/"
-            at_step 3
-            style "story"
-            paragraph "(Live migration was demoed for Intel GVT-g at Xen Summit 2016)"
-
-
-
-// ----------------------------------------------------------------------------
-base_slide "Resource allocation and sharing",
-// ----------------------------------------------------------------------------
-    title page_label
-    subtitle "Vendors are still looking for the best approach"
-    stepping
-    picture
-        show fade_at(page_time, 1)
-        image 0, 0, 200%, 200%, "GPUComparison.png"
-        at_step 1
-
-
-
-// ============================================================================
-//
-section_slide "Remote access with SPICE",
-//
-// ============================================================================
-    title page_label
-    subtitle "Efficient remote access to virtual machines..."
-    stepping
-    picture
-        translate 600, 450, 0
-        rotate_z -4
-        image 0, 0, 30%, 30%, "control-panel.jpg"
-
-import "spice.ddd"
-
-
-
-// ============================================================================
-//
-section_slide "Comparing the various approaches",
-//
-// ============================================================================
-    title page_label
-    subtitle "Attempting to visualize the tradeoffs..."
-    stepping
-    picture
-        translate 600, 450, 0
-        rotate_z -4
-        image 0, 0, 30%, 30%, "control-panel.jpg"
-
-import "comparisons.ddd"
-
-
-
 // ============================================================================
 //
 section_slide "Virtual machine configuration",
@@ -467,6 +350,37 @@ base_slide "Emulated & paravirtualized GPU management layer",
        ** "high performance VMs"
 
 
+// ============================================================================
+//
+section_slide "Hardware acceleration in VMs",
+//
+// ============================================================================
+    title page_label
+    subtitle "But... But... I want my VM to be fast!"
+    stepping
+    picture
+        image 600, 450, 40%, 40%, "tesla.png"
+
+
+// ----------------------------------------------------------------------------
+base_slide "GPU device assignment (aka pass-through)",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Assign the GPU to a single guest, poking a hole for GPU's memory mapped I/O "
+    graphics_api "Passthru"
+    pros
+        * "Performance"
+        * "Compatibility (New)"
+        ** "Use vendor driver"
+        ** "Latest APIs"
+        * "Graphics features"
+    cons
+        * "Boot console"
+        * "Inflexible setup"
+        * "Migration?"
+        * "Sharing?"
+
+
 // ----------------------------------------------------------------------------
 base_slide "Device assignment",
 // ----------------------------------------------------------------------------
@@ -515,17 +429,6 @@ section_slide "Why device topology matters...",
 
 import "topo.ddd"
 
-
-// ----------------------------------------------------------------------------
-base_slide "What about topology con't",
-// ----------------------------------------------------------------------------
-    title page_label
-    subtitle "Some applications (ML/AI) can benefit from p2p GPU communication..."
-    stepping
-    story
-        scale 140%
-        * "p2p domains for GPU memory throughput"
-        * "optimization for ML/AI models"
 
 // ----------------------------------------------------------------------------
 base_slide "Device assignment API - QEMU",
@@ -613,6 +516,45 @@ base_slide "Device assignment and management software",
 
                 line_arrow -600, 400, none, 200, -50, none
                 line_arrow -600, -50, none, 200, 400, none
+
+
+// ============================================================================
+//
+section_slide "Slicing a GPU",
+//
+// ============================================================================
+    title page_label
+    subtitle "But... But... I want more than one VM!"
+    stepping
+    picture
+        for I in 1..10 loop
+            image 500 - 150 * sin I, 450 - 150 * cos I, 20%, 20%, "tesla.png"
+
+
+
+// ----------------------------------------------------------------------------
+base_slide "GPU virtualization: vGPU, GVT-g, MxGPU",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Split a virtualization capable GPU between multiple guests"
+    // graphics_api (if smooth_step < 3 then "vGPU" else "vGPU+VMs")
+    if smooth_step < 4.5 then
+        graphics_api "vGPU"
+    else
+        graphics_api "vGPU+VMs"
+    pros
+        * "Performance"
+        * "Compatibility (New)"
+        * "Graphics features"
+        * "Multiple VMs"
+    cons
+        * "Medium flexibility"
+        * "H/W requirements"
+        * "Migration?"
+
+
+import "comparisons.ddd"
+
 
 
 // ----------------------------------------------------------------------------
@@ -804,6 +746,137 @@ base_slide "vfio-mdev caveat",
         font_size 100
         paragraph "Ask your vendor."
 
+
+// ============================================================================
+//
+section_slide "Comparing the various approaches",
+//
+// ============================================================================
+    title page_label
+    subtitle "Attempting to visualize the tradeoffs..."
+    stepping
+    picture
+        translate 600, 450, 0
+        rotate_z -4
+        image 0, 0, 30%, 30%, "control-panel.jpg"
+
+
+// ----------------------------------------------------------------------------
+base_slide "Comparison of GPU virtualization solutions",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Tradeoffs, tradeoffs, it's all about tradeoffs"
+    stepping
+    picture
+        consideration 0, "Hardware requirements"
+        consideration 1, "Software requirements"
+        consideration 2, "Performance"
+        consideration 3, "Security"
+        consideration 4, "Flexibility"
+        consideration 5, "Scalability"
+        virt_type_hsv := 60 * page_number
+
+
+//  Percentage for...        H/W, S/W, Perf, Sec, Flex, Scal
+virt_type "Native GPU",      100, 100, 100,  100,   0,  20
+virt_type "Emulated GPU",    100, 100,   0,   90, 100,  20
+virt_type "Assigned GPU",     90,  90,  90,   90,  30,   0
+virt_type "VGPU",             50,  70,  70,   70,  70,  70
+virt_type "VirtIO GPU",      100,  50,  50,   90,  90,  50
+
+
+// ----------------------------------------------------------------------------
+base_slide "This is all very much work in progress",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Live migration of NVIDIA GPUs announced at Xen Summit 2018"
+    stepping
+    picture
+        scale 80%
+        locally
+            frame_texture 1900, 1000,
+                image 0, -300 + 400 * smooth_step, 100%, 100%, "LiveMigration.png"
+            show fade_out_at(smooth_step, 3)
+            rectangle 1900, 1000
+        if smooth_step >= 2.01 then
+            locally
+                show fade_at(smooth_step, 3)
+                // From https://www.youtube.com/watch?v=y2SkU5JODIY
+                INTEL_LIVE_MIGRATION -> "movies/Intel GVT-g Live Migration Demo-y2SkU5JODIY.mp4##start-time=8"
+                movie 0, 0, 200%, 200%, INTEL_LIVE_MIGRATION
+                on "pageexit",
+                    movie_drop INTEL_LIVE_MIGRATION
+        text_box 0, 520, 1500, 150,
+            style "code"
+            paragraph "https://blogs.nvidia.com/blog/2018/01/04/vgpu-xenmotion-technology/"
+            at_step 3
+            style "story"
+            paragraph "(Live migration was demoed for Intel GVT-g at Xen Summit 2016)"
+
+
+
+// ----------------------------------------------------------------------------
+base_slide "Resource allocation and sharing",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle "Vendors are still looking for the best approach"
+    stepping
+    picture
+        show fade_at(page_time, 1)
+        image 0, 0, 200%, 200%, "GPUComparison.png"
+        at_step 1
+
+
+
+// ----------------------------------------------------------------------------
+base_slide "Comparison - Conclusion",
+// ----------------------------------------------------------------------------
+    title "Conclusion: It's complicated™"
+    subtitle "There is no ""one-size-fits-all"" solution today"
+    stepping
+    picture
+        frame_texture 1600, 700,
+            color "#23355D" // Facebook blue
+            rectangle 0, 0, 1600, 700
+            radial_gradient 128, 128, 128, 256, 256,
+                gradient_color 0%, "#3A5896"
+                gradient_color 50%, "#344A80"
+                gradient_color 100%, "#23355D"
+            color "white"
+            circle -400, 0, 800
+            texture ""
+            for I in -3..3 loop
+                text_box -300, 0 - 80 * I, 400, 100,
+                    font "Facebook Letter Faces", 50, bold
+                    color "white", exp(-I^2*0.2)
+                    text comparison_vm_text I
+            show 1.0 - sin(10 * page_time)^2 * exp(-page_time * 1.5)
+            rectangle -550, 29, 40, 40
+            image -550, 40, 20%, 20%, "CheckMark.png"
+            comparison_vm_text -3 -> "Native"
+            comparison_vm_text -2 -> "Virtualized"
+            comparison_vm_text -1 -> "Paravirtualized"
+            comparison_vm_text  0 -> "It's complicated"
+            comparison_vm_text  1 -> "GPU accelerated"
+            comparison_vm_text  2 -> "In a container"
+            comparison_vm_text  3 -> "Migrated"
+        rectangle 0, 50, 1600, 700
+
+
+// ============================================================================
+//
+section_slide "Remote access with SPICE",
+//
+// ============================================================================
+    title page_label
+    subtitle "Efficient remote access to virtual machines..."
+    stepping
+    picture
+        translate 600, 450, 0
+        rotate_z -4
+        image 0, 0, 30%, 30%, "control-panel.jpg"
+
+import "spice.ddd"
 
 // ----------------------------------------------------------------------------
 section_slide "Thank you",
