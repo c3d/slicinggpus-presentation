@@ -64,7 +64,7 @@ base_slide "About the presentation authors",
     right_column
         show fade_at(page_time, 2)
         paragraph
-            bold "Christophe de Dinechin"
+            bold "Christophe ""D³"" de Dinechin"
             anchor { color "white"; texture "Christophe.jpg"; circle 150, 80, 80 }
         paragraph "Senior Principal Software Engineer at Red Hat"
         paragraph "Working on SPICE (remote computing)"
