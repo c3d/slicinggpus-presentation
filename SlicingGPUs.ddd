@@ -139,6 +139,13 @@ section_slide "How to waste 120000 threads",
     subtitle
         paragraph "Real-time ray tracing and ray marching"
         paragraph "(Red) Hat tip to ShaderToy"
+    picture
+        texture "UlrichDrepper.jpg"
+        translate 550, 450, 0
+        scale 50%
+        rotate_z -4
+        rounded_rectangle 0, 0, texture_width, texture_height, 200
+
 
 import "BlueWallClock.ddd"
 import "Dali.ddd"
