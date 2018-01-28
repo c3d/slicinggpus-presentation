@@ -138,13 +138,24 @@ section_slide "How to waste 120000 threads",
     title page_label
     subtitle
         paragraph "Real-time ray tracing and ray marching"
+        at_step 2
         paragraph "(Red) Hat tip to ShaderToy"
+    stepping
     picture
-        texture "UlrichDrepper.jpg"
-        translate 550, 450, 0
-        scale 50%
-        rotate_z -4
-        rounded_rectangle 0, 0, texture_width, texture_height, 200
+        locally
+            at_step 1
+            texture "UlrichDrepper.jpg"
+            translate 550, 450, 0
+            scale 50%
+            rotate_z -4
+            rounded_rectangle 0, 0, texture_width, texture_height, 200
+        locally
+            at_step 2
+            texture "Inigo.jpg"
+            translate 200, 450, 0
+            scale 80%
+            rotate_z 4
+            rounded_rectangle 0, 0, texture_width, texture_height, 100
 
 
 import "BlueWallClock.ddd"
