@@ -1,0 +1,9 @@
+shader_slide "Terrain Tubes",
+    shader_show "terrain-tubes.fs",
+        shader_resolution
+        shader_htime
+        shader_depth 100%
+        shader_channel 0, "tex09.jpg"
+        shader_channel 1, "tex11.png"
+        shader_channel 3, "tex08.jpg"
+    artist "Iñigo Quílez, C3D"

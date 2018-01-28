@@ -1,0 +1,9 @@
+shader_slide "Jack o' Lantern",
+    shader_show "jack-o-lantern.fs",
+        shader_resolution
+        shader_atime
+        shader_depth 100%
+        shader_channel 0, "tex03.jpg"
+        shader_chanres
+        shader_channel 1, "tex01.jpg"
+    artist "Paul Malin, C3D"

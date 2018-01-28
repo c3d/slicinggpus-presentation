@@ -1,0 +1,11 @@
+// http://www.youtube.com/watch?v=JDnt-JnatxY
+DALI_MOVIE -> "wood.jpg"
+shader_slide "Dali donne l'heure",
+    shader_show "dali.fs",
+         shader_resolution
+         shader_gtime
+         shader_channel 0, DALI_MOVIE
+         shader_channel 1, "Ground.jpg"
+         shader_depth 100%
+         shader_mouse
+    artist "Paul Malin, Eresha.S, C3D"

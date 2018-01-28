@@ -1,0 +1,20 @@
+frame_texture 128, 128,
+    background_color "transparent"
+    color "white"
+    line_color "transparent"
+    circle 0, 0, 50
+line_color redhat_red1
+color "transparent"
+texture_wrap true, true
+texture_transform
+    translate -2.1 * time mod 2, 0.2 * time mod 2, 0.0
+    rotate_z 0.3 * time
+    scale 155
+line_width 6
+for I in -3..3 loop
+    path
+        endpoints_style NONE, ARROWHEAD
+        rectangle 2000, 2000
+        move_to -100, 0
+        line_to 0, 0
+        quad_to 250, 0, 100+200*sin(pi*I/5), 100*cos(pi*I/5)

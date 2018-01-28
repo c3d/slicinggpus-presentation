@@ -1,0 +1,6 @@
+shader_slide "Wet stone",
+    shader_show "wet-stone.fs",
+        shader_resolution
+        shader_htime
+        shader_depth 100%
+    artist "Alexander Alekseev, C3D"

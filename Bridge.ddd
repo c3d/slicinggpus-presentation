@@ -1,0 +1,10 @@
+shader_slide "Bridge",
+    shader_show "bridge.fs",
+        shader_resolution
+        shader_atime
+        shader_depth 100%
+        shader_channel 0, "tex00.jpg"
+        shader_channel 1, "tex09.jpg"
+        shader_channel 2, "tex11.png"
+        shader_mouse
+    artist "Iñigo Quílez, C3D"

@@ -133,6 +133,26 @@ star_chart ->
 
 
 // ----------------------------------------------------------------------------
+section_slide "How to waste 120000 threads",
+// ----------------------------------------------------------------------------
+    title page_label
+    subtitle
+        paragraph "Real-time ray tracing and ray marching"
+        paragraph "(Red) Hat tip to ShaderToy"
+
+import "BlueWallClock.ddd"
+import "Dali.ddd"
+import "WaterSpout.ddd"
+import "Mike.ddd"
+import "Bridge.ddd"
+import "WetStone.ddd"
+import "JackOLantern.ddd"
+import "TerrainTubes.ddd"
+
+
+
+
+// ----------------------------------------------------------------------------
 base_slide "How GPUs accelerate 3D graphics",
 // ----------------------------------------------------------------------------
     title "How GPUs accelerate 3D graphics"

@@ -1,0 +1,48 @@
+virt_type Index:integer, Body, HW, SW, Perf, Sec, Flex, Scal ->
+// ----------------------------------------------------------------------------
+//   A text box representing a virtualization type
+// ----------------------------------------------------------------------------
+    locally
+        show fade_at(page_time, 0.5 * Index + 1)
+        locally
+            color_hsv 0%, 0%, Index * 5% + 70%, 30%
+            line_color "#222"
+            line_width 2
+            rectangle Index * 200 - 180, 0, 190, 600
+        text_box Index * 200 - 180, 0, 190, 600,
+            style "category"
+            render Body
+
+        at_step Index + 1
+        consideration_score Index, 0, HW
+        consideration_score Index, 1, SW
+        consideration_score Index, 2, Perf
+        consideration_score Index, 3, Sec
+        consideration_score Index, 4, Flex
+        consideration_score Index, 5, Scal
+
+
+consideration Index:integer, Body ->
+// ----------------------------------------------------------------------------
+//   A text box representing one of the considerations being compared
+// ----------------------------------------------------------------------------
+    locally
+        show fade_at(page_time, 0.5 * Index + 4)
+        locally
+            color_hsv 0%, 0%, Index * 8% + 65%, 30%
+            line_color "#222"
+            line_width 2
+            rectangle 0, 150 - Index * 80, 1500, 70
+        text_box 0, 150 - Index * 80, 1450, 70,
+            style "consideration"
+            render Body
+
+
+consideration_score Cat, Cons, Value ->
+// ----------------------------------------------------------------------------
+//   Indicate a color-coded score, where 0 = RED and 100 = GREEN
+// ----------------------------------------------------------------------------
+    locally
+        fract X:real -> X - floor X
+        color_hsv 1.2 * Value, 90%, 100%, fade_at(smooth_step, Cat + 0.2 * Cons)
+        rounded_rectangle Cat * 200 - 180, 150 - Cons * 80, 120, 50, 30

@@ -1,0 +1,8 @@
+shader_slide "Blue Wall Clock",
+    shader_show "blue-wall-clock.fs",
+        shader_resolution
+        shader_atime
+        shader_depth 100%
+        shader_date
+        shader_set iMouse := shader_x, shader_y * 0.3 - 200, 0, 0
+    artist "C3D"

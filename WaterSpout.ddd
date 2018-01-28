@@ -1,0 +1,8 @@
+shader_slide "Water Spout",
+    shader_show "water-spout.fs",
+        shader_resolution
+        shader_atime
+        shader_depth 1%
+        shader_set iMouse := shader_x, shader_y * 0.3 - 200, 0, 0
+        shader_set iWaterVelocity := 1.0
+    description "Paul Malin, C3D"

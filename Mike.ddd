@@ -1,0 +1,7 @@
+shader_slide "Mike",
+    shader_show "mike.fs",
+        shader_resolution
+        shader_atime
+        shader_depth 100%
+        shader_channel 0, "tex11.png"
+    artist "Iñigo Quílez, C3D"

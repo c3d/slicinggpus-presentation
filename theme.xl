@@ -747,3 +747,185 @@ english Body -> if LANG="en" then Body
 french  Body -> if LANG="fr" then Body
 key "f" -> LANG := "fr"; refresh 0
 key "e" -> LANG := "en"; refresh 0
+
+
+
+// ============================================================================
+//
+//    Shader display
+//
+// ============================================================================
+
+viewpoint_delta_base -> 0.01
+viewpoint_delta -> viewpoint_delta_base * eye_distance
+
+shader_x        -> 0.0
+shader_y        -> 0.0
+shader_scale    -> 1.0
+shader_scale S  -> shader_scale := S
+shader_rscale   -> 1.0
+shader_rrate    -> 60.0
+shader_autoscale-> 0
+
+shader_show File, Arguments ->
+// ----------------------------------------------------------------------------
+//   Display a shader with the given file name
+// ----------------------------------------------------------------------------
+  locally
+    if page_time < 0.1 then shader_speed 1
+    shader_rscale := shader_scale / sqrt(stereo_viewpoints)
+    WIDTH  := window_width  * shader_rscale
+    HEIGHT := window_height * shader_rscale
+    color "white"
+    shader_x := mouse_x
+    shader_y := mouse_y
+
+    if shader_autoscale > 0 then
+        nonzero 0.0 -> 1e5
+        nonzero X -> X
+        shader_rrate := 0.95 * shader_rrate + 0.05 / nonzero refresh_time
+        if shader_rrate < 15 then
+            shader_scale := shader_scale * 0.99
+        else if shader_rrate >= 20 and shader_scale < 1 then
+            shader_scale := shader_scale * 1.001
+
+    for I in 0..stereo_viewpoints-1 loop
+        stereo_viewpoints 2^I,
+            frame_texture WIDTH, HEIGHT,
+                clear_color 0, 0, 0, 1
+                shader_program
+                    fragment_shader_file File
+                Arguments
+                shader_set iViewpoint := I * viewpoint_delta
+                color "white"
+                rectangle WIDTH, HEIGHT
+            color "white"
+            rectangle 0, 120, slide_width, slide_height
+
+
+    if shader_autoscale > 0 then
+        contents 0,
+            color "darkgreen", 0.5
+            ellipse_sector -800, -400, 180, 180, 180, -180 * shader_scale
+            color "darkred", 0.5
+            ellipse_sector -800, -400, 200, 200, 180, -180 * shader_rrate / 60
+    on "key:r",
+        shader_scale := 1.0
+    on "key:a",
+        shader_autoscale := 1 - shader_autoscale
+
+
+shader_speed       -> 1.0
+shader_speed S     -> shader_speed := S
+shader_resolution  -> shader_set iResolution := WIDTH, HEIGHT, 1
+shader_time        -> shader_set iGlobalTime := page_time * shader_speed
+shader_gtime       -> shader_set iGlobalTime := (time+3600) mod 86400 * shader_speed
+shader_atime       -> shader_set iGlobalTime := time mod 813 * shader_speed
+shader_htime       -> shader_set iGlobalTime := time mod 997 * shader_speed
+shader_mouse       -> shader_set iMouse := shader_x+slide_width/2, shader_y+slide_height/2, mouse_buttons and 1, mouse_buttons and 2
+shader_depth X:real -> viewpoint_delta_base := 0.01 * X
+shader_channel 0,T -> shader_chantex 0, T; shader_set iChannel0 := 0
+shader_channel 1,T -> shader_chantex 1, T; shader_set iChannel1 := 1
+shader_channel 2,T -> shader_chantex 2, T; shader_set iChannel2 := 2
+shader_channel 3,T -> shader_chantex 3, T; shader_set iChannel3 := 3
+shader_chanres 0 ->
+    shader_set iChannelResolution0 := 1.0/texture_width, 1.0/texture_height, 1
+shader_chanres 1 ->
+    shader_set iChannelResolution1 := 1.0/texture_width, 1.0/texture_height, 1
+shader_chanres 2 ->
+    shader_set iChannelResolution2 := 1.0/texture_width, 1.0/texture_height, 1
+shader_chanres 3 ->
+    shader_set iChannelResolution3 := 1.0/texture_width, 1.0/texture_height, 1
+shader_chantex N,T ->
+    texture_unit N
+    if T contains ".mp4" or T contains "youtube" then
+        movie_texture T
+        on "pageexit",
+            movie_drop T
+        texture_wrap true, true
+    else if T contains "#" then
+        cube_map 512,
+            cube_map_flip false, false
+            cube_map_face 0, text_replace(T, "#", "1")
+            cube_map_face 1, text_replace(T, "#", "2")
+            cube_map_face 2, text_replace(T, "#", "3")
+            cube_map_face 3, text_replace(T, "#", "4")
+            cube_map_face 4, text_replace(T, "#", "5")
+            cube_map_face 5, text_replace(T, "#", "6")
+    else if T contains "cross" then
+        cube_map_cross T
+    else
+        texture T
+        texture_wrap true, true
+shader_date     -> shader_set iDate := year, month, day, time mod 86400
+
+
+
+// ============================================================================
+//
+//    Display artist information
+//
+// ============================================================================
+
+description T ->
+// ----------------------------------------------------------------------------
+//   Display information about the artist
+// ----------------------------------------------------------------------------
+    locally
+        texture ""
+        rotate_y -30
+        translate_z 300
+
+        text_box 0, -200, 1500, 200,
+            style "story"
+            color "white"
+            font "Cherry Cream Soda", bold, 40
+            align 1
+            vertical_align 1
+            text T
+
+shader_slide T, Body ->
+// ----------------------------------------------------------------------------
+//   Show a shader in a slide
+// ----------------------------------------------------------------------------
+    base_slide T,
+        stepping
+        picture Body
+
+artist T -> description T
+
+
+
+// ============================================================================
+//
+//    Per-display size adjustments
+//
+// ============================================================================
+
+WIDTH -> 1920.0
+HEIGHT -> 1080.0
+
+adjust_width "alioscopy" ->
+    WIDTH := window_width*0.4
+    HEIGHT := window_height*0.4
+adjust_width "united_entertain" ->
+    WIDTH := window_width*0.4
+    HEIGHT := window_height*0.4
+adjust_width "tridelity_ml" ->
+    WIDTH := window_width*0.4
+    HEIGHT := window_height*0.4
+adjust_width "tridelity_mv" ->
+    WIDTH := window_width*0.4
+    HEIGHT := window_height*0.4
+adjust_width "tridelity_mp" ->
+    WIDTH := window_width*0.4
+    HEIGHT := window_height*0.4
+adjust_width "hsplit" ->
+    WIDTH := window_width*0.2
+    HEIGHT := window_width*0.4
+adjust_width "vsplit" ->
+    WIDTH := window_width*0.4
+    HEIGHT := window_width*0.2
+adjust_width Other ->
+    WIDTH := window_width
+    HEIGHT := window_height
